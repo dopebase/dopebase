@@ -1,7 +1,5 @@
 # Dopebase - All-in-one Web & Mobile Development Platform
 
-Absolutely, here is an expanded and enhanced version of your statement:
-
 ---
 
 ### **Dopebase: The Next-Generation Open-Source App Builder**
@@ -22,7 +20,7 @@ In a world driven by dynamic digital landscapes, Dopebase emerges as a revolutio
 
 Join a community of forward-thinking developers who are leveraging Dopebase to bring their visions to life. With a rich feature set and a robust framework at your disposal, the potential is limitless. Build with Dopebase, and craft digital experiences that are not just modern but monumental, reshaping the digital landscape one creation at a time.
 
-[Get Started with Dopebase](#) | [Explore Features](#)
+[Get Started with Dopebase](https://dopebase.com) | [Explore Features](https://dopebase.com)
 
 ---
 
