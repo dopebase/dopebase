@@ -193,7 +193,7 @@ model ArticleCategory {
 // Website Settings
 model Settings {
   id        String  @id @default(uuid())
-  name      String?
+  name      String? @unique
   value     String?
   createdAt String? @map("created_at")
   updatedAt String? @map("updated_at")

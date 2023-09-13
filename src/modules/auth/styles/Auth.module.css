@@ -1,0 +1,88 @@
+.title {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.2px;
+  color: #3c4257;
+}
+
+.LoginCard {
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);
+  background-color: #fff;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 2, 0.6, 1), box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  padding: 40px 60px;
+  margin: 7rem auto;
+  display: table !important;
+  min-width: 30%;
+}
+
+.FormFieldContainer {
+  margin: 16px 0px;
+}
+
+.FormTextField {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: left;
+  color: rgb(60, 66, 87);
+  text-decoration: none;
+  border-radius: 4px;
+  border: 0px;
+  padding: 5px 20px;
+  min-width: 250px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #66615b;
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  box-shadow: none;
+  width: 100%;
+}
+
+.PrimaryButton {
+  margin: 20px auto;
+  display: table !important;
+  padding: 12px 10px;
+  width: 100%;
+  background-color: #6546d7;
+  color: white;
+  font-weight: bold;
+  border: 0;
+  border-radius: 5px;
+}
+
+.FormLabel {
+  margin: 8px 1px;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: rgb(60, 66, 87);
+  padding: 10px 5px 0 0px;
+  line-height: 1.5;
+  display: block;
+}
+
+.ErrorMessage {
+  color: #f2505b;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.SignupInsteadContainer {
+  text-align: center;
+  margin: 20px auto;
+}
