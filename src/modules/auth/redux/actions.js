@@ -2,36 +2,36 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from "./types";
 import setAuthToken from "../utils/setAuthToken";
-import { websiteURL } from "../../settings/settings";
+import { websiteURL } from "../../../config/config";
 
 // Register User
-export const registerUser =
-  (userData, router, dispatch2) => async (dispatch) => {
-    const endpoint = `${await websiteURL()}api/register`;
-    console.log(userData);
-    console.log(endpoint);
-    axios
-      .post(endpoint, userData)
-      .then((response) => {
-        dispatch2(
-          loginUser(
-            { ...response.data, password: userData.password },
-            router,
-            dispatch2
-          )
-        );
-      }) // re-direct to login on successful register
-      .catch((err) => {
-        dispatch2({
-          type: GET_ERRORS,
-          payload: err.response.data,
-        });
+export const registerUser = (userData, router, dispatch2) => (dispatch) => {
+  const endpoint = `${websiteURL}api/auth/register`;
+  console.log(userData);
+  console.log(endpoint);
+  axios
+    .post(endpoint, userData)
+    .then((response) => {
+      dispatch2(
+        loginUser(
+          { ...response.data, password: userData.password },
+          router,
+          dispatch2
+        )
+      );
+    }) // re-direct to login on successful register
+    .catch((err) => {
+      console.log(err);
+      dispatch2({
+        type: GET_ERRORS,
+        payload: err.response.data,
       });
-  };
+    });
+};
 
 // Login - get user token
-export const loginUser = (loginData, router, dispatch2) => async (dispatch) => {
-  const endpoint = `${await websiteURL()}api/login`;
+export const loginUser = (loginData, router, dispatch2) => (dispatch) => {
+  const endpoint = `${websiteURL}api/auth/login`;
   axios
     .post(endpoint, loginData)
     .then((res) => {
@@ -82,34 +82,29 @@ export const logoutUser = (dispatch, router) => (dispatch2) => {
 };
 
 // Reset Password
-export const resetPassword =
-  (userData, router, dispatch2) => async (dispatch) => {
-    console.log(userData);
-    const endpoint = `${await websiteURL()}api/reset`;
-    axios
-      .post(endpoint, userData)
-      .then((response) => {
-        console.log(response);
-        const data = response.data;
-        if (data.error) {
-          dispatch2({
-            type: GET_ERRORS,
-            payload: data.error,
-          });
-        } else {
-          dispatch2(
-            loginUser(
-              { ...data, password: userData.password },
-              router,
-              dispatch2
-            )
-          );
-        }
-      }) // re-direct to login on successful register
-      .catch((err) => {
+export const resetPassword = (userData, router, dispatch2) => (dispatch) => {
+  console.log(userData);
+  const endpoint = `${websiteURL}api/reset`;
+  axios
+    .post(endpoint, userData)
+    .then((response) => {
+      console.log(response);
+      const data = response.data;
+      if (data.error) {
         dispatch2({
           type: GET_ERRORS,
-          payload: err.response.data,
+          payload: data.error,
         });
+      } else {
+        dispatch2(
+          loginUser({ ...data, password: userData.password }, router, dispatch2)
+        );
+      }
+    }) // re-direct to login on successful register
+    .catch((err) => {
+      dispatch2({
+        type: GET_ERRORS,
+        payload: err.response.data,
       });
-  };
+    });
+};

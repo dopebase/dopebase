@@ -1,4 +1,5 @@
-import instamobileDB from "./db";
+import { NextResponse } from "next/server";
+import { loginWithEmailAndPassword } from "../../../../core/db/auth";
 
 const jwt = require("jsonwebtoken");
 
@@ -27,22 +28,23 @@ const validateLoginInput = (data) => {
   };
 };
 
-export default async function login(req, res) {
-  if (!req.body) {
-    return res.status(500).json({});
+export async function POST(req) {
+  const res = NextResponse;
+  const json = await req.json();
+  if (!json) {
+    return res.json({}, { status: 500 });
   }
   // Form validation
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { errors, isValid } = validateLoginInput(json);
   // Check validation
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.json(errors, { status: 400 });
   }
-  const { email } = req.body;
-  const { password } = req.body;
+  const { email, password } = json;
 
-  const result = await instamobileDB.loginWithEmailAndPassword(email, password);
+  const result = await loginWithEmailAndPassword(email, password);
   if (result.error) {
-    return res.status(400).json(result.error);
+    return res.json(result.error, { status: 400 });
   }
   const userData = result.payload;
   // Sign token
@@ -59,10 +61,13 @@ export default async function login(req, res) {
     );
   });
   const token = await signPromise;
-  res.status(200).json({
-    success: true,
-    token: `Bearer ${token}`,
-    userData,
-    errors: null,
-  });
+  return res.json(
+    {
+      success: true,
+      token: `Bearer ${token}`,
+      userData,
+      errors: null,
+    },
+    { status: 200 }
+  );
 }

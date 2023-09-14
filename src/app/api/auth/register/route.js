@@ -1,4 +1,5 @@
-import instamobileDB from "./db";
+import { NextResponse } from "next/server";
+import { register } from "../../../../core/db/auth";
 
 const Validator = require("validator");
 const isEmpty = require("is-empty");
@@ -42,18 +43,22 @@ const validateRegisterInput = (data) => {
   };
 };
 
-export default async function register(req, res) {
-  console.log(req.body);
+export async function POST(req) {
+  console.log("Registering user");
+  const json = await req.json();
+  console.log(json);
+
+  const res = NextResponse;
 
   // Form validation
-  if (!req.body) {
-    return res.status(500).json({});
+  if (!json) {
+    return res.json({}, { status: 500 });
   }
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(json);
 
   // Check validation
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.json(errors, { status: 400 });
   }
 
   const {
@@ -64,9 +69,9 @@ export default async function register(req, res) {
     phone,
     profilePictureURL,
     role,
-  } = req.body;
+  } = json;
 
-  const user = await instamobileDB.register(
+  const user = await register(
     email,
     password,
     firstName,
@@ -76,5 +81,5 @@ export default async function register(req, res) {
     role
   );
 
-  res.status(200).json({ ...user });
+  return res.json({ ...user }, { status: 200 });
 }

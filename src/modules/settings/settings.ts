@@ -1,10 +1,4 @@
-import { prisma } from "../../core/db/prisma";
-
-export const websiteURL = async () => {
-  const settings = await prisma.settings.findFirst({
-    where: {
-      name: "websiteURL",
-    },
-  });
-  return settings?.value;
+export const websiteURL = () => {
+  console.log("process.env.WEBSITE_URL", process.env.DATABASE_URL);
+  return process.env.WEBSITE_URL;
 };

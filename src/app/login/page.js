@@ -14,6 +14,7 @@ const Login = (props) => {
   }
   if (user) {
     // already logged in, so redirect
+    console.log("already logged in, so redirect");
     router.push(".");
     return <></>;
   }

@@ -1,46 +1,46 @@
 // pages/api/auth/[...nextauth].js
-import NextAuth from 'next-auth'
-import GithubProvider from 'next-auth/providers/github'
-import instamobileDB from '../db'
-import { unescapeString } from '../../../utils'
+import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import db from "../db";
+import { unescapeString } from "../../../utils";
 
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const createProviderUserIfNeeded = async (profile, account) => {
-  const { access_token, provider } = account
-  const { email, name, login, avatar_url } = profile
-  const existingUser = await instamobileDB.getUserByEmail(email)
+  const { access_token, provider } = account;
+  const { email, name, login, avatar_url } = profile;
+  const existingUser = await db.getUserByEmail(email);
   if (existingUser !== null) {
     // If user already exists, we update the access tokens and github metadata
-    const metadata = unescapeString(existingUser.metadata)
-    var metadataObj = JSON.parse(metadata) ?? {}
-    metadataObj['githubProfile'] = profile
-    const newUser = await instamobileDB.updateOne('users', existingUser.id, {
+    const metadata = unescapeString(existingUser.metadata);
+    var metadataObj = JSON.parse(metadata) ?? {};
+    metadataObj["githubProfile"] = profile;
+    const newUser = await db.updateOne("users", existingUser.id, {
       access_token,
       provider,
       metadata: JSON.stringify(metadataObj),
-    })
-    console.log('updated user with new access token')
-    return
+    });
+    console.log("updated user with new access token");
+    return;
   }
 
   // If user does not exist, we create it
-  const user = await instamobileDB.register(
+  const user = await db.register(
     email,
     access_token,
     name?.length > 0 ? name : login,
-    '',
-    '',
+    "",
+    "",
     avatar_url,
-    'githubUser',
+    "githubUser",
     provider,
     access_token,
-    JSON.stringify({ githubProfile: profile }),
-  )
+    JSON.stringify({ githubProfile: profile })
+  );
 
-  console.log('User created')
-  console.log(user)
-}
+  console.log("User created");
+  console.log(user);
+};
 
 export default (req, res) =>
   NextAuth(req, res, {
@@ -50,7 +50,7 @@ export default (req, res) =>
         clientSecret: process.env.GITHUB_APP_CLIENT_SECRET,
         authorization: {
           params: {
-            scope: 'repo,read:user,user:email',
+            scope: "repo,read:user,user:email",
           },
         },
         // profile(profile) {
@@ -68,22 +68,22 @@ export default (req, res) =>
     secret: process.env.JWT_SECRET,
     callbacks: {
       async signIn({ user, account, profile, email, credentials }) {
-        await createProviderUserIfNeeded(profile, account)
-        return true
+        await createProviderUserIfNeeded(profile, account);
+        return true;
       },
       async redirect({ url, baseUrl }) {
-        return baseUrl
+        return baseUrl;
       },
       async session({ session, user, token }) {
-        const { jwtToken } = token
-        return { ...session, jwtToken }
+        const { jwtToken } = token;
+        return { ...session, jwtToken };
       },
       async jwt({ token, user, account, profile, isNewUser }) {
-        const secretOrKey = 'fheqwhHUOHD7DSFNVewuifhw'
-        const { email } = token
-        const existingUser = await instamobileDB.getUserByEmail(email)
+        const secretOrKey = "fheqwhHUOHD7DSFNVewuifhw";
+        const { email } = token;
+        const existingUser = await db.getUserByEmail(email);
         // Sign token
-        const signPromise = new Promise(resolve => {
+        const signPromise = new Promise((resolve) => {
           jwt.sign(
             { id: existingUser.id },
             secretOrKey,
@@ -91,12 +91,12 @@ export default (req, res) =>
               expiresIn: 31556926, // 1 year in seconds
             },
             (err, token) => {
-              resolve(token)
-            },
-          )
-        })
-        const jwtToken = await signPromise
-        return { ...token, jwtToken: `Bearer ${jwtToken}` }
+              resolve(token);
+            }
+          );
+        });
+        const jwtToken = await signPromise;
+        return { ...token, jwtToken: `Bearer ${jwtToken}` };
       },
     },
-  })
+  });
