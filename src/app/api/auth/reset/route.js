@@ -1,34 +1,59 @@
-import { rootURL } from "../../config";
-import { prisma } from "../../lib/prisma";
-// import emailTrigger from "../../../modules/emails/emailTrigger";
-import { getUserByEmail } from "../../../../core/db/auth";
-const { v4: uuidv4 } = require("uuid");
+import { NextResponse } from "next/server";
+import { resetPassword } from "../../core/db/auth";
 
-export default async function reset(req, res) {
-  console.log("requestResetPassword");
+const Validator = require("validator");
+const isEmpty = require("is-empty");
+
+const validateRegisterInput = (data) => {
+  const errors = {};
+
+  // Convert empty fields to an empty string so we can use validator functions
+  data.password = !isEmpty(data.password) ? data.password : "";
+  data.confirmPassword = !isEmpty(data.confirmPassword)
+    ? data.confirmPassword
+    : "";
+
+  // Password checks
+  if (Validator.isEmpty(data.password)) {
+    errors.password = "Password field is required";
+  }
+  if (Validator.isEmpty(data.confirmPassword)) {
+    errors.confirmPassword = "Confirm password field is required";
+  }
+  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+    errors.password = "Password must be at least 6 characters";
+  }
+  if (!Validator.equals(data.password, data.confirmPassword)) {
+    errors.confirmPassword = "Passwords must match";
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};
+
+export async function POST(req) {
+  const res = NextResponse;
+  console.log(req.body);
 
   // Form validation
   if (!req.body) {
-    return res.status(500).json({});
+    return res.json({}, { status: 500 });
+  }
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.json(errors, { status: 400 });
   }
 
-  const { email } = req.body;
-  console.log(email);
+  const { token, password } = req.body;
 
-  const user = await getUserByEmail(email);
+  const response = await resetPassword(token, password);
 
-  if (user) {
-    console.log("Password reset request for user ", user);
-    const email = user.email;
-    const token = uuidv4();
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { resetToken: token },
-    });
-    const resetURL = `${rootURL}reset?token=${token}`;
+  console.log("Password reset for user ", response);
 
-    // emailTrigger.resetPasswordRequested(email, resetURL, user.id);
-  }
+  console.log(response);
 
-  return res.status(200).json({ success: true });
+  return res.status(200).json({ ...response }, { status: 200 });
 }

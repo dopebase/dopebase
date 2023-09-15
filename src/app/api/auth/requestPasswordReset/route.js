@@ -1,15 +1,16 @@
+import { NextResponse } from "next/server";
 import { rootURL } from "../../config";
 import { prisma } from "../../lib/prisma";
 // import emailTrigger from "../../modules/emails/emailTrigger";
 import { getUserByEmail } from "../../../../core/db/users";
 const { v4: uuidv4 } = require("uuid");
 
-export default async function reset(req, res) {
+export async function reset(req, res) {
   console.log("requestResetPassword");
-
+  const res = NextResponse;
   // Form validation
   if (!req.body) {
-    return res.status(500).json({});
+    return res.json({}, { status: 500 });
   }
 
   const { email } = req.body;
@@ -30,5 +31,5 @@ export default async function reset(req, res) {
     // emailTrigger.resetPasswordRequested(email, resetURL, user.id);
   }
 
-  return res.status(200).json({ success: true });
+  return res.json({ success: true }, { status: 200 });
 }
