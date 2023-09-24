@@ -18,6 +18,12 @@ export default function RootLayout({ session, children }) {
     <SessionProvider session={session}>
       <Provider store={store}>
         <html lang="en">
+          <head>
+            <link
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+              rel="stylesheet"
+            />
+          </head>
           <body className={inter.className}>{children}</body>
         </html>
       </Provider>

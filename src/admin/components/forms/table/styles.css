@@ -1,0 +1,50 @@
+.imageCell {
+  max-height: 80px;
+  border-radius: 4px;
+}
+
+.multiImageCell {
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 2px;
+  margin: 5px;
+}
+
+.multimediaCell {
+  max-height: 80px;
+  border-radius: 4px;
+}
+
+.multiMultimediaCell {
+  max-height: 50px;
+  border-radius: 2px;
+  margin: 3px;
+}
+
+.colorCellContainer {
+  display: inline-block;
+}
+
+.imageCellContainer {
+}
+
+ul.ArrayTableCell {
+  list-style-type: circle;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+ul.ArrayTableCell li {
+  margin-bottom: 5px;
+}
+
+ul.ArrayTableCell li a,
+ul.ArrayTableCell li span {
+  font-size: 12px;
+}
+
+.ObjectCellContainer {
+  font-size: 0.85em;
+  padding: 0px;
+}

@@ -1,0 +1,635 @@
+/* Admin Dashboard */
+
+.adminContent {
+    padding-top: 70px;
+  }
+.adminNavbar {
+  position: fixed;
+  height: 70px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-background-color);
+  border-bottom: 1px solid rgba(153, 153, 153, 0.2);
+}
+  
+.headerTitle {
+  color: var(--primary-foreground-color);
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 48px;
+}
+  
+.MainMenu {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  bottom: 0;
+  width: 300px;
+  left: 0;
+  z-index: 998;
+  padding-top: 6rem;
+}
+
+.MainMenu:before,
+.MainMenu:after {
+  position: absolute;
+  content: '';
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: block;
+}
+  
+.MainMenu:after {
+  background-color: white;
+  border-right: 1px solid rgba(153, 153, 153, 0.2);
+  /* background: #66615b;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#66615b),
+    color-stop(80%, #000)
+  );
+  background: linear-gradient(#66615b, #000 80%); */
+  z-index: 3;
+}
+
+.MenuContainer {
+  position: relative;
+  height: calc(100vh - 75px);
+  overflow: auto;
+  z-index: 4;
+  padding-bottom: 100px;
+}
+
+.MainPanel {
+  padding: 30px 30px 100px 30px;
+  position: relative;
+  float: right;
+  width: calc(100% - 300px);
+  margin-left: 300px;
+  background-color: #fff;
+}
+
+.MenuItemsList {
+  margin-top: 16px;
+}
+
+.MenuItemsList li p {
+  text-transform: uppercase;
+  display: block;
+  font-weight: 600;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  font-size: 0.8rem;
+}
+
+.MenuItemsList li > p {
+  margin: 0px 15px 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0px 8px;
+  line-height: 50px;
+}
+
+.MenuItemsList li p i {
+  width: 40px;
+  font-size: 20px;
+}
+
+.MenuItemsList ul li,
+.MenuItemsList li {
+  display: block;
+  width: 100%;
+  color: rgba(37, 36, 34, 0.85);
+}
+
+.MenuItemsList li:hover {
+  background-color: rgba(65, 45, 196, 0.1);
+}
+.MenuItemsList li.selected {
+  background-color: #412dc4;
+  color: white;
+}
+
+ul.MenuItemsList li {
+  padding-left: 16px;
+}
+
+ul.MenuItemsList .submenu ul li {
+  cursor: pointer;
+  padding-left: 64px;
+  line-height: 40px;
+}
+
+ul.MenuItemsList .submenu ul li p {
+  text-transform: none;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.PhotoContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.Openable {
+  cursor: pointer;
+}
+
+.PhotoDismissContainer {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.PhotoFullscreen {
+  margin: 0px auto;
+  max-width: 100%;
+  max-height: 100%;
+  max-width: 400px;
+  max-height: 900px;
+}
+
+.imageCell {
+  max-height: 80px;
+  border-radius: 4px;
+}
+
+.multiImageCell {
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 2px;
+  margin: 5px;
+}
+
+.multimediaCell {
+  max-height: 80px;
+  border-radius: 4px;
+}
+
+.multiMultimediaCell {
+  max-height: 50px;
+  border-radius: 2px;
+  margin: 3px;
+}
+
+.colorCellContainer {
+  display: inline-block;
+}
+
+ul.ArrayTableCell {
+  list-style-type: circle;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+ul.ArrayTableCell li {
+  margin-bottom: 5px;
+}
+
+ul.ArrayTableCell li a,
+ul.ArrayTableCell li span {
+  font-size: 12px;
+}
+
+.ObjectCellContainer {
+  font-size: 0.85em;
+  padding: 0px;
+}
+
+.DismissButton {
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  border-radius: 12px;
+  background-color: #dddddd;
+  opacity: 0.9;
+  display: flex;
+  justify-content: center;
+}
+
+.DismissIcon {
+  margin: auto;
+  width: 70%;
+  height: 70%;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 3px;
+}
+
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.ModalMain {
+  position: fixed;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.ModalMainInner {
+  position: relative;
+}
+
+.TableContainer {
+  margin-bottom: 1rem;
+}
+
+.TableContainer td span {
+  color: #212529;
+}
+
+.TableContainer .table {
+  border-collapse: collapse;
+}
+
+.TableContainer td,
+.TableContainer th {
+  padding: 12px 7px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.TableContainer th {
+  color: #412dc4;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.TableContainer td {
+  border-top: 1px solid #dee2e6;
+  box-sizing: border-box;
+}
+
+.Table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.AddLink {
+  font-size: 16px;
+  margin: 20px;
+  float: right;
+  display: inline-block;
+}
+
+.EditLink {
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.inline-actions-container {
+  min-width: 100px;
+}
+
+.inline-actions-container .btn-sm {
+  font-size: 0.8571em;
+  border-radius: 3px;
+  padding: 5px 15px;
+  margin-right: 4px;
+}
+
+.Card {
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0;
+  -webkit-transition: transform 0.3s cubic-bezier(0.34, 2, 0.6, 1),
+    box-shadow 0.2s ease;
+  -webkit-transition: box-shadow 0.2s ease,
+    -webkit-transform 0.3s cubic-bezier(0.34, 2, 0.6, 1);
+  transition: box-shadow 0.2s ease,
+    -webkit-transform 0.3s cubic-bezier(0.34, 2, 0.6, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 2, 0.6, 1), box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 2, 0.6, 1), box-shadow 0.2s ease,
+    -webkit-transform 0.3s cubic-bezier(0.34, 2, 0.6, 1);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  padding: 20px 30px;
+}
+
+.ArrayTableCell {
+  font-size: 0.85em;
+}
+
+.PaginationDetails {
+  /* text-align: center; */
+  margin: auto;
+  width: 28%;
+  padding: 5px;
+}
+
+.Pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.PaginationButton {
+  border: none;
+  width: 50px;
+  height: 30px;
+}
+
+.TypeaheadComponent {
+  display: inline-block;
+}
+
+.TypeaheadComponent .FormSelectionField {
+  padding-left: 20px;
+  width: auto;
+  padding-bottom: 3px;
+  vertical-align: top;
+}
+
+.TypeaheadResultsContainer {
+  position: absolute;
+  min-width: 300px;
+  margin-left: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  color: #252422;
+  z-index: 3;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.TypeaheadResultsList {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.TypeaheadResultsList li:hover {
+  background-color: #d9e8fc;
+  cursor: pointer;
+}
+
+.TypeaheadResultsList img {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  margin: 0px 10px;
+  object-fit: cover;
+}
+
+.TypeaheadResultsList p {
+  line-height: 40px;
+  display: inline-block;
+  margin: 0px;
+}
+
+.ErrorMessage {
+  color: #f2505b;
+  padding-left: 162px;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.FormCard .photo {
+  max-width: 60px;
+  border-radius: 4px;
+  margin: 5px;
+  vertical-align: top;
+}
+
+.FormCard .multimedia {
+  margin: 5px;
+  vertical-align: top;
+  max-width: 150px;
+}
+
+.FormCard .FormActionContainer {
+  margin: 24px;
+}
+
+.FormCard .FormFieldContainer {
+  margin: 16px 24px;
+}
+
+.FormFieldContainer .LockedFieldValue {
+  display: inline-block;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.FormCard .FormTextField,
+.FormCard .FormTextareaField,
+.FormCard .react-datepicker__input-container input,
+.FormCard .FormFieldContainer .geosuggest__input {
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: left;
+  color: rgb(60, 66, 87);
+  text-decoration: none;
+  border-radius: 4px;
+  border: 0px;
+  padding: 5px 20px;
+  min-width: 250px;
+
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #66615b;
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  box-shadow: none;
+}
+
+.FormCard .FormTextField,
+.FormCard .FormArrayField,
+.FormCard .colorField,
+.FormCard .FormTextareaField,
+.FormFieldContainer .photo,
+.FormCard .FormFieldContainer .geosuggest,
+.FormCard .react-datepicker__input-container input,
+.FormCard .FormFileField,
+.toggleSwitch {
+  margin-left: 20px;
+}
+
+.FormCard .SelectComponent {
+  vertical-align: top;
+}
+
+.FormCard .FormFieldContainer .card-calendar-input,
+.FormCard .FormArrayField,
+.FormCard .colorField,
+.FormCard .FormFieldContainer .geosuggest,
+.toggleSwitch {
+  display: inline-block;
+}
+
+.FormCard .PrimaryButton {
+  margin-left: 120px;
+  padding: 12px 130px;
+  background-color: #6546d7;
+  border-radius: 4px;
+  font-size: 14px;
+  font-stretch: 100%;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Helvetica Neue', 'Ubuntu', sans-serif;
+  color: #f4f3ef;
+  cursor: pointer;
+  border: 0px;
+}
+
+.FormCard .FormArrayField {
+  vertical-align: top;
+  position: relative;
+}
+
+.FormCard .FormTextareaField {
+  font-size: 15px;
+  resize: none;
+  width: 60%;
+  white-space: normal;
+  height: 120px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+  .FormLabelStyling {
+  color: #1a1f36;
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #9a9a9a;
+  padding: 10px 5px 0 15px;
+  text-align: right;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+.FormCard .FormLabel {
+  margin: 8px 1px;
+  color: #1a1f36;
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #9a9a9a;
+  padding: 10px 5px 0 15px;
+  text-align: right;
+  max-width: 180px;
+  line-height: 1.5;
+  min-width: 120px;
+  display: inline-block;
+}
+
+@media (min-width: 576px) {
+  .FormCard .FormLabel {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+  }
+}
+
+.FormEditorContainer {
+  background-color: #f7fafc !important;
+  padding: 32px 16px !important;
+}
+
+.navUserBox {
+  background-color: rgba(200, 200, 202, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  margin-left: auto;
+  margin-right: 16px; 
+  font-weight: bold;
+  color: var(--primary-text-color)
+}
+  
+.navUserBox:hover {
+    background-color: #412dc4;
+    color: white;
+}
+  
+.navUserBox i {
+  font-size: 24px;
+  margin-left: 8px;
+}
+  
+.profileExpandedMenu {
+  position: absolute;
+  top: 50px;
+  right: 18px;
+  width: 256px;
+  z-index: 999;
+  background-color: white;
+  border: 1px solid rgba(153, 153, 153, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);
+}
+
+.profileExpandedMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profileExpandedMenu li {
+  font-weight: bold;
+  padding: 16px 24px;
+  border-radius: 12px;
+  color: var(--primary-text-color)
+}
+
+.profileExpandedMenu li:hover {
+  background-color: #412dc4;
+  color: white;
+  cursor: pointer;
+}
+
+.authLinksContainer {
+  display: flex;
+  align-items: center;
+}
+
+.signupButton {
+  margin-right: 16px;
+  padding: 8px 16px;
+  background-color: #412dc4;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.signupButton:hover {
+  color: white;
+}
+
+.loginButton {
+  font-weight: 600;
+}

@@ -1,5 +1,5 @@
-import Image from "next/image";
+import { AdminAppContainer } from "../../admin/screens/AdminAppContainer";
 
 export default function Home() {
-  return <main>sex</main>;
+  return <AdminAppContainer />;
 }

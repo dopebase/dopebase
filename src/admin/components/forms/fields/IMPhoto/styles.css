@@ -1,0 +1,22 @@
+.PhotoContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.Openable {
+  cursor: pointer;
+}
+
+.PhotoDismissContainer {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.PhotoFullscreen {
+  margin: 0px auto;
+  max-width: 100%;
+  max-height: 100%;
+  max-width: 400px;
+  max-height: 900px;
+}

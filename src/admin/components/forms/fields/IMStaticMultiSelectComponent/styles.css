@@ -1,0 +1,10 @@
+.SelectComponent {
+  min-height: 150px !important;
+  min-width: 292px !important;
+}
+
+.SelectOption {
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 1px 0px;
+}

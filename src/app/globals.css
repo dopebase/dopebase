@@ -1,14 +1,21 @@
 :root {
   --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+  --primary-font: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --primary-foreground-color: #412dc4;
+  --primary-background-color: #ffffff;
+  --primary-link-color: #412dc4;
+  --primary-text-color: #333;
+  --secondary-text-color: rgba(109, 114, 128, 0.9);
+  --hairline-color: #aaa;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
+
+  --border-radius: 12px;
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
     #16abff33 0deg,
@@ -96,8 +103,17 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--primary-link-color);
   text-decoration: none;
+  cursor: pointer;
+}
+
+p {
+  color: var(--primary-text-color)
+}
+
+a:hover {
+  color: var(--primary-text-color)
 }
 
 @media (prefers-color-scheme: dark) {
