@@ -1,78 +1,78 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import Link from "next/link";
-import useCurrentUser from "../../modules/auth/hooks/useCurrentUser";
-import styles from "../themes/admin.module.css";
+import React, { useState } from 'react'
+import Link from 'next/link'
+import useCurrentUser from '../../modules/auth/hooks/useCurrentUser'
+import styles from '../themes/admin.module.css'
 
 const adminMenuItems = [
   {
-    title: "Dashboard",
-    path: "",
+    title: 'Dashboard',
+    path: '',
     subItems: [],
-    icon: "bar-chart-o",
+    icon: 'bar-chart-o',
   },
   {
-    title: "Settings",
-    path: "settings",
-    icon: "dollar",
+    title: 'System',
+    path: 'system',
+    icon: 'dollar',
     subItems: [
-      { title: "Themes", path: "themes" },
-      { title: "Extensions", path: "extensions" },
       {
-        title: "General",
-        path: "general",
+        title: 'Settings',
+        path: 'settings',
       },
+      { title: 'Themes', path: 'themes' },
+      { title: 'Plugins', path: 'plugins' },
     ],
   },
   {
-    title: "Users",
-    path: "users",
-    icon: "user",
+    title: 'Users',
+    path: 'users',
+    icon: 'user',
   },
   {
-    title: "Articles",
-    path: "articles",
+    title: 'Articles',
+    path: 'articles',
     subItems: [
-      { title: "Articles", path: "articles" },
-      { title: "Categories", path: "categories" },
-      { title: "Tags", path: "articleTags" },
+      { title: 'Articles', path: 'articles' },
+      { title: 'Categories', path: 'categories' },
+      { title: 'Tags', path: 'articleTags' },
     ],
-    icon: "font",
+    icon: 'font',
   },
   {
-    title: "E-mails",
-    path: "emails",
+    title: 'E-mails',
+    path: 'emails',
     subItems: [
-      { title: "Subscribers", path: "emailSubscribers" },
-      { title: "Campaigns", path: "emailCampaigns" },
-      { title: "Newsletters", path: "newsletters" },
-      { title: "Job Queue", path: "jobs" },
-      { title: "Settings", path: "emailSettings" },
-      { title: "Subscriber Tags", path: "emailSubscriberTags" },
-      { title: "Stats", path: "emails" },
+      { title: 'Subscribers', path: 'emailSubscribers' },
+      { title: 'Campaigns', path: 'emailCampaigns' },
+      { title: 'Newsletters', path: 'newsletters' },
+      { title: 'Job Queue', path: 'jobs' },
+      { title: 'Settings', path: 'emailSettings' },
+      { title: 'Subscriber Tags', path: 'emailSubscriberTags' },
+      { title: 'Stats', path: 'emails' },
     ],
-    icon: "envelope-o",
+    icon: 'envelope-o',
   },
   {
-    title: "My Account",
-    path: "settings/profile",
+    title: 'My Account',
+    path: 'settings/profile',
     subItems: [],
-    icon: "user-circle",
+    icon: 'user-circle',
   },
   {
-    title: "Logout",
-    path: "../logout",
+    title: 'Logout',
+    path: '../logout',
     subItems: [],
-    icon: "sign-out",
+    icon: 'sign-out',
   },
-];
+]
 
 const AdminMenu: React.FC = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedSubindex, setSelectedSubindex] = useState(0);
-  const [user, , loading] = useCurrentUser();
-  const menuItems = user?.role === "admin" ? adminMenuItems : [];
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedSubindex, setSelectedSubindex] = useState(0)
+  const [user, , loading] = useCurrentUser()
+  const menuItems = user?.role === 'admin' ? adminMenuItems : []
 
   const onSelect = (index, subindex) => {
     // const item = menuItems[index]
@@ -82,9 +82,9 @@ const AdminMenu: React.FC = () => {
 
     //   }
     // }
-    setSelectedIndex(index);
-    setSelectedSubindex(subindex);
-  };
+    setSelectedIndex(index)
+    setSelectedSubindex(subindex)
+  }
   return (
     <div className={styles.MenuContainer}>
       <div className={styles.MenuBody}>
@@ -96,16 +96,14 @@ const AdminMenu: React.FC = () => {
                 className={
                   index === selectedIndex && menuItem.subItems?.length === 0
                     ? styles.selected
-                    : ""
-                }
-              >
+                    : ''
+                }>
                 {menuItem.subItems?.length === 0 ? (
                   <Link href={`/admin/${menuItem.path}`}>
                     <p
                       onClick={() => onSelect(index, -1)}
                       data-toggle={styles.collapse}
-                      aria-expanded="false"
-                    >
+                      aria-expanded="false">
                       <i className={`fa fa-${menuItem.icon}`} />
                       {menuItem.title}
                       <b className="caret" />
@@ -116,8 +114,7 @@ const AdminMenu: React.FC = () => {
                     <p
                       onClick={() => onSelect(index, -1)}
                       data-toggle={styles.collapse}
-                      aria-expanded="false"
-                    >
+                      aria-expanded="false">
                       <i className={`fa fa-${menuItem.icon}`} />
                       {menuItem.title}
                       <b className="caret" />
@@ -130,17 +127,14 @@ const AdminMenu: React.FC = () => {
                             className={
                               index === selectedIndex &&
                               subindex === selectedSubindex
-                                ? "selected"
-                                : ""
-                            }
-                          >
+                                ? 'selected'
+                                : ''
+                            }>
                             <Link
-                              href={`/admin/${menuItem.path}/${subitem.path}`}
-                            >
+                              href={`/admin/${menuItem.path}/${subitem.path}`}>
                               <p
                                 className={styles.sidebarNormal}
-                                onClick={() => onSelect(index, subindex)}
-                              >
+                                onClick={() => onSelect(index, subindex)}>
                                 {subitem.title}
                               </p>
                             </Link>
@@ -156,7 +150,7 @@ const AdminMenu: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminMenu;
+export default AdminMenu

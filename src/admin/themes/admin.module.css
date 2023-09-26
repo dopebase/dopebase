@@ -74,7 +74,8 @@
   float: right;
   width: calc(100% - 300px);
   margin-left: 300px;
-  background-color: #fff;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color);
 }
 
 .MenuItemsList {
@@ -604,7 +605,7 @@ ul.ArrayTableCell li span {
   font-weight: bold;
   padding: 16px 24px;
   border-radius: 12px;
-  color: var(--primary-text-color)
+  color: var(--primary-link-color)
 }
 
 .profileExpandedMenu li:hover {

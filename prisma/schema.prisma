@@ -200,3 +200,14 @@ model Settings {
 
   @@map("settings")
 }
+
+// Plugins
+model Plugin {
+  id        String  @id @default(uuid())
+  name      String? @unique
+  installed Boolean
+  createdAt String? @map("created_at")
+  updatedAt String? @map("updated_at")
+
+  @@map("plugins")
+}
