@@ -2,7 +2,7 @@ import { getUserByID } from '../../core/db/users'
 
 const jwt = require('jsonwebtoken')
 
-export const getCurrentUser = async cookieStore => {
+export const getCurrentUserByCookies = async cookieStore => {
   const tokenObj = cookieStore.get('dopebase.session-token')
   const token = tokenObj?.value
   console.log(token)

@@ -19,3 +19,42 @@ export const insertPluginToDB = async metadata => {
   })
   return plugins
 }
+
+export const retrievePlugin = async id => {
+  const plugin = await prisma.plugin.findUnique({
+    where: {
+      id,
+    },
+  })
+  return plugin
+}
+
+export const markAsInstalled = async id => {
+  const dateStr = Math.floor(new Date().getTime() / 1000).toString()
+
+  const plugin = await prisma.plugin.update({
+    where: {
+      id,
+    },
+    data: {
+      installed: true,
+      updatedAt: dateStr,
+    },
+  })
+  return plugin
+}
+
+export const markAsUninstalled = async id => {
+  const dateStr = Math.floor(new Date().getTime() / 1000).toString()
+
+  const plugin = await prisma.plugin.update({
+    where: {
+      id,
+    },
+    data: {
+      installed: false,
+      updatedAt: dateStr,
+    },
+  })
+  return plugin
+}

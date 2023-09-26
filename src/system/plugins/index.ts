@@ -48,17 +48,22 @@ export const getAllPluginsAndUpdateIfNeeded = async () => {
       const storedPlugin = storedPlugins.find(
         plugin => plugin.id === metadata.id,
       )
-      const { installed = false } = storedPlugin ?? {}
       if (!storedPlugin) {
         // insert the plugin into the database
         await insertPluginToDB(metadata)
       }
+
+      const { installed = false, createdAt, updatedAt } = storedPlugin ?? {}
       return {
         ...metadata,
-        installed: installed,
+        createdAt,
+        updatedAt,
+        installed,
       }
     }),
   )
 
   return plugins
 }
+
+export { installPlugin } from './install'

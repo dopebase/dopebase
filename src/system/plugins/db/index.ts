@@ -1,2 +1,8 @@
 // Prisma database
-export { getStoredPlugins, insertPluginToDB } from './prismaDB'
+export {
+  getStoredPlugins,
+  insertPluginToDB,
+  markAsInstalled,
+  markAsUninstalled,
+  retrievePlugin,
+} from './prismaDB'
