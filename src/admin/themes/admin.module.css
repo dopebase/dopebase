@@ -301,11 +301,11 @@ ul.ArrayTableCell li span {
   font-size: 20px;
 }
 
-.inline-actions-container {
+.inlineActionsContainer {
   min-width: 100px;
 }
 
-.inline-actions-container .btn-sm {
+.inlineActionsContainer .btnSm {
   font-size: 0.8571em;
   border-radius: 3px;
   padding: 5px 15px;

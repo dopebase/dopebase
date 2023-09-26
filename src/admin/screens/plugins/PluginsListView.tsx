@@ -7,6 +7,7 @@ import { useTable, usePagination, useGlobalFilter } from 'react-table'
 import useCurrentUser from '../../../modules/auth/hooks/useCurrentUser'
 import { authFetch } from '../../../modules/auth/utils/authFetch'
 import { websiteURL } from '../../../config/config'
+import styles from '../../themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
 const pluginsColumns = [
@@ -40,9 +41,10 @@ const pluginsColumns = [
 
 function ActionsItemView(props) {
   const { data } = props
+  const item = data.row.original
   const router = useRouter()
 
-  const handleView = item => {
+  const handleInstall = item => {
     const viewPath = websiteURL + item.slug
     const win = window.open(viewPath, '_blank')
     if (win != null) {
@@ -50,12 +52,7 @@ function ActionsItemView(props) {
     }
   }
 
-  const handleEdit = item => {
-    const editPath = './plugins/update/' + item.id
-    router.push(editPath)
-  }
-
-  const handleDelete = async item => {
+  const handleUninstall = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       const response = await fetch(
         `${websiteURL}system/plugins/delete?id=${item.id}`,
@@ -67,29 +64,28 @@ function ActionsItemView(props) {
     }
   }
 
+  console.log(data)
+
   return (
-    <div className="inline-actions-container">
-      <button
-        onClick={() => handleView(data.row.original)}
-        type="button"
-        id="tooltip264453216"
-        className="btn-icon btn btn-info btn-sm">
-        <i className="fa fa-eye"></i>
-      </button>
-      <button
-        onClick={() => handleEdit(data.row.original)}
-        type="button"
-        id="tooltip366246651"
-        className="btn-icon btn btn-success btn-sm">
-        <i className="fa fa-edit"></i>
-      </button>
-      <button
-        onClick={() => handleDelete(data.row.original)}
-        type="button"
-        id="tooltip476609793"
-        className="btn-icon btn btn-danger btn-sm">
-        <i className="fa fa-times"></i>
-      </button>
+    <div className={styles.inlineActionsContainer}>
+      {item.installed === true && (
+        <button
+          onClick={() => handleInstall(data.row.original)}
+          type="button"
+          id="tooltip264453216"
+          className="btn-icon btn btn-info btn-sm">
+          <i className="fa fa-setuo"></i>Uninstall
+        </button>
+      )}
+      {item.installed === false && (
+        <button
+          onClick={() => handleUninstall(data.row.original)}
+          type="button"
+          id="tooltip366246651"
+          className="btn-icon btn btn-success btn-sm">
+          <i className="fa fa-edit">Install</i>
+        </button>
+      )}
     </div>
   )
 }
@@ -163,20 +159,17 @@ export const PluginsListView = props => {
           <div className="col col-md-12">
             <div className="Card">
               <div className="CardHeader">
-                <a className="Link AddLink" href="./plugins/add">
-                  Add New
-                </a>
                 <h4>Plugins</h4>
               </div>
-              <div className="CardBody">
-                <div className="TableContainer">
+              <div className={styles.CardBody}>
+                <div className={styles.TableContainer}>
                   <input
                     type="text"
                     placeholder="Search..."
                     value={globalFilter || ''}
                     onChange={e => setGlobalFilter(e.target.value)}
                   />
-                  <table className="Table" {...getTableProps()}>
+                  <table className={styles.Table} {...getTableProps()}>
                     <thead>
                       {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -210,7 +203,7 @@ export const PluginsListView = props => {
                           </td>
                         ) : (
                           <td colSpan={columns.length - 1}>
-                            <p className="PaginationDetails">
+                            <p className={styles.PaginationDetails}>
                               Showing {page.length} of {data.length} results
                             </p>
                           </td>
@@ -218,22 +211,22 @@ export const PluginsListView = props => {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="Pagination">
-                    <div className="LeftPaginationButtons">
+                  <div className={styles.Pagination}>
+                    <div className={styles.LeftPaginationButtons}>
                       <button
                         onClick={() => gotoPage(0)}
-                        className="PaginationButton"
+                        className={styles.PaginationButton}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-double-left"></i>
                       </button>{' '}
                       <button
                         onClick={() => previousPage()}
-                        className="PaginationButton"
+                        className={styles.PaginationButton}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-left"></i>
                       </button>
                     </div>
-                    <div className="CenterPaginationButtons">
+                    <div className={styles.CenterPaginationButtons}>
                       <span>
                         Page{' '}
                         <strong>
@@ -266,16 +259,16 @@ export const PluginsListView = props => {
                         ))}
                       </select>
                     </div>
-                    <div className="RightPaginationButtons">
+                    <div className={styles.RightPaginationButtons}>
                       <button
                         onClick={() => nextPage()}
-                        className="PaginationButton"
+                        className={styles.PaginationButton}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-right"></i>
                       </button>{' '}
                       <button
                         onClick={() => gotoPage(pageCount - 1)}
-                        className="PaginationButton"
+                        className={styles.PaginationButton}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-double-right"></i>
                       </button>
