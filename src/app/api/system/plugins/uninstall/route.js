@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { installPlugin } from '../../../../../system/plugins'
+import { uninstallPlugin } from '../../../../../system/plugins'
 import { isAdminAuthenticated } from '../../../../../admin/utils/isAdminAuthenticated'
 
 export async function POST(req) {
@@ -13,7 +13,7 @@ export async function POST(req) {
   const url = new URL(req.url)
   const id = url.searchParams.get('id')
 
-  const success = await installPlugin(id)
+  const success = await uninstallPlugin(id)
 
   return res.json(
     {

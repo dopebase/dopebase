@@ -1,7 +1,12 @@
 /* Admin Dashboard */
 
+.admin {
+  background-color: var(--primary-background-color);
+}
+
 .adminContent {
     padding-top: 70px;
+    background-color: var(--primary-background-color);
   }
 .adminNavbar {
   position: fixed;
@@ -31,6 +36,7 @@
   left: 0;
   z-index: 998;
   padding-top: 6rem;
+  background-color: var(--primary-background-color);
 }
 
 .MainMenu:before,
@@ -43,10 +49,11 @@
   top: 0;
   left: 0;
   display: block;
+  background-color: var(--primary-background-color);
 }
   
 .MainMenu:after {
-  background-color: white;
+  background-color: var(--primary-background-color);
   border-right: 1px solid rgba(153, 153, 153, 0.2);
   /* background: #66615b;
   background: -webkit-gradient(
@@ -66,6 +73,7 @@
   overflow: auto;
   z-index: 4;
   padding-bottom: 100px;
+  background-color: var(--primary-background-color);
 }
 
 .MainPanel {
@@ -91,7 +99,7 @@
   font-size: 0.8rem;
 }
 
-.MenuItemsList li > p {
+.MenuItemsList li p {
   margin: 0px 15px 0;
   display: flex;
   align-items: center;
@@ -119,7 +127,7 @@
   background-color: rgba(65, 45, 196, 0.1);
 }
 .MenuItemsList li.selected {
-  background-color: #412dc4;
+  background-color: var(--primary-foreground-color);
   color: white;
 }
 
@@ -315,7 +323,7 @@ ul.ArrayTableCell li span {
 .Card {
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: var(--primary-background-color);
   color: #252422;
   margin-bottom: 20px;
   position: relative;
@@ -375,7 +383,7 @@ ul.ArrayTableCell li span {
   margin-left: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+  background-color: var(--primary-background-color);
   color: #252422;
   z-index: 3;
   max-height: 200px;
@@ -456,7 +464,7 @@ ul.ArrayTableCell li span {
   padding: 5px 20px;
   min-width: 250px;
 
-  background-color: #fff;
+  background-color: var(--primary-background-color);
   border: 1px solid #ddd;
   border-radius: 4px;
   color: #66615b;
@@ -589,7 +597,7 @@ ul.ArrayTableCell li span {
   right: 18px;
   width: 256px;
   z-index: 999;
-  background-color: white;
+  background-color: var(--primary-background-color);
   border: 1px solid rgba(153, 153, 153, 0.2);
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);

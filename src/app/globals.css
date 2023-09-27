@@ -49,6 +49,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --primary-foreground-color: #412dc4;
+    --primary-background-color: rgb(17, 24, 39);
+    --primary-link-color: #412dc4;
+    --primary-text-color: rgb(156, 163, 175);
+    --secondary-text-color: rgb(156, 163, 175);
+    --hairline-color: #555;
+
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;

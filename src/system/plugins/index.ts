@@ -66,4 +66,4 @@ export const getAllPluginsAndUpdateIfNeeded = async () => {
   return plugins
 }
 
-export { installPlugin } from './install'
+export { installPlugin, uninstallPlugin } from './install'

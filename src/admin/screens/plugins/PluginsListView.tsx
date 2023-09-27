@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { IMDateTableCell } from '../../components/forms/table/IMDateTableCell'
 import { useTable, usePagination, useGlobalFilter } from 'react-table'
 import useCurrentUser from '../../../modules/auth/hooks/useCurrentUser'
-import { authFetch } from '../../../modules/auth/utils/authFetch'
+import { authFetch, authPost } from '../../../modules/auth/utils/authFetch'
 import { websiteURL } from '../../../config/config'
 import styles from '../../themes/admin.module.css'
 /* Insert extra imports for table cells here */
@@ -44,21 +44,18 @@ function ActionsItemView(props) {
   const item = data.row.original
   const router = useRouter()
 
-  const handleInstall = item => {
-    const viewPath = websiteURL + item.slug
-    const win = window.open(viewPath, '_blank')
-    if (win != null) {
-      win.focus()
-    }
+  const handleInstall = async item => {
+    const response = await authPost(
+      `${websiteURL}api/system/plugins/install?id=${item.id}`,
+    )
+    console.log(response)
+    window.location.reload(false)
   }
 
   const handleUninstall = async item => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      const response = await fetch(
-        `${websiteURL}system/plugins/delete?id=${item.id}`,
-        {
-          method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-        },
+    if (window.confirm('Are you sure you want to uninstall this plugin?')) {
+      const response = await authPost(
+        `${websiteURL}api/system/plugins/uninstall?id=${item.id}`,
       )
       window.location.reload(false)
     }
@@ -70,7 +67,7 @@ function ActionsItemView(props) {
     <div className={styles.inlineActionsContainer}>
       {item.installed === true && (
         <button
-          onClick={() => handleInstall(data.row.original)}
+          onClick={() => handleUninstall(data.row.original)}
           type="button"
           id="tooltip264453216"
           className="btn-icon btn btn-info btn-sm">
@@ -79,7 +76,7 @@ function ActionsItemView(props) {
       )}
       {item.installed === false && (
         <button
-          onClick={() => handleUninstall(data.row.original)}
+          onClick={() => handleInstall(data.row.original)}
           type="button"
           id="tooltip366246651"
           className="btn-icon btn btn-success btn-sm">
