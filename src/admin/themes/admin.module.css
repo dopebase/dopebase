@@ -287,7 +287,7 @@ ul.ArrayTableCell li span {
 }
 
 .TableContainer td {
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--hairline-color);
   box-sizing: border-box;
 }
 

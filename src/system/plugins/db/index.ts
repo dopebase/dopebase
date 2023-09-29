@@ -1,5 +1,6 @@
 // Prisma database
 export {
+  isInstalled,
   getStoredPlugins,
   insertPluginToDB,
   markAsInstalled,

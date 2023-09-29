@@ -1,5 +1,5 @@
 export const metadata = {
-  id: 'blog-core',
+  id: 'blog',
   name: 'Blog',
   description: 'Blog plugin for CMS with AI features',
   version: '1.0',

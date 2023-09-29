@@ -14,7 +14,11 @@ Anatomy of a plugin:
 
 */
 
-import { insertPluginToDB, getStoredPlugins } from './db'
+import {
+  insertPluginToDB,
+  getStoredPlugins,
+  isInstalled as isInstalledDB,
+} from './db'
 
 export const getAllPluginsAndUpdateIfNeeded = async () => {
   const storedPlugins = await getStoredPlugins()
@@ -67,3 +71,7 @@ export const getAllPluginsAndUpdateIfNeeded = async () => {
 }
 
 export { installPlugin, uninstallPlugin } from './install'
+
+export const isInstalled = async id => {
+  return await isInstalledDB(id)
+}

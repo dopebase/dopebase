@@ -58,3 +58,12 @@ export const markAsUninstalled = async id => {
   })
   return plugin
 }
+
+export const isInstalled = async id => {
+  const plugin = await prisma.plugin.findUnique({
+    where: {
+      id,
+    },
+  })
+  return plugin?.installed ?? false
+}
