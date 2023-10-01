@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { apiURL } from '../../../../../config'
-import useCurrentUser from '../../../../../hooks/useCurrentUser'
 
-const baseAPIURL = `${apiURL}admin/`
+import { pluginsAPIURL } from '../../../../../config/config'
+import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
+const baseAPIURL = pluginsAPIURL
 
 function IMTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)

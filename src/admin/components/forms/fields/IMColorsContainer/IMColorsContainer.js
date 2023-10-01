@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMColorBoxComponent } from '../../../IMComponents'
+import IMColorBoxComponent from '../IMColorBoxComponent/IMColorBoxComponent'
 
 function IMColorsContainer(props) {
   const { data, handleDelete } = props

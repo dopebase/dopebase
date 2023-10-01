@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { IMModal, IMDismissButton } from '../..'
+import IMModal from '../IMModal/IMModal'
+import IMDismissButton from '../IMDismissButton/IMDismissButton'
 
 function parseType(text) {
   if (text.includes('.mp4') || text.includes('.mov')) {

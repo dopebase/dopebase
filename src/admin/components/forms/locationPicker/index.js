@@ -1,1 +1,1 @@
-export { default as IMLocationPicker } from './IMLocationPicker'
+export { default as LocationPicker } from './LocationPicker'

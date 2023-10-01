@@ -7,7 +7,7 @@ function IMToggleSwitchComponent(props) {
   return (
     <div className="toggleSwitch">
       <Switch
-        checked={isChecked}
+        checked={isChecked ?? false}
         onChange={onSwitchChange}
         disabled={disabled}
         onColor="#86d3ff"

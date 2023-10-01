@@ -1,14 +1,14 @@
-import React from "react";
-import Geosuggest from "react-geosuggest";
+import React from 'react'
+import Geosuggest from 'react-geosuggest'
 
 /* Default position */
 const defaultPosition = {
   lat: 37.77,
   lng: -122.41,
-};
+}
 
-function IMLocationPicker(props) {
-  const { onLocationChange, initialValue } = props;
+function LocationPicker(props) {
+  const { onLocationChange, initialValue } = props
 
   return (
     <Geosuggest
@@ -18,7 +18,7 @@ function IMLocationPicker(props) {
       initialValue={initialValue}
       onSuggestSelect={onLocationChange}
     />
-  );
+  )
 }
 
-export default IMLocationPicker;
+export default LocationPicker

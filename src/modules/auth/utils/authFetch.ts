@@ -15,12 +15,14 @@ export const authFetch = async (url: string, options: any = {}) => {
   })
 }
 
-export const authPost = async (url: string, options: any = {}) => {
+export const authPost = async (
+  url: string,
+  body: any = {},
+  options: any = {},
+) => {
   const token = await getToken()
-  return axios({
-    url,
+  return axios.post(url, body, {
     ...options,
-    method: 'POST',
     headers: {
       ...options.headers,
       Authorization: token,

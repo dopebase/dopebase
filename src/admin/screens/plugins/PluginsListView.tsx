@@ -151,7 +151,7 @@ export const PluginsListView = props => {
 
   return (
     <>
-      <div className="content">
+      <div className={`content ${styles.content}`}>
         <div className="row">
           <div className="col col-md-12">
             <div className="Card">

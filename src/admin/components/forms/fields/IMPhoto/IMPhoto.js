@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { IMModal, IMDismissButton } from '../..'
+import IMModal from '../IMModal/IMModal'
+import IMDismissButton from '../IMDismissButton/IMDismissButton'
 
 function IMPhoto(props) {
   const { src, onDelete, className, openable, dismissable } = props

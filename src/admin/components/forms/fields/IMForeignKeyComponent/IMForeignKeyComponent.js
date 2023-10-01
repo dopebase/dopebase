@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { apiURL } from '../../../../../config'
+import { pluginsAPIURL } from '../../../../../config/config'
 
-const baseAPIURL = `${apiURL}admin/`
+const baseAPIURL = `${pluginsAPIURL}`
 
 function IMForeignKeyComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
