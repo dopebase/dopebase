@@ -168,6 +168,7 @@ model ArticleCategory {
   imageURL       String? @map("image_url")
   published      Boolean @default(false)
   createdAt      String? @map("created_at")
+  updatedAt      String? @map("updated_at")
   parentId       String? @map("parent_id")
   seoTitle       String? @map("seo_title")
   seoDescription String? @map("seo_description")

@@ -3,7 +3,7 @@ import { isInstalled } from '../../../../../system/plugins'
 import { isAdminAuthenticated } from '../../../../../admin/utils/isAdminAuthenticated'
 
 export async function GET(req) {
-  console.log('GET /api/plugins/test')
+  console.log('GET /api/plugins/admin/[...route]/route.ts')
   const res = NextResponse
   // const { route } = req.query
   const url = new URL(req.url)
@@ -14,10 +14,11 @@ export async function GET(req) {
   const pathItems = url.pathname.split('/')
 
   // First path item is always the identifier of the plugin
-  if (pathItems?.length < 4) {
+  if (pathItems?.length < 5) {
     return res.json({ error: 'Invalid route' }, { status: 400 })
   }
-  const pluginID = pathItems[3]
+  const pluginID = pathItems[4]
+  console.log('pluginID', pluginID)
   const installed = await isInstalled(pluginID)
   if (!installed) {
     return res.json({ error: 'Plugin not installed' }, { status: 400 })
@@ -26,7 +27,7 @@ export async function GET(req) {
   // Find the plugin by the route
   const file = await import(
     `./../../../../../plugins` +
-      `/${pluginID}/admin/api/${pathItems.slice(4).join('/')}`
+      `/${pluginID}/admin/api/${pathItems.slice(5).join('/')}`
   )
   const { GET } = file
   return await GET(req)

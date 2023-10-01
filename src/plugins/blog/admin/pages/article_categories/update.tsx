@@ -36,7 +36,7 @@ const CodeMirror = dynamic(
 )
 
 /* Insert extra imports here */
-import IMParentArticleCategoryTypeaheadComponent from '../../../ui/IMParentArticleCategoryTypeaheadComponent.js'
+// import IMParentArticleCategoryTypeaheadComponent from '../../../ui/IMParentArticleCategoryTypeaheadComponent.js'
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -581,11 +581,11 @@ const UpdateCategoryView = props => {
 
               <div className="FormFieldContainer">
                 <label className="FormLabel">Parent Category</label>
-                <IMParentArticleCategoryTypeaheadComponent
+                {/* <IMParentArticleCategoryTypeaheadComponent
                   onSelect={value => onTypeaheadSelect(value, 'parent_id')}
                   id={originalData && originalData.parent_id}
                   name={originalData && originalData.parent_id}
-                />
+                /> */}
               </div>
 
               <div className="FormActionContainer">

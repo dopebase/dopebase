@@ -2,7 +2,7 @@
 'use client'
 import React, { useMemo, useEffect, useState } from 'react'
 import { GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useTable, usePagination } from 'react-table'
 import {
   IMLocationTableCell,
@@ -21,12 +21,13 @@ import {
   IMModal,
   IMToggleSwitchComponent,
 } from '../../../../../admin/components/forms/fields'
-import useCurrentUser from '../../../../hooks/useCurrentUser'
 import { pluginsAPIURL } from '../../../../../config/config'
+import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
 
 /* Insert extra imports for table cells here */
 
-const baseAPIURL = `${pluginsAPIURL}artciles`
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
@@ -57,7 +58,7 @@ const categoriesColumns = [
     Cell: data => (
       <IMForeignKeyTableCell
         id={data.value}
-        apiRouteName="articles/categories"
+        apiRouteName="admin/blog/article_categories/view"
         titleKey="name"
       />
     ),
@@ -75,23 +76,19 @@ function ActionsItemView(props) {
   const router = useRouter()
 
   const handleView = item => {
-    const viewPath = './categories/' + item.id
+    const viewPath = './article_categories/view?id=' + item.id
     router.push(viewPath)
   }
 
   const handleEdit = item => {
-    const editPath = './categories/update/' + item.id
+    const editPath = './article_categories/update?id=' + item.id
     router.push(editPath)
   }
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const response = await fetch(
-        baseAPIURL + 'categories/delete/' + item.id,
-        {
-          method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-        },
-      )
+      const path = baseAPIURL + 'article_categories/delete'
+      const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
   }
@@ -124,8 +121,6 @@ function ActionsItemView(props) {
 }
 
 function ArticleTagCategoriesListView(props) {
-  const listName = 'categories'
-
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
   const [categories, setArticleTagCategories] = useState([])
@@ -175,12 +170,15 @@ function ArticleTagCategoriesListView(props) {
     setIsLoading(true)
 
     fetch(
-      baseAPIURL + listName + (extraQueryParams ? extraQueryParams : ''),
+      baseAPIURL +
+        'article_categories/list' +
+        (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
-        const categories = data.categories
+        console.log(data)
+        const categories = data
         setData(categories)
 
         setIsLoading(false)
@@ -205,7 +203,7 @@ function ArticleTagCategoriesListView(props) {
           <div className="col col-md-12">
             <div className="Card">
               <div className="CardHeader">
-                <a className="Link AddLink" href="./categories/add">
+                <a className="Link AddLink" href="./add">
                   Add New
                 </a>
                 <h4>Article Tag Categories</h4>

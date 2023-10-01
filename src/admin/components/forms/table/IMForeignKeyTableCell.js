@@ -9,8 +9,8 @@ function IMForeignKeyTableCell(props) {
   const { apiRouteName, id, titleKey } = props
 
   useEffect(() => {
-    console.log(baseAPIURL + apiRouteName + '/' + id)
-    fetch(baseAPIURL + apiRouteName + '/' + id)
+    console.log(baseAPIURL + apiRouteName + '?id=' + id)
+    fetch(baseAPIURL + apiRouteName + '?id=' + id)
       .then(response => response.json())
       .catch(err => {
         console.log(err)

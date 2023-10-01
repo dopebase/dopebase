@@ -54,7 +54,6 @@ const AddNewCategoryView = () => {
   }, [])
 
   const createCategory = async (data, setSubmitting) => {
-    console.log(JSON.stringify(data))
     setIsLoading(true)
     const url = `${baseAPIURL}admin/blog/article_categories/add`
     const response = await authPost(

@@ -1,37 +1,37 @@
 // @ts-nocheck
-"use client";
-import { useRouter } from "next/navigation";
-import React, { useState, FunctionComponent, useEffect } from "react";
-import useCurrentUser from "../../../modules/auth/hooks/useCurrentUser";
-import useComponentVisible from "../hooks/useComponentVisible";
-import { websiteURL } from "../../../config/config";
-import styles from "../../themes/admin.module.css";
+'use client'
+import { useRouter } from 'next/navigation'
+import React, { useState, FunctionComponent, useEffect } from 'react'
+import useCurrentUser from '../../../modules/auth/hooks/useCurrentUser'
+import useComponentVisible from '../hooks/useComponentVisible'
+import { websiteURL } from '../../../config/config'
+import styles from '../../themes/admin.module.css'
 
 type ExpandedMenuProps = {
-  isExpanded: boolean;
-  hide: any;
-};
+  isExpanded: boolean
+  hide: any
+}
 const ExpandedMenu: FunctionComponent<ExpandedMenuProps> = ({
   isExpanded,
   hide,
 }) => {
-  const router = useRouter();
+  const router = useRouter()
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(isExpanded);
+    useComponentVisible(isExpanded)
 
   useEffect(() => {
-    setIsComponentVisible(isExpanded);
-  }, [isExpanded, setIsComponentVisible]);
+    setIsComponentVisible(isExpanded)
+  }, [isExpanded, setIsComponentVisible])
 
   useEffect(() => {
     if (isComponentVisible === false) {
-      hide && hide();
+      hide && hide()
     }
-  }, [isComponentVisible]);
+  }, [isComponentVisible])
 
   const logout = () => {
-    router.push("/logout");
-  };
+    router.push('/logout')
+  }
 
   return (
     <>
@@ -43,20 +43,20 @@ const ExpandedMenu: FunctionComponent<ExpandedMenuProps> = ({
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
 const UserProfileMenu: React.FC = () => {
-  const [user, , loading] = useCurrentUser();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [user, , loading] = useCurrentUser()
+  const [isExpanded, setIsExpanded] = useState(false)
   const onClick = () => {
-    setIsExpanded(!isExpanded);
-  };
+    setIsExpanded(!isExpanded)
+  }
 
   const hide = () => {
-    setIsExpanded(false);
-  };
-  console.log(user);
+    setIsExpanded(false)
+  }
+  console.log(user)
   return (
     <>
       {!loading && user && (
@@ -79,7 +79,7 @@ const UserProfileMenu: React.FC = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default UserProfileMenu;
+export default UserProfileMenu

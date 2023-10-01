@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMPhoto } from '../IMComponents'
+import { IMPhoto } from '../fields'
 
 function IMImagesTableCell(props) {
   const { singleImageURL, imageURLs } = props

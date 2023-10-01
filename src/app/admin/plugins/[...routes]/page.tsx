@@ -11,7 +11,7 @@ export default function Page({ params }: { params: { routes: string } }) {
 
   const [component, setComponent] = useState(null)
 
-  // console.log('routes', routes)
+  console.log('routes', routes)
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
   // console.log('search', search)
@@ -35,7 +35,8 @@ export default function Page({ params }: { params: { routes: string } }) {
   const Component = React.lazy(
     () =>
       import(
-        `../../../../plugins/` + `${pluginID}/admin/pages/${routes[1]}/add`
+        `../../../../plugins/` +
+          `${pluginID}/admin/pages/${routes.slice(1).join('/')}`
       ),
   )
 

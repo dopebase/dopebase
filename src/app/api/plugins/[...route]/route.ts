@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server'
 import { isInstalled } from '../../../../system/plugins'
 
 export async function GET(req) {
-  console.log('GET /api/plugins/test')
   const res = NextResponse
   // const { route } = req.query
   const url = new URL(req.url)
+  console.log(`GET ${url}`)
 
   console.log(url.pathname)
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMColorBoxComponent } from '../IMComponents'
+import { IMColorBoxComponent } from '../fields'
 
 function IMColorsTableCell(props) {
   const { data } = props

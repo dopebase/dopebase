@@ -1,5 +1,5 @@
 import React from 'react'
-import { IMMultimediaComponent } from '../IMComponents'
+import { IMMultimediaComponent } from '../fields'
 
 function IMMultimediaTableCell(props) {
   const { singleMultimediaURL, multimediaURLs } = props

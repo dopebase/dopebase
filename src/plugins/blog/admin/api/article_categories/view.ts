@@ -1,10 +1,15 @@
 // import instamobileDB from '../../../db'
 import { NextResponse } from 'next/server'
+import { getOne } from '../../../../../core/db'
 
 export async function GET(req) {
-  const res = NextResponse
-
-  return NextResponse.json({ ok: 'It works2' }, { status: 200 })
+  const url = new URL(req.url)
+  const id = url.searchParams.get('id')
+  const result = await getOne('article_categories', id)
+  if (result) {
+    return NextResponse.json(result, { status: 200 })
+  }
+  return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
 
   // const articles = await instamobileDB.list(
   //   'articles',
