@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 import React, { useEffect, useState } from 'react'
-import { GetServerSideProps } from 'next'
+import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
 import { formatDate } from '../../../../utils'
 import {
@@ -29,30 +29,35 @@ const CodeMirror = dynamic(
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-const baseAPIURL = pluginsAPIURL
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return { props: { isAdminRoute: true, categoryId: params?.id } }
-}
+import { authFetch } from '../../../../../modules/auth/utils/authFetch'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 const DetailedCategoryView = props => {
-  let { categoryId } = props
-
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
   useEffect(() => {
-    fetch(baseAPIURL + 'categories/' + categoryId)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      try {
+        const response = await authFetch(
+          baseAPIURL + 'article_categories/view?id=' + id,
+        )
+        if (response.data) {
+          setOriginalData(response.data)
+        } else {
+          alert('Error fetching data - try refreshing the page')
+        }
+        setIsLoading(false)
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        setOriginalData(data)
-        setIsLoading(false)
-      })
-  }, [categoryId])
+      }
+    }
+    fetchData()
+  }, [id])
 
   if (isLoading || !originalData) {
     return (
@@ -70,7 +75,7 @@ const DetailedCategoryView = props => {
     )
   }
 
-  const editPath = '/admin/articles/categories/update/' + categoryId
+  const editPath = './update?id=' + id
 
   return (
     <div className="Card FormCard">
@@ -91,7 +96,10 @@ const DetailedCategoryView = props => {
         <div className="FormFieldContainer">
           <label className="FormLabel">Description</label>
           <div className="markdownEditorReadOnly FormTextField">
-            <Editor defaultValue={originalData.description} readOnly={true} />
+            <Editor
+              defaultValue={originalData?.description ?? ''}
+              readOnly={true}
+            />
           </div>
         </div>
 

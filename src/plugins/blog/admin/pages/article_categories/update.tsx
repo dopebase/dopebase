@@ -39,7 +39,10 @@ const CodeMirror = dynamic(
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-import { authPost } from '../../../../../modules/auth/utils/authFetch'
+import {
+  authFetch,
+  authPost,
+} from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 const UpdateCategoryView = props => {
@@ -51,19 +54,22 @@ const UpdateCategoryView = props => {
   const id = searchParams.get('id')
 
   useEffect(() => {
-    fetch(baseAPIURL + 'article_categories/view?id=' + id)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      try {
+        const response = await authFetch(
+          baseAPIURL + 'article_categories/view?id=' + id,
+        )
+        if (response?.data) {
+          setOriginalData(response.data)
+          initializeModifieableNonFormData(response.data)
+          setIsLoading(false)
+        }
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        setOriginalData(data)
-        if (data) {
-          initializeModifieableNonFormData(data)
-        }
-        setIsLoading(false)
-      })
+      }
+    }
+    fetchData()
   }, [id])
 
   const initializeModifieableNonFormData = originalData => {
