@@ -1,9 +1,8 @@
 // @ts-nocheck
 'use client'
 import React, { useEffect, useState } from 'react'
-import { GetStaticProps } from 'next'
+import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
-import { GetServerSideProps } from 'next'
 import { ClipLoader } from 'react-spinners'
 import IMDatePicker from '../../../../../components/dashboard/IMDatePicker'
 import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
@@ -40,21 +39,19 @@ const CodeMirror = dynamic(
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-const baseAPIURL = pluginsAPIURL
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return { props: { isAdminRoute: true, categoryId: params?.id } }
-}
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 const UpdateCategoryView = props => {
-  let { categoryId } = props
-
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
 
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
   useEffect(() => {
-    fetch(baseAPIURL + 'admin/articles/categories/' + categoryId)
+    fetch(baseAPIURL + 'article_categories/view?id=' + id)
       .then(response => response.json())
       .catch(err => {
         console.log(err)
@@ -67,7 +64,7 @@ const UpdateCategoryView = props => {
         }
         setIsLoading(false)
       })
-  }, [categoryId])
+  }, [id])
 
   const initializeModifieableNonFormData = originalData => {
     var nonFormData = {}
@@ -94,20 +91,18 @@ const UpdateCategoryView = props => {
   }
 
   const saveChanges = async (modifiedData, setSubmitting) => {
-    console.log(JSON.stringify({ ...modifiedData, ...modifiedNonFormData }))
-    const response = await fetch(
-      baseAPIURL + 'admin/articles/categories/update/' + categoryId,
-      {
-        method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...modifiedData, ...modifiedNonFormData }), // body data type must match "Content-Type" header
-      },
+    const response = await authPost(
+      baseAPIURL + 'article_categories/update?id=' + id,
+      JSON.stringify({
+        ...modifiedData,
+        ...modifiedNonFormData,
+      }),
     )
-    if (response.ok == true) {
+    const { data } = response
+    if (data.success == true) {
       window.location.reload()
+    } else {
+      alert(data.error)
     }
     setSubmitting(false)
   }

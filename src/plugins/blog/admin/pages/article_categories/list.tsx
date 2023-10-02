@@ -76,12 +76,12 @@ function ActionsItemView(props) {
   const router = useRouter()
 
   const handleView = item => {
-    const viewPath = './article_categories/view?id=' + item.id
+    const viewPath = './view?id=' + item.id
     router.push(viewPath)
   }
 
   const handleEdit = item => {
-    const editPath = './article_categories/update?id=' + item.id
+    const editPath = './update?id=' + item.id
     router.push(editPath)
   }
 
