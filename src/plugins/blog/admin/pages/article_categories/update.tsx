@@ -33,6 +33,7 @@ const CodeMirror = dynamic(
   },
   { ssr: false },
 )
+import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
 // import IMParentArticleCategoryTypeaheadComponent from '../../../ui/IMParentArticleCategoryTypeaheadComponent.js'
@@ -392,8 +393,8 @@ const UpdateCategoryView = props => {
   }
 
   return (
-    <div className="Card FormCard">
-      <div className="CardBody">
+    <div className={`${styles.Card} ${styles.FormCard}`}>
+      <div className={`${styles.CardBody}`}>
         <h1>{originalData && originalData.name}</h1>
         <Formik
           initialValues={originalData}
@@ -589,9 +590,9 @@ const UpdateCategoryView = props => {
                 /> */}
               </div>
 
-              <div className="FormActionContainer">
+              <div className={`${styles.FormActionContainer}`}>
                 <button
-                  className="PrimaryButton"
+                  className={`${styles.PrimaryButton}`}
                   type="submit"
                   disabled={isSubmitting}>
                   Save category

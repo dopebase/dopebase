@@ -3,7 +3,7 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/navigation'
-import { useTable, usePagination } from 'react-table'
+import { useGlobalFilter, useTable, usePagination } from 'react-table'
 import {
   IMLocationTableCell,
   IMSimpleLocationTableCell,
@@ -24,7 +24,7 @@ import {
 import { pluginsAPIURL } from '../../../../../config/config'
 import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
 import { authPost } from '../../../../../modules/auth/utils/authFetch'
-
+import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
@@ -94,26 +94,26 @@ function ActionsItemView(props) {
   }
 
   return (
-    <div className="inline-actions-container">
+    <div className={`${styles.inlineActionsContainer} inlineActionsContainer`}>
       <button
         onClick={() => handleView(data.row.original)}
         type="button"
         id="tooltip264453216"
-        className="btn-icon btn btn-info btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-info btn-sm`}>
         <i className="fa fa-eye"></i>
       </button>
       <button
         onClick={() => handleEdit(data.row.original)}
         type="button"
         id="tooltip366246651"
-        className="btn-icon btn btn-success btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-success btn-sm`}>
         <i className="fa fa-edit"></i>
       </button>
       <button
         onClick={() => handleDelete(data.row.original)}
         type="button"
         id="tooltip476609793"
-        className="btn-icon btn btn-danger btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-danger btn-sm`}>
         <i className="fa fa-times"></i>
       </button>
     </div>
@@ -146,7 +146,8 @@ function ArticleTagCategoriesListView(props) {
     previousPage,
     setPageSize,
     // Get the state from the instance
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, globalFilter },
+    setGlobalFilter,
   } = useTable(
     {
       columns,
@@ -155,6 +156,7 @@ function ArticleTagCategoriesListView(props) {
       manualPagination: true,
       pageCount: controlledPageCount,
     },
+    useGlobalFilter,
     usePagination,
   )
 
@@ -198,19 +200,30 @@ function ArticleTagCategoriesListView(props) {
 
   return (
     <>
-      <div className="content">
+      <div className={`${styles.adminContent} adminContent`}>
         <div className="row">
           <div className="col col-md-12">
             <div className="Card">
               <div className="CardHeader">
-                <a className="Link AddLink" href="./add">
+                <a
+                  className={`${styles.Link} ${styles.AddLink} Link AddLink`}
+                  href="./add">
                   Add New
                 </a>
-                <h4>Article Tag Categories</h4>
+                <h1>Article Tag Categories</h1>
               </div>
-              <div className="CardBody">
-                <div className="TableContainer">
-                  <table className="Table" {...getTableProps()}>
+              <div className={`${styles.CardBody} CardBody`}>
+                <div className={`${styles.TableContainer} TableContainer`}>
+                  <input
+                    className={`${styles.SearchInput} SearchInput`}
+                    type="text"
+                    placeholder="Search..."
+                    value={globalFilter || ''}
+                    onChange={e => setGlobalFilter(e.target.value)}
+                  />
+                  <table
+                    className={`${styles.Table} Table`}
+                    {...getTableProps()}>
                     <thead>
                       {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -244,7 +257,8 @@ function ArticleTagCategoriesListView(props) {
                           </td>
                         ) : (
                           <td colSpan={categoriesColumns.length - 1}>
-                            <p className="PaginationDetails">
+                            <p
+                              className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
                             </p>
                           </td>
@@ -252,22 +266,23 @@ function ArticleTagCategoriesListView(props) {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="Pagination">
-                    <div className="LeftPaginationButtons">
+                  <div className={`${styles.Pagination} Pagination`}>
+                    <div
+                      className={`${styles.LeftPaginationButtons} LeftPaginationButtons`}>
                       <button
                         onClick={() => gotoPage(0)}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-double-left"></i>
                       </button>{' '}
                       <button
                         onClick={() => previousPage()}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-left"></i>
                       </button>
                     </div>
-                    <div className="CenterPaginationButtons">
+                    <div className={`${styles.CenterPaginationButtons}`}>
                       <span>
                         Page{' '}
                         <strong>
@@ -300,16 +315,16 @@ function ArticleTagCategoriesListView(props) {
                         ))}
                       </select>
                     </div>
-                    <div className="RightPaginationButtons">
+                    <div className={`${styles.RightPaginationButtons}`}>
                       <button
                         onClick={() => nextPage()}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-right"></i>
                       </button>{' '}
                       <button
                         onClick={() => gotoPage(pageCount - 1)}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-double-right"></i>
                       </button>

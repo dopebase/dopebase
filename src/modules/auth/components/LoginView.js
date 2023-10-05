@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { Formik } from "formik";
-import { ClipLoader } from "react-spinners";
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import { Formik } from 'formik'
+import { ClipLoader } from 'react-spinners'
 
-import { loginUser } from "../redux/actions";
+import { loginUser } from '../redux/actions'
 
-import styles from "../styles/Auth.module.css";
+import styles from '../styles/Auth.module.css'
 
 export const LoginView = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const auth = useSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const auth = useSelector(state => state.auth)
 
   const login = async (data, setSubmitting) => {
-    setFormData(data);
-    setIsLoading(true);
-    dispatch(loginUser(data, router, dispatch));
-    setSubmitting(false);
-    setIsLoading(false);
-  };
+    setFormData(data)
+    setIsLoading(true)
+    dispatch(loginUser(data, router, dispatch))
+    setSubmitting(false)
+    setIsLoading(false)
+  }
 
   if (isLoading) {
     return (
@@ -29,14 +29,14 @@ export const LoginView = () => {
         <div className="spinner-container">
           <ClipLoader
             className="spinner"
-            sizeUnit={"px"}
+            sizeUnit={'px'}
             size={50}
-            color={"#123abc"}
+            color={'#123abc'}
             loading={isLoading}
           />
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -45,24 +45,23 @@ export const LoginView = () => {
         <h1 className={styles.title}>Sign in to your account</h1>
         <Formik
           initialValues={formData}
-          validate={(values) => {
-            const errors = {};
+          validate={values => {
+            const errors = {}
             if (!values.email) {
-              errors.email = "Required";
+              errors.email = 'Required'
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              errors.email = "Invalid email address";
+              errors.email = 'Invalid email address'
             }
             if (!values.password) {
-              errors.password = "Required";
+              errors.password = 'Required'
             }
-            return errors;
+            return errors
           }}
           onSubmit={(values, { setSubmitting }) => {
-            login(values, setSubmitting);
-          }}
-        >
+            login(values, setSubmitting)
+          }}>
           {({
             values,
             errors,
@@ -110,8 +109,7 @@ export const LoginView = () => {
                 <button
                   className={styles.PrimaryButton}
                   type="submit"
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
                   Continue
                 </button>
               </div>
@@ -128,5 +126,5 @@ export const LoginView = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

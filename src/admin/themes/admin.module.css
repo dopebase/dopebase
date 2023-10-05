@@ -260,6 +260,16 @@ ul.ArrayTableCell li span {
 .ModalMainInner {
   position: relative;
 }
+.SearchInput {
+  margin: 20px 0px; 
+  height: 40px;
+  padding-left: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline-color);
+  min-width: 256px;
+  color: var(--primary-text);
+  background-color: var(--primary-background-color);
+}
 
 .TableContainer {
   margin-bottom: 1rem;
@@ -324,7 +334,7 @@ ul.ArrayTableCell li span {
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
   background-color: var(--primary-background-color);
-  color: #252422;
+  color: var(--primary-text-color);
   margin-bottom: 20px;
   position: relative;
   border: 0;
@@ -465,9 +475,9 @@ ul.ArrayTableCell li span {
   min-width: 250px;
 
   background-color: var(--primary-background-color);
-  border: 1px solid #ddd;
+  border: 1px solid var(--hairline-color);
   border-radius: 4px;
-  color: #66615b;
+  color: var(--primary-text-color);
   -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
     background-color 0.3s ease-in-out;
   transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
@@ -502,7 +512,7 @@ ul.ArrayTableCell li span {
 .FormCard .PrimaryButton {
   margin-left: 120px;
   padding: 12px 130px;
-  background-color: #6546d7;
+  background-color: var(--primary-foreground-color);
   border-radius: 4px;
   font-size: 14px;
   font-stretch: 100%;
