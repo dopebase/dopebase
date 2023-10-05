@@ -1,7 +1,9 @@
 // @ts-nocheck
+'use client'
 import React, { useMemo, useEffect, useState } from 'react'
 import { GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
+import { useGlobalFilter, useTable, usePagination } from 'react-table'
 import {
   IMLocationTableCell,
   IMSimpleLocationTableCell,
@@ -12,24 +14,26 @@ import {
   IMDateTableCell,
   IMForeignKeyTableCell,
   IMAddressTableCell,
-} from '../../../components/dashboard/IMTable'
+} from '../../../../../admin/components/forms/table'
 import {
   IMColorBoxComponent,
   IMPhoto,
   IMModal,
   IMToggleSwitchComponent,
-} from '../../../components/dashboard/IMComponents'
-import { useTable, usePagination } from 'react-table'
-import useCurrentUser from '../../../hooks/useCurrentUser'
-/* Insert extra imports for table cells here */
+} from '../../../../../admin/components/forms/fields'
 import { pluginsAPIURL } from '../../../../../config/config'
-const baseAPIURL = pluginsAPIURL
+import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
+import styles from '../../../../../admin/themes/admin.module.css'
+/* Insert extra imports for table cells here */
+
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const usersColumns = [
+const $capitalcasePlural$Columns = [
   $columns$,
   {
     Header: 'Actions',
@@ -43,62 +47,59 @@ function ActionsItemView(props) {
   const router = useRouter()
 
   const handleView = item => {
-    const viewPath = './users/' + item.id
+    const viewPath = './view?id=' + item.id
     router.push(viewPath)
   }
 
   const handleEdit = item => {
-    const editPath = './users/update/' + item.id
+    const editPath = './update?id=' + item.id
     router.push(editPath)
   }
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const response = await fetch(baseAPIURL + 'users/delete/' + item.id, {
-        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-      })
+      const path = baseAPIURL + '$lowercasePlural$/delete'
+      const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
   }
 
   return (
-    <div className="inline-actions-container">
+    <div className={`${styles.inlineActionsContainer} inlineActionsContainer`}>
       <button
         onClick={() => handleView(data.row.original)}
         type="button"
         id="tooltip264453216"
-        className="btn-icon btn btn-info btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-info btn-sm`}>
         <i className="fa fa-eye"></i>
       </button>
       <button
         onClick={() => handleEdit(data.row.original)}
         type="button"
         id="tooltip366246651"
-        className="btn-icon btn btn-success btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-success btn-sm`}>
         <i className="fa fa-edit"></i>
       </button>
       <button
         onClick={() => handleDelete(data.row.original)}
         type="button"
         id="tooltip476609793"
-        className="btn-icon btn btn-danger btn-sm">
+        className={`${styles.btnSm} btn-icon btn btn-danger btn-sm`}>
         <i className="fa fa-times"></i>
       </button>
     </div>
   )
 }
 
-function UsersListView(props) {
-  const listName = 'users'
-
+function $capitalcasePlural$ListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [users, setUsers] = useState([])
+  const [$capitalcasePlural$, set$capitalcasePlural$] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => usersColumns, [])
+  const columns = useMemo(() => $capitalcasePlural$Columns, [])
 
   const {
     getTableProps,
@@ -116,15 +117,17 @@ function UsersListView(props) {
     previousPage,
     setPageSize,
     // Get the state from the instance
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, globalFilter },
+    setGlobalFilter,
   } = useTable(
     {
       columns,
-      data: users,
+      data: $capitalcasePlural$,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
     },
+    useGlobalFilter,
     usePagination,
   )
 
@@ -136,17 +139,20 @@ function UsersListView(props) {
       headers: { Authorization: token },
     }
 
-    const extraQueryParams = $extraQueryParams$
+    const extraQueryParams = null
     setIsLoading(true)
 
     fetch(
-      baseAPIURL + listName + (extraQueryParams ? extraQueryParams : ''),
+      baseAPIURL +
+        '$lowercasePlural$/list' +
+        (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
-        const users = data.users
-        setData(users)
+        console.log(data)
+        const $lowercasePlural$ = data
+        setData($lowercasePlural$)
 
         setIsLoading(false)
       })
@@ -159,25 +165,36 @@ function UsersListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    setUsers(data.slice(startRow, endRow))
+    set$capitalcasePlural$(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
   return (
     <>
-      <div className="content">
+      <div className={`${styles.adminContent} adminContent`}>
         <div className="row">
           <div className="col col-md-12">
             <div className="Card">
               <div className="CardHeader">
-                <a className="Link AddLink" href="./users/add">
+                <a
+                  className={`${styles.Link} ${styles.AddLink} Link AddLink`}
+                  href="./add">
                   Add New
                 </a>
-                <h4>Users</h4>
+                <h1>$capitalcasePluralDisplay$</h1>
               </div>
-              <div className="CardBody">
-                <div className="TableContainer">
-                  <table className="Table" {...getTableProps()}>
+              <div className={`${styles.CardBody} CardBody`}>
+                <div className={`${styles.TableContainer} TableContainer`}>
+                  <input
+                    className={`${styles.SearchInput} SearchInput`}
+                    type="text"
+                    placeholder="Search..."
+                    value={globalFilter || ''}
+                    onChange={e => setGlobalFilter(e.target.value)}
+                  />
+                  <table
+                    className={`${styles.Table} Table`}
+                    {...getTableProps()}>
                     <thead>
                       {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -206,12 +223,13 @@ function UsersListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={usersColumns.length - 1}>
+                          <td colSpan={$lowercasePlural$Columns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={usersColumns.length - 1}>
-                            <p className="PaginationDetails">
+                          <td colSpan={$lowercasePlural$Columns.length - 1}>
+                            <p
+                              className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
                             </p>
                           </td>
@@ -219,22 +237,23 @@ function UsersListView(props) {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="Pagination">
-                    <div className="LeftPaginationButtons">
+                  <div className={`${styles.Pagination} Pagination`}>
+                    <div
+                      className={`${styles.LeftPaginationButtons} LeftPaginationButtons`}>
                       <button
                         onClick={() => gotoPage(0)}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-double-left"></i>
                       </button>{' '}
                       <button
                         onClick={() => previousPage()}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canPreviousPage}>
                         <i className="fa fa-angle-left"></i>
                       </button>
                     </div>
-                    <div className="CenterPaginationButtons">
+                    <div className={`${styles.CenterPaginationButtons}`}>
                       <span>
                         Page{' '}
                         <strong>
@@ -267,16 +286,16 @@ function UsersListView(props) {
                         ))}
                       </select>
                     </div>
-                    <div className="RightPaginationButtons">
+                    <div className={`${styles.RightPaginationButtons}`}>
                       <button
                         onClick={() => nextPage()}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-right"></i>
                       </button>{' '}
                       <button
                         onClick={() => gotoPage(pageCount - 1)}
-                        className="PaginationButton"
+                        className={`${styles.PaginationButton}`}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-double-right"></i>
                       </button>
@@ -292,4 +311,4 @@ function UsersListView(props) {
   )
 }
 
-export default UsersListView
+export default $capitalcasePlural$ListView
