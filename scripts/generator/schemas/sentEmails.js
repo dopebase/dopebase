@@ -11,7 +11,7 @@ const schema = {
     tableName: 'sent_emails',
     singularName: 'email',
     singularCapitalName: 'Email',
-    pluralName: 'emails',
+    lowercasePluralName: 'emails',
     titleFieldKey: 'name',
   },
   email_templates: {
@@ -29,7 +29,7 @@ const schema = {
     tableName: 'email_templates',
     singularName: 'template',
     singularCapitalName: 'Template',
-    pluralName: 'templates',
+    lowercasePluralName: 'templates',
     titleFieldKey: 'name',
   },
   users: {
@@ -37,7 +37,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {},

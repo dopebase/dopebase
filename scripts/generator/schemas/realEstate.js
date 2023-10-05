@@ -11,7 +11,7 @@ const schema = {
     tableName: 'real_estate_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   filters: {
@@ -40,7 +40,7 @@ const schema = {
     tableName: 'real_estate_filters',
     singularName: 'filter',
     singularCapitalName: 'Filter',
-    pluralName: 'filters',
+    lowercasePluralName: 'filters',
     titleFieldKey: 'name',
   },
   listings: {
@@ -86,7 +86,7 @@ const schema = {
     tableName: 'real_estate_listings',
     singularName: 'listing',
     singularCapitalName: 'Listing',
-    pluralName: 'listings',
+    lowercasePluralName: 'listings',
     titleFieldKey: 'title',
   },
   reviews: {
@@ -121,7 +121,7 @@ const schema = {
     tableName: 'real_estate_reviews',
     singularName: 'review',
     singularCapitalName: 'Review',
-    pluralName: 'reviews',
+    lowercasePluralName: 'reviews',
     titleFieldKey: 'starCount',
   },
   saved_listings: {
@@ -153,7 +153,7 @@ const schema = {
     tableName: 'real_estate_saved_listings',
     singularName: 'saved_listing',
     singularCapitalName: 'Saved_listing',
-    pluralName: 'saved_listings',
+    lowercasePluralName: 'saved_listings',
     titleFieldKey: 'listingID',
   },
   users: {
@@ -161,7 +161,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {

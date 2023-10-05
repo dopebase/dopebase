@@ -5,4 +5,4 @@ const decodeData = (data, transformations) => {
   })
   return output
 }
-module.exports = decodeData
+module.exports = { decodeData }

@@ -23,7 +23,7 @@ const schema = {
     tableName: 'tag_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   tags: {
@@ -48,7 +48,7 @@ const schema = {
     tableName: 'tags',
     singularName: 'tag',
     singularCapitalName: 'Tag',
-    pluralName: 'tags',
+    lowercasePluralName: 'tags',
     titleFieldKey: 'name',
   },
   products: {
@@ -172,7 +172,7 @@ const schema = {
     tableName: 'products',
     singularName: 'product',
     singularCapitalName: 'Product',
-    pluralName: 'products',
+    lowercasePluralName: 'products',
     titleFieldKey: 'title',
   },
   product_variants: {
@@ -200,7 +200,7 @@ const schema = {
     tableName: 'product_variants',
     singularName: 'variant',
     singularCapitalName: 'Variant',
-    pluralName: 'variants',
+    lowercasePluralName: 'variants',
     titleFieldKey: 'id',
   },
   freebie_variants: {
@@ -227,7 +227,7 @@ const schema = {
     tableName: 'freebie_variants',
     singularName: 'variant',
     singularCapitalName: 'Variant',
-    pluralName: 'freebie-variants',
+    lowercasePluralName: 'freebie-variants',
     titleFieldKey: 'id',
   },
   freebie_downloads: {
@@ -270,7 +270,7 @@ const schema = {
     tableName: 'freebie_downloads',
     singularName: 'download',
     singularCapitalName: 'Download',
-    pluralName: 'downloads',
+    lowercasePluralName: 'downloads',
     titleFieldKey: 'customer_email',
   },
   purchases: {
@@ -343,7 +343,7 @@ const schema = {
     tableName: 'purchases',
     singularName: 'purchase',
     singularCapitalName: 'Purchase',
-    pluralName: 'purchases',
+    lowercasePluralName: 'purchases',
     titleFieldKey: 'license_no',
   },
   reviews: {
@@ -378,7 +378,7 @@ const schema = {
     tableName: 'customer_reviews',
     singularName: 'review',
     singularCapitalName: 'Review',
-    pluralName: 'reviews',
+    lowercasePluralName: 'reviews',
     titleFieldKey: 'starCount',
   },
   email_subscribers: {
@@ -414,7 +414,7 @@ const schema = {
     tableName: 'email_subscribers',
     singularName: 'emailSubscriber',
     singularCapitalName: 'EmailSubscriber',
-    pluralName: 'emailSubscribers',
+    lowercasePluralName: 'emailSubscribers',
     titleFieldKey: 'email',
   },
   email_subscriber_tags: {
@@ -431,7 +431,7 @@ const schema = {
     tableName: 'email_subscriber_tags',
     singularName: 'emailSubscriberTag',
     singularCapitalName: 'EmailSubscriberTag',
-    pluralName: 'emailSubscriberTags',
+    lowercasePluralName: 'emailSubscriberTags',
     titleFieldKey: 'name',
   },
   email_campaigns: {
@@ -502,7 +502,7 @@ const schema = {
     tableName: 'email_campaigns',
     singularName: 'emailCampaign',
     singularCapitalName: 'EmailCampaign',
-    pluralName: 'emailCampaigns',
+    lowercasePluralName: 'emailCampaigns',
     titleFieldKey: 'title',
   },
   email_newsletters: {
@@ -543,7 +543,7 @@ const schema = {
     tableName: 'email_newsletters',
     singularName: 'newsletter',
     singularCapitalName: 'Newsletter',
-    pluralName: 'newsletters',
+    lowercasePluralName: 'newsletters',
     titleFieldKey: 'title',
   },
   job_queue: {
@@ -580,7 +580,7 @@ const schema = {
     tableName: 'job_queue',
     singularName: 'job',
     singularCapitalName: 'JobQueue',
-    pluralName: 'jobs',
+    lowercasePluralName: 'jobs',
     titleFieldKey: 'id',
   },
   email_settings: {
@@ -601,7 +601,7 @@ const schema = {
     tableName: 'email_settings',
     singularName: 'emailSettings',
     singularCapitalName: 'EmailSettings',
-    pluralName: 'emailSettings',
+    lowercasePluralName: 'emailSettings',
     titleFieldKey: 'display_name',
   },
 
@@ -629,7 +629,7 @@ const schema = {
     tableName: 'emails',
     singularName: 'email',
     singularCapitalName: 'Email',
-    pluralName: 'emails',
+    lowercasePluralName: 'emails',
     titleFieldKey: 'id',
   },
 
@@ -717,7 +717,7 @@ const schema = {
     tableName: 'articles',
     singularName: 'article',
     singularCapitalName: 'Article',
-    pluralName: 'articles',
+    lowercasePluralName: 'articles',
     titleFieldKey: 'title',
   },
   article_categories: {
@@ -763,7 +763,7 @@ const schema = {
     tableName: 'article_tag_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   article_tags: {
@@ -801,7 +801,7 @@ const schema = {
     tableName: 'article_tags',
     singularName: 'articleTag',
     singularCapitalName: 'ArticleTag',
-    pluralName: 'articleTags',
+    lowercasePluralName: 'articleTags',
     titleFieldKey: 'name',
   },
   author_articles: {
@@ -863,7 +863,7 @@ const schema = {
     tableName: 'articles',
     singularName: 'article',
     singularCapitalName: 'Article',
-    pluralName: 'articles',
+    lowercasePluralName: 'articles',
     titleFieldKey: 'title',
   },
   ticket_threads: {
@@ -921,7 +921,7 @@ const schema = {
     tableName: 'ticket_threads',
     singularName: 'thread',
     singularCapitalName: 'Thread',
-    pluralName: 'threads',
+    lowercasePluralName: 'threads',
     titleFieldKey: 'subject',
   },
   ticket_messages: {
@@ -968,7 +968,7 @@ const schema = {
     tableName: 'ticket_messages',
     singularName: 'message',
     singularCapitalName: 'Message',
-    pluralName: 'messages',
+    lowercasePluralName: 'messages',
     titleFieldKey: 'subject',
   },
   ticket_tags: {
@@ -986,7 +986,7 @@ const schema = {
     tableName: 'ticket_tags',
     singularName: 'ticketTag',
     singularCapitalName: 'TicketTag',
-    pluralName: 'ticketTags',
+    lowercasePluralName: 'ticketTags',
     titleFieldKey: 'name',
   },
   users: {
@@ -994,7 +994,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
     fields: {
       email: { type: 'string', required: true, displayName: 'Email' },
@@ -1061,7 +1061,7 @@ const schema = {
     tableName: 'user_tags',
     singularName: 'userTag',
     singularCapitalName: 'UserTag',
-    pluralName: 'userTags',
+    lowercasePluralName: 'userTags',
     titleFieldKey: 'name',
   },
   mapRenderers: {
@@ -1103,7 +1103,7 @@ const schema = {
     tableName: 'article_ideas',
     singularName: 'articleIdea',
     singularCapitalName: 'ArticleIdea',
-    pluralName: 'articleIdeas',
+    lowercasePluralName: 'articleIdeas',
     titleFieldKey: 'title',
   },
 }

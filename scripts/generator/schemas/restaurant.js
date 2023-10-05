@@ -10,7 +10,7 @@ const schema = {
     tableName: 'restaurant_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   deliveries: {
@@ -38,7 +38,7 @@ const schema = {
     tableName: 'restaurant_deliveries',
     singularName: 'delivery',
     singularCapitalName: 'Delivery',
-    pluralName: 'deliveries',
+    lowercasePluralName: 'deliveries',
     titleFieldKey: 'orderID',
   },
   orders: {
@@ -108,7 +108,7 @@ const schema = {
     tableName: 'restaurant_orders',
     singularName: 'order',
     singularCapitalName: 'Order',
-    pluralName: 'orders',
+    lowercasePluralName: 'orders',
     titleFieldKey: 'id',
     orderBy: {
       field: 'createdAt',
@@ -142,7 +142,7 @@ const schema = {
     tableName: 'restaurant_foods',
     singularName: 'food',
     singularCapitalName: 'Food',
-    pluralName: 'foods',
+    lowercasePluralName: 'foods',
     titleFieldKey: 'name',
   },
   reservations: {
@@ -161,7 +161,7 @@ const schema = {
     tableName: 'restaurant_reservations',
     singularName: 'reservation',
     singularCapitalName: 'Reservation',
-    pluralName: 'reservations',
+    lowercasePluralName: 'reservations',
     titleFieldKey: 'lastName',
   },
   restaurants: {
@@ -183,7 +183,7 @@ const schema = {
     tableName: 'restaurants',
     singularName: 'restaurant',
     singularCapitalName: 'Restaurant',
-    pluralName: 'restaurants',
+    lowercasePluralName: 'restaurants',
     titleFieldKey: 'name',
   },
   users: {
@@ -191,7 +191,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {

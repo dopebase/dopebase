@@ -11,7 +11,7 @@ const schema = {
     tableName: 'vendor_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'title',
   },
   restaurants: {
@@ -53,7 +53,7 @@ const schema = {
     tableName: 'vendors',
     singularName: 'restaurant',
     singularCapitalName: 'Restaurant',
-    pluralName: 'restaurants',
+    lowercasePluralName: 'restaurants',
     titleFieldKey: 'title',
   },
   products: {
@@ -83,7 +83,7 @@ const schema = {
     tableName: 'vendor_products',
     singularName: 'product',
     singularCapitalName: 'Product',
-    pluralName: 'products',
+    lowercasePluralName: 'products',
     titleFieldKey: 'name',
   },
   orders: {
@@ -168,7 +168,7 @@ const schema = {
     tableName: 'restaurant_orders',
     singularName: 'order',
     singularCapitalName: 'Order',
-    pluralName: 'orders',
+    lowercasePluralName: 'orders',
     titleFieldKey: 'id',
     orderBy: {
       field: 'createdAt',
@@ -207,7 +207,7 @@ const schema = {
     tableName: 'vendor_reviews',
     singularName: 'review',
     singularCapitalName: 'Review',
-    pluralName: 'reviews',
+    lowercasePluralName: 'reviews',
     titleFieldKey: 'starCount',
     orderBy: {
       field: 'createdAt',
@@ -219,7 +219,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {

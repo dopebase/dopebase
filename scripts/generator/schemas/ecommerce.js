@@ -1,6 +1,53 @@
 'use strict'
 
 const schema = {
+  article_categories: {
+    fields: {
+      name: { type: 'string', required: false, displayName: 'Name' },
+      description: {
+        type: 'markdown',
+        required: false,
+        displayName: 'Description',
+      },
+      slug: { type: 'string', required: false, displayName: 'Slug' },
+      logo_url: { type: 'photo', required: false, displayName: 'Logo' },
+      seo_title: { type: 'string', required: false, displayName: 'SEO Title' },
+      seo_description: {
+        type: 'string',
+        required: false,
+        displayName: 'SEO Description',
+      },
+      canonical_url: {
+        type: 'string',
+        required: false,
+        displayName: 'Canonical URL',
+      },
+      seo_image_url: {
+        type: 'photo',
+        required: false,
+        displayName: 'SEO Cover Image',
+      },
+      published: { type: 'boolean', required: true, displayName: 'Published' },
+      parent_id: {
+        type: 'string',
+        required: false,
+        displayName: 'Parent Category',
+        foreignKey: 'article_categories',
+        cellClassName: 'ParentArticleCategory',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.name}</span></td></tr></table>`,
+          originalDataFormatter: `data.name`,
+        },
+      },
+    },
+    capitalPluralName: 'articleCategories',
+    pluralDisplayName: 'Article Categories',
+    lowercasePluralName: 'article_categories',
+    tableName: 'article_tag_categories',
+    lowercaseSingularName: 'category',
+    singularCapitalName: 'Category',
+    titleFieldKey: 'name',
+  },
   categories: {
     fields: {
       name: { type: 'string', required: true, displayName: 'Name' },
@@ -11,7 +58,8 @@ const schema = {
     tableName: 'shopertino_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    capitalPluralName: 'Categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   products: {
@@ -50,7 +98,7 @@ const schema = {
     tableName: 'shopertino_products',
     singularName: 'product',
     singularCapitalName: 'Product',
-    pluralName: 'products',
+    lowercasePluralName: 'products',
     titleFieldKey: 'name',
   },
   users: {
@@ -58,7 +106,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   orders: {
@@ -130,7 +178,7 @@ const schema = {
     tableName: 'shopertino_orders',
     singularName: 'order',
     singularCapitalName: 'Order',
-    pluralName: 'orders',
+    lowercasePluralName: 'orders',
     titleFieldKey: 'id',
     orderBy: {
       field: 'createdAt',

@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const $capitalcasePlural$Columns = [
+const $capitalcaseplural$Columns = [
   $columns$,
   {
     Header: 'Actions',
@@ -58,7 +58,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + '$lowercasePlural$/delete'
+      const path = baseAPIURL + '$lowercaseplural$/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -91,15 +91,15 @@ function ActionsItemView(props) {
   )
 }
 
-function $capitalcasePlural$ListView(props) {
+function $capitalcaseplural$ListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [$capitalcasePlural$, set$capitalcasePlural$] = useState([])
+  const [$capitalcaseplural$, set$capitalcaseplural$] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => $capitalcasePlural$Columns, [])
+  const columns = useMemo(() => $capitalcaseplural$Columns, [])
 
   const {
     getTableProps,
@@ -122,7 +122,7 @@ function $capitalcasePlural$ListView(props) {
   } = useTable(
     {
       columns,
-      data: $capitalcasePlural$,
+      data: $capitalcaseplural$,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
@@ -144,15 +144,15 @@ function $capitalcasePlural$ListView(props) {
 
     fetch(
       baseAPIURL +
-        '$lowercasePlural$/list' +
+        '$lowercaseplural$/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const $lowercasePlural$ = data
-        setData($lowercasePlural$)
+        const $lowercaseplural$ = data
+        setData($lowercaseplural$)
 
         setIsLoading(false)
       })
@@ -165,7 +165,7 @@ function $capitalcasePlural$ListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    set$capitalcasePlural$(data.slice(startRow, endRow))
+    set$capitalcaseplural$(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
@@ -181,7 +181,7 @@ function $capitalcasePlural$ListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>$capitalcasePluralDisplay$</h1>
+                <h1>$displayplural$</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -223,11 +223,11 @@ function $capitalcasePlural$ListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={$lowercasePlural$Columns.length - 1}>
+                          <td colSpan={$capitalcaseplural$Columns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={$lowercasePlural$Columns.length - 1}>
+                          <td colSpan={$capitalcaseplural$Columns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -311,4 +311,4 @@ function $capitalcasePlural$ListView(props) {
   )
 }
 
-export default $capitalcasePlural$ListView
+export default $capitalcaseplural$ListView

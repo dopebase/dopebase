@@ -41,7 +41,7 @@ const schema = {
     tableName: 'SocialNetwork_Posts',
     singularName: 'post',
     singularCapitalName: 'Post',
-    pluralName: 'posts',
+    lowercasePluralName: 'posts',
     titleFieldKey: 'postText',
     orderBy: {
       field: 'createdAt',
@@ -79,7 +79,7 @@ const schema = {
     tableName: 'socialnetwork_comments',
     singularName: 'comment',
     singularCapitalName: 'Comment',
-    pluralName: 'comments',
+    lowercasePluralName: 'comments',
     titleFieldKey: 'name',
     orderBy: {
       field: 'createdAt',
@@ -134,7 +134,7 @@ const schema = {
     tableName: 'socialnetwork_notifications',
     singularName: 'notification',
     singularCapitalName: 'Notification',
-    pluralName: 'notifications',
+    lowercasePluralName: 'notifications',
     titlefieldkey: 'reacted',
     orderBy: {
       field: 'createdAt',
@@ -177,7 +177,7 @@ const schema = {
     tableName: 'socialnetwork_reactions',
     singularName: 'reaction',
     singularCapitalName: 'Reaction',
-    pluralName: 'reactions',
+    lowercasePluralName: 'reactions',
     titleFieldKey: 'reaction',
     orderBy: {
       field: 'createdAt',
@@ -231,7 +231,7 @@ const schema = {
     tableName: 'socialnetwork_stories',
     singularName: 'story',
     singularCapitalName: 'Story',
-    pluralName: 'stories',
+    lowercasePluralName: 'stories',
     titleFieldKey: 'storyMediaURL',
     orderBy: {
       field: 'createdAt',
@@ -243,7 +243,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {

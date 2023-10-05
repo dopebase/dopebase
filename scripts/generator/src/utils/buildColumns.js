@@ -253,10 +253,11 @@ function objectTableCellBuilder(
   }
 }
 
-const buildColumns = (fields, listTemplateData) => {
+const buildColumns = (fields, listTemplateData, allSchemas) => {
   var columnsString = ''
   var outputListTemplateData = listTemplateData
 
+  console.log(fields)
   Object.keys(fields).forEach(function (fieldName) {
     var field = fields[fieldName]
     if (field.type === 'photo') {
@@ -408,8 +409,8 @@ const buildColumns = (fields, listTemplateData) => {
           accessor: "${fieldName}",
           Cell: data => (
               <IMForeignKeyTableCell id={data.value} apiRouteName="${
-                schema[field.foreignKey].pluralName
-              }" titleKey="${schema[field.foreignKey].titleFieldKey}" />
+                allSchemas[field.foreignKey].lowercasePluralName
+              }" titleKey="${allSchemas[field.foreignKey].titleFieldKey}" />
           )
       },`
     } else if (field.type == 'location') {
@@ -483,3 +484,5 @@ const buildColumns = (fields, listTemplateData) => {
     templateData: outputListTemplateData,
   }
 }
+
+module.exports = { buildColumns }

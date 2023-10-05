@@ -7,14 +7,18 @@ var decodeData = require('./src/utils/decodeData')
 var fs = require('fs')
 
 var myArgs = process.argv.slice(2)
-const schema = require('./schemas/' + myArgs[0])
+const allSchemas = require('./schemas/' + myArgs[0])
 var schemaKey = myArgs[1]
 
-var { outputPath, templatesPath, nodeAPIOutputPath } = require('./src/config')
+var { outputPath, templatesPath } = require('./src/config')
+var {
+  decodeTemplate,
+  decodeFieldTemplate,
+} = require('./src/utils/decodeTemplate')
 
 function typeaheadBuilder(mutableOriginalData, field, fieldName, formType) {
   const foreignKey = field.foreignKey
-  const foreignField = schema[foreignKey]
+  const foreignField = allSchemas[foreignKey]
   const typeaheadRenderers = field.typeaheadRenderers
 
   // For typeahead/foreign keys in forms, we first generate a typeahead class
@@ -22,12 +26,12 @@ function typeaheadBuilder(mutableOriginalData, field, fieldName, formType) {
 
   var decode = {}
   decode['$className$'] = () => field.cellClassName
-  decode['$lowercaseplural$'] = () => foreignField.pluralName
+  decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
   decode['$lowercasesingular$'] = () => foreignField.singularName
-  decode['$capitalcasePluralDisplay$'] = () => foreignField.pluralName
+  decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
   decode['$capitalcaseplural$'] = () =>
-    foreignField.pluralName.charAt(0).toUpperCase() +
-    foreignField.pluralName.slice(1)
+    foreignField.lowercasePluralName.charAt(0).toUpperCase() +
+    foreignField.lowercasePluralName.slice(1)
 
   decode['$originalDataFormatter$'] = () =>
     typeaheadRenderers.originalDataFormatter
@@ -87,7 +91,7 @@ function multipleTypeaheadBuilder(
   formType,
 ) {
   const foreignKeys = field.foreignKeys ? field.foreignKeys : field.foreignKey
-  const foreignField = schema[foreignKeys]
+  const foreignField = allSchemas[foreignKeys]
   const typeaheadRenderers = field.typeaheadRenderers
 
   // For typeahead/foreign keys in forms, we first generate a typeahead class
@@ -95,12 +99,12 @@ function multipleTypeaheadBuilder(
 
   var decode = {}
   decode['$className$'] = () => field.cellClassName
-  decode['$lowercaseplural$'] = () => foreignField.pluralName
-  decode['$capitalcasePluralDisplay$'] = () => foreignField.pluralName
+  decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
+  decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
   decode['$lowercasesingular$'] = () => foreignField.singularName
   decode['$capitalcaseplural$'] = () =>
-    foreignField.pluralName.charAt(0).toUpperCase() +
-    foreignField.pluralName.slice(1)
+    foreignField.lowercasePluralName.charAt(0).toUpperCase() +
+    foreignField.lowercasePluralName.slice(1)
 
   decode['$originalDataFormatter$'] = () =>
     typeaheadRenderers.originalDataFormatter
@@ -162,12 +166,12 @@ function multipleTypeaheadIdBuilder(mutableOriginalData, field, fieldName) {
 
   var decode = {}
   decode['$className$'] = () => field.cellClassName
-  decode['$lowercaseplural$'] = () => foreignField.pluralName
-  decode['$capitalcasePluralDisplay$'] = () => foreignField.pluralName
+  decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
+  decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
   decode['$lowercasesingular$'] = () => foreignField.singularName
   decode['$capitalcaseplural$'] = () =>
-    foreignField.pluralName.charAt(0).toUpperCase() +
-    foreignField.pluralName.slice(1)
+    foreignField.lowercasePluralName.charAt(0).toUpperCase() +
+    foreignField.lowercasePluralName.slice(1)
 
   decode['$originalDataFormatter$'] = () =>
     typeaheadRenderers.originalDataFormatter
@@ -218,29 +222,12 @@ function multipleTypeaheadIdBuilder(mutableOriginalData, field, fieldName) {
   }
 }
 
-function generateFile(
-  fileName,
-  tableName,
-  fields,
-  displayName,
-  singularName,
-  pluralName,
-  singularCapitalName,
-  extraQueryParams = null,
-) {
-  var dir = outputPath + pluralName
+function generateFile(fileName, schema, extraQueryParams = null) {
+  var { lowercasePluralName } = schema
+  var dir = outputPath + lowercasePluralName
 
   const data = fs.readFileSync(templatesPath + fileName, 'utf8')
-  const finalData = decodeTemplate(
-    data,
-    displayName,
-    singularName,
-    pluralName,
-    tableName,
-    fields,
-    singularCapitalName,
-    extraQueryParams,
-  )
+  const finalData = decodeTemplate(data, schema, allSchemas, extraQueryParams)
 
   const filePath = dir + '/' + fileName
   console.log('Generating ' + filePath)
@@ -262,22 +249,14 @@ function generateFormFile(
     fields,
     displayName,
     singularName,
-    pluralName,
+    lowercasePluralName,
     titleFieldKey,
     singularCapitalName,
   } = schema
-  var dir = outputPath + pluralName
+  var dir = outputPath + lowercasePluralName
 
   const data = fs.readFileSync(templatesPath + fileName, 'utf8')
-  const finalDataNoForm = decodeTemplate(
-    data,
-    displayName,
-    singularName,
-    pluralName,
-    pluralName,
-    fields,
-    singularCapitalName,
-  )
+  const finalDataNoForm = decodeTemplate(data, schema, allSchemas)
   const finalDataNoErr = populatedDataWithFormFields(
     finalDataNoForm,
     fields,
@@ -347,15 +326,7 @@ function generateFormFile(
             : type === 'code'
             ? nonmodifiableCodeTemplateData
             : nonmodifiableTemplateData
-        const chunkOutputData = decodeTemplate(
-          data,
-          field.displayName,
-          fieldName,
-          fieldName,
-          fieldName,
-          [],
-          singularCapitalName,
-        )
+        const chunkOutputData = decodeTemplate(data, schema, allSchemas)
         nonmodifiableData = nonmodifiableData + chunkOutputData
       }
     })
@@ -388,22 +359,14 @@ function generateViewFile(
     fields,
     displayName,
     singularName,
-    pluralName,
+    lowercasePluralName,
     titleFieldKey,
     singularCapitalName,
   } = schema
-  var dir = outputPath + pluralName
+  var dir = outputPath + lowercasePluralName
 
   const data = fs.readFileSync(templatesPath + fileName, 'utf8')
-  const finalDataNoForm = decodeTemplate(
-    data,
-    displayName,
-    singularName,
-    pluralName,
-    pluralName,
-    fields,
-    singularCapitalName,
-  )
+  const finalDataNoForm = decodeTemplate(data, schema, allSchemas)
   var finalData = populatedDataWithFormFields(
     finalDataNoForm,
     fields,
@@ -459,15 +422,7 @@ function generateViewFile(
           type == 'date'
             ? nonmodifiableDateTemplateData
             : nonmodifiableTemplateData
-        const chunkOutputData = decodeTemplate(
-          data,
-          field.displayName,
-          fieldName,
-          fieldName,
-          fieldName,
-          [],
-          singularCapitalName,
-        )
+        const chunkOutputData = decodeTemplate(data, schema, allSchemas)
         nonmodifiableData = nonmodifiableData + chunkOutputData
       }
     })
@@ -488,150 +443,6 @@ function generateViewFile(
   })
 }
 
-function generateController(
-  tableName,
-  fields,
-  displayName,
-  singularName,
-  pluralName,
-  singularCapitalName,
-) {
-  const controllerOutputPath =
-    nodeAPIOutputPath + singularCapitalName + 'Controller.js'
-
-  const data = fs.readFileSync(templatesPath + 'UserController.js', 'utf8')
-  const finalData = decodeTemplate(
-    data,
-    null,
-    singularName,
-    pluralName,
-    tableName,
-    fields,
-    singularCapitalName,
-  )
-
-  console.log('Generating ' + controllerOutputPath)
-  fs.writeFile(controllerOutputPath, finalData, function (err) {
-    if (err) return console.log(err)
-    console.log('Generated ' + controllerOutputPath)
-  })
-}
-
-function generateAPIRoutes(schema) {
-  console.log('Writing the API routes')
-
-  const apiRoutesJSPath = '../api/apiRoutes.js'
-  const indicatorKeyword = 'Insert more API routes here'
-  const data = fs.readFileSync(apiRoutesJSPath, 'utf8')
-
-  const templateData =
-    "\n\n\
-    // Users Routes\n\
-    var userController = require('./controllers/generated/UserController')\n\
-    app.route('/api/users')\n\
-        .get(requestAuth, (req, res) => { userController.list(req, res, db) })\n\
-\n\
-    app.route('/api/user/:userId')\n\
-        .get( (req, res) => {userController.fetchUser(req, res, db) })\n\
-        .put( (req, res) => {userController.updateUser(req, res, db) })\n\
-        .delete((req, res) => { userController.deleteUser(req, res, db) })\n\
-\n\
-    app.route('/api/user/add')\n\
-        .post( (req, res) => { userController.createNewUser(req, res, db) })"
-
-  const finalData = decodeTemplate(
-    templateData,
-    null,
-    schema.singularName,
-    schema.pluralName,
-    schema.tableName,
-    schema.fields,
-    schema.singularCapitalName,
-  )
-  const insertionIndex =
-    data.indexOf(indicatorKeyword) + indicatorKeyword.length
-
-  var outputData = [
-    data.slice(0, insertionIndex),
-    finalData + '\n',
-    data.slice(insertionIndex),
-  ].join('')
-
-  fs.writeFile(apiRoutesJSPath, outputData, function (err) {
-    if (err) return console.log(err)
-    console.log('Generated the API routes at ' + apiRoutesJSPath)
-  })
-}
-
-function generateHTTPRoutes(schema) {
-  console.log('Generating the HTTP routes')
-  const routesKeyword = '{/* Insert more CRUD routes here */}'
-  const importKeyword = 'Insert more CRUD imports here'
-  const adminViewJSPath = '../client/src/admin/ui/AdminView.js'
-
-  const data = fs.readFileSync(adminViewJSPath, 'utf8')
-
-  const importData =
-    "\nimport { UsersListView, UpdateUserView, AddNewUserView, DetailedUserView } from '../generated/users';\n"
-  const finalImportData = decodeTemplate(
-    importData,
-    schema.displayName,
-    schema.singularName,
-    schema.pluralName,
-    schema.tableName,
-    schema.fields,
-    schema.singularCapitalName,
-  )
-  const importInsertionIndex =
-    data.indexOf(importKeyword) + importKeyword.length
-  const outputDataAfterAddingImports = [
-    data.slice(0, importInsertionIndex),
-    finalImportData,
-    data.slice(importInsertionIndex),
-  ].join('')
-
-  const httpRoutesData =
-    '\n\n\
-                <Route path="/admin/users">\n\
-                    <UsersListView />\n\
-                </Route>\n\
-                <Route path="/admin/user/:userId/update">\n\
-                    <UpdateUserView />\n\
-                </Route>\n\
-                <Route path="/admin/user/:userId/view">\n\
-                    <DetailedUserView />\n\
-                </Route>\n\
-                <Route path="/admin/user/add">\n\
-                    <AddNewUserView />\n\
-                </Route>\n'
-
-  const finalHttpRoutesData = decodeTemplate(
-    httpRoutesData,
-    schema.displayName,
-    schema.singularName,
-    schema.pluralName,
-    schema.tableName,
-    schema.fields,
-    schema.singularCapitalName,
-  )
-  const httpRoutesInsertionIndex =
-    outputDataAfterAddingImports.indexOf(routesKeyword) + routesKeyword.length
-  const outputDataAfterAddingImportsAndRoutes = [
-    outputDataAfterAddingImports.slice(0, httpRoutesInsertionIndex),
-    finalHttpRoutesData,
-    outputDataAfterAddingImports.slice(httpRoutesInsertionIndex),
-  ].join('')
-
-  fs.writeFile(
-    adminViewJSPath,
-    outputDataAfterAddingImportsAndRoutes,
-    function (err) {
-      if (err) return console.log(err)
-      console.log('Generated the http routes at ' + adminViewJSPath)
-    },
-  )
-}
-
 function generateMenuItems(schema) {
   console.log('Writing the API routes')
 
@@ -647,15 +458,7 @@ function generateMenuItems(schema) {
                 subItems: []\n\
             },'
 
-  const finalData = decodeTemplate(
-    templateData,
-    schema.displayName,
-    schema.singularName,
-    schema.pluralName,
-    schema.pluralName,
-    schema.fields,
-    schema.singularCapitalName,
-  )
+  const finalData = decodeTemplate(templateData, schema, allSchemas)
   const insertionIndex =
     data.indexOf(indicatorKeyword) + indicatorKeyword.length
 
@@ -677,12 +480,12 @@ function generateScaffold(schema) {
     fields,
     displayName,
     singularName,
-    pluralName,
+    lowercasePluralName,
     singularCapitalName,
     orderBy,
   } = schema
 
-  const dir = outputPath + pluralName
+  const dir = outputPath + lowercasePluralName
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
@@ -702,11 +505,11 @@ function generateScaffold(schema) {
   // )
   // generateFile(
   //   'index.tsx',
-  //   pluralName,
+  //   lowercasePluralName,
   //   fields,
   //   displayName,
   //   singularName,
-  //   pluralName,
+  //   lowercasePluralName,
   //   singularCapitalName,
   // )
   // if (orderBy) {
@@ -717,24 +520,16 @@ function generateScaffold(schema) {
   //   }
   //   generateFile(
   //     'list.tsx',
-  //     pluralName,
+  //     lowercasePluralName,
   //     fields,
   //     displayName,
   //     singularName,
-  //     pluralName,
+  //     lowercasePluralName,
   //     singularCapitalName,
   //     orderByStr,
   //   )
   // } else {
-  generateFile(
-    'list.tsx',
-    pluralName,
-    fields,
-    displayName,
-    singularName,
-    pluralName,
-    singularCapitalName,
-  )
+  generateFile('list.tsx', schema)
   // }
   // generateFormFile(
   //   'update/[id].tsx',
@@ -764,7 +559,7 @@ function generateScaffold(schema) {
   //   fields,
   //   displayName,
   //   singularName,
-  //   pluralName,
+  //   lowercasePluralName,
   //   singularCapitalName,
   // )
   // // add API routes
@@ -1715,13 +1510,11 @@ function populatedDataWithFormFields(
           ? nonEditableFormFieldTemplateData
           : ''
       }
-      const chunkOutputData = decodeTemplate(
+      const chunkOutputData = decodeFieldTemplate(
         templateData,
+        allSchemas,
         field.displayName,
         fieldName,
-        fieldName,
-        fieldName,
-        [],
       )
       allChunks.push(chunkOutputData)
     }
@@ -1751,13 +1544,11 @@ function populatedDataWithFormErrors(
   Object.keys(fields).forEach(function (fieldName) {
     var field = fields[fieldName]
     var templateData = dataMap[field.type]
-    templateData = decodeTemplate(
+    templateData = decodeFieldTemplate(
       templateData,
+      allSchemas,
       field.displayName,
       fieldName,
-      fieldName,
-      fieldName,
-      [],
     )
     if (field.required === true) {
       if (
@@ -1766,13 +1557,11 @@ function populatedDataWithFormErrors(
       ) {
         return
       }
-      var errRequired = decodeTemplate(
+      var errRequired = decodeFieldTemplate(
         dataMap.required,
+        allSchemas,
         field.displayName,
         fieldName,
-        fieldName,
-        fieldName,
-        [],
       )
       allErrors.push(errRequired)
     }
@@ -1798,5 +1587,5 @@ function populatedDataWithFormErrors(
 }
 
 console.log('Starting scaffoling for ' + schemaKey)
-var currentTable = schema[schemaKey]
+var currentTable = allSchemas[schemaKey]
 generateScaffold(currentTable)

@@ -30,7 +30,7 @@ const schema = {
     tableName: 'subscriptions',
     singularName: 'subscription',
     singularCapitalName: 'Subscription',
-    pluralName: 'subscriptions',
+    lowercasePluralName: 'subscriptions',
     titleFieldKey: 'name',
   },
   users: {
@@ -38,7 +38,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {},

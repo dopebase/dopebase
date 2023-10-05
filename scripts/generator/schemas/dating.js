@@ -38,7 +38,7 @@ const schema = {
     tableName: 'swipes',
     singularName: 'swipe',
     singularCapitalName: 'Swipe',
-    pluralName: 'swipes',
+    lowercasePluralName: 'swipes',
     titleFieldKey: 'type',
     orderBy: {
       field: 'createdAt',
@@ -81,7 +81,7 @@ const schema = {
     tableName: 'reports',
     singularName: 'report',
     singularCapitalName: 'Report',
-    pluralName: 'reports',
+    lowercasePluralName: 'reports',
     titleFieldKey: 'type',
     orderBy: {
       field: 'createdAt',
@@ -104,7 +104,7 @@ const schema = {
   //     tableName: "swipe_counts",
   //     singularName: "swipe_count",
   //     singularCapitalName: "Swipe_count",
-  //     pluralName: "swipe_counts",
+  //     lowercasePluralName: "swipe_counts",
   //     titleFieldKey: "count"
   // },
   users: {
@@ -112,7 +112,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
   },
   mapRenderers: {},
