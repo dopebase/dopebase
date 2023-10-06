@@ -1,9 +1,13 @@
+'use client'
 import React, { useEffect, useState } from 'react'
-import useCurrentUser from '../../../hooks/useCurrentUser'
+import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
+import { authFetch } from '../../../../modules/auth/utils/authFetch'
+import { pluginsAPIURL } from '../../../../config/config'
+import styles from '../../../../admin/themes/admin.module.css'
 
-const baseAPIURL = 'http://localhost:3000/api/admin/'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-function IMParentArticleCategoryTypeaheadComponent(props) {
+function ParentArticleCategoryTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [article_categories, setArticle_categories] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
@@ -15,56 +19,50 @@ function IMParentArticleCategoryTypeaheadComponent(props) {
   const { id, name, onSelect } = props
 
   useEffect(() => {
-    if (!id) {
-      setIsLoading(false)
-      return
-    }
-    fetch(baseAPIURL + ',/' + id)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      if (!id) {
+        setIsLoading(false)
+        return
+      }
+      try {
+        const response = await authFetch(
+          baseAPIURL + 'article_categories/view?id=' + id,
+        )
+        if (response?.data) {
+          setInputValue(data.name) // data.firstName + " " + data.lastName)
+          initializeModifieableNonFormData(response.data)
+          setIsLoading(false)
+        }
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        if (data) {
-          setInputValue(data.name) // data.firstName + " " + data.lastName)
-        }
-        fetch(baseAPIURL + 'article_categories/' + id)
-          .then(response => response.json())
-          .catch(err => {
-            console.log(err)
-            setIsLoading(false)
-          })
-          .then(data => {
-            if (data) {
-              setInputValue(data.name) // data.firstName + " " + data.lastName)
-            }
-            setIsLoading(false)
-          })
-      })
-  }, [])
+      }
+    }
+    fetchData()
+  }, [id])
 
   useEffect(() => {
-    if (typeaheadValue == null || loading == true) {
-      return
-    }
-    const config = {
-      headers: { Authorization: token },
-    }
-    fetch(
-      baseAPIURL + 'article_categories/?limit=10&search=' + typeaheadValue,
-      config,
-    )
-      .then(response => response.json())
-      .catch(err => {
-        console.log(err)
-      })
-      .then(data => {
-        console.log(data)
-        if (data && data.article_categories) {
-          setArticle_categories(data.article_categories)
+    const fetchData = async () => {
+      if (typeaheadValue == null || loading == true) {
+        return
+      }
+      try {
+        const response = await authFetch(
+          baseAPIURL +
+            'article_categories/list?limit=10&search=' +
+            typeaheadValue,
+        )
+        if (response?.data) {
+          console.log(response.data)
+          if (response?.data.article_categories) {
+            setArticle_categories(response.data.article_categories)
+          }
         }
-      })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
   }, [typeaheadValue, loading])
 
   const handleChange = event => {
@@ -99,7 +97,7 @@ function IMParentArticleCategoryTypeaheadComponent(props) {
   }
 
   return (
-    <div className="TypeaheadComponent">
+    <div className={`${styles.TypeaheadComponent} TypeaheadComponent`}>
       <input
         className={`${styles.FormTextField} FormTextField`}
         autoComplete="off"
@@ -111,8 +109,11 @@ function IMParentArticleCategoryTypeaheadComponent(props) {
         onChange={handleChange}
       />
       {isTypeaheadVisible && (
-        <div className="TypeaheadResultsContainer">
-          <ul className="TypeaheadResultsList" id={name}>
+        <div
+          className={`${styles.TypeaheadResultsContainer} TypeaheadResultsContainer`}>
+          <ul
+            className={`${styles.TypeaheadResultsList} TypeaheadResultsList`}
+            id={name}>
             {listItems}
           </ul>
         </div>
@@ -121,4 +122,4 @@ function IMParentArticleCategoryTypeaheadComponent(props) {
   )
 }
 
-export default IMParentArticleCategoryTypeaheadComponent
+export default ParentArticleCategoryTypeaheadComponent

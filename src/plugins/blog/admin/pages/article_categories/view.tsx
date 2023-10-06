@@ -26,13 +26,14 @@ const CodeMirror = dynamic(
   },
   { ssr: false },
 )
+import styles from '../../../../../admin/themes/admin.module.css'
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const DetailedCategoryView = props => {
+const DetailedarticleCategoriesView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -45,7 +46,7 @@ const DetailedCategoryView = props => {
         const response = await authFetch(
           baseAPIURL + 'article_categories/view?id=' + id,
         )
-        if (response.data) {
+        if (response?.data) {
           setOriginalData(response.data)
         } else {
           alert('Error fetching data - try refreshing the page')
@@ -78,90 +79,90 @@ const DetailedCategoryView = props => {
   const editPath = './update?id=' + id
 
   return (
-    <div className="Card FormCard">
+    <div className={`${styles.FormCard} ${styles.Card}`}>
       <div className="CardBody">
         <h1>
           {originalData && originalData.name}
-          <a className="Link EditLink" href={editPath}>
+          <a
+            className={`${styles.Link} ${styles.EditLink} Link EditLink`}
+            href={editPath}>
             Edit
           </a>
         </h1>
 
         {/* Insert all view form fields here */}
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Name</label>
-          <span className="LockedFieldValue">{originalData.name}</span>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Description</label>
-          <div className="markdownEditorReadOnly FormTextField">
-            <Editor
-              defaultValue={originalData?.description ?? ''}
-              readOnly={true}
-            />
-          </div>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+                <div className={`${styles.FormTextField} ${styles.markdownEditorReadOnly} markdownEditorReadOnly FormTextField`}>
+                  <Editor
+                    defaultValue={originalData?.description ?? ''}
+                    readOnly={true}
+                  />
+                </div>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Slug</label>
-          <span className="LockedFieldValue">{originalData.slug}</span>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Logo</label>
-          {originalData.logo_url && (
-            <IMPhoto openable className="photo" src={originalData.logo_url} />
-          )}
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
+                {originalData.logo_url && (
+                    <IMPhoto openable className="photo" src={originalData.logo_url} />
+                )}
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">SEO Title</label>
-          <span className="LockedFieldValue">{originalData.seo_title}</span>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>SEO Title</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.seo_title}</span>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">SEO Description</label>
-          <span className="LockedFieldValue">
-            {originalData.seo_description}
-          </span>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>SEO Description</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.seo_description}</span>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Canonical URL</label>
-          <span className="LockedFieldValue">{originalData.canonical_url}</span>
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Canonical URL</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.canonical_url}</span>
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">SEO Cover Image</label>
-          {originalData.seo_image_url && (
-            <IMPhoto
-              openable
-              className="photo"
-              src={originalData.seo_image_url}
-            />
-          )}
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>SEO Cover Image</label>
+                {originalData.seo_image_url && (
+                    <IMPhoto openable className="photo" src={originalData.seo_image_url} />
+                )}
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Published</label>
-          <IMToggleSwitchComponent
-            isChecked={originalData.published}
-            disabled
-          />
-        </div>
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
+                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
+            </div>
+    
 
-        <div className="FormFieldContainer">
-          <label className="FormLabel">Parent Category</label>
-          <IMForeignKeyComponent
-            id={originalData.parent_id}
-            apiRouteName="category"
-            titleKey="name"
-          />
-        </div>
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
+                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="undefined" titleKey="name" />
+            </div>
+    
+
       </div>
     </div>
   )
 }
 
-export default DetailedCategoryView
+export default DetailedarticleCategoriesView

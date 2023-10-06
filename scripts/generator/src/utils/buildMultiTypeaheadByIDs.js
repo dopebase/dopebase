@@ -48,7 +48,7 @@ function buildMultiTypeaheadByIDs(
   const importsIndicator = '/* Insert extra imports here */'
   var insertionIndex = mutableOriginalData.indexOf(importsIndicator)
   const importData =
-    '\nimport ' + className + " from '../ui/" + fileName + "'\n"
+    '\nimport ' + className + " from '../../components/" + fileName + "'\n"
 
   var outputData = mutableOriginalData
   if (insertionIndex !== -1) {

@@ -2,13 +2,7 @@ var fs = require('fs')
 var { outputPath, templatesPath } = require('../config')
 var { decodeData } = require('./decodeData')
 
-function buildTypeahead(
-  mutableOriginalData,
-  allSchemas,
-  field,
-  fieldName,
-  formType,
-) {
+function buildTypeahead(mutableOriginalData, allSchemas, field, fieldName) {
   const foreignKey = field.foreignKey
   const foreignField = allSchemas[foreignKey]
   const typeaheadRenderers = field.typeaheadRenderers
@@ -37,7 +31,11 @@ function buildTypeahead(
 
   const className = field.cellClassName + 'TypeaheadComponent'
   const fileName = className + '.js'
-  const filePath = dir + 'ui/' + fileName
+  const folderPath = dir + '../components/'
+  const filePath = folderPath + fileName
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   console.log('Generating typeahead class' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
@@ -48,9 +46,8 @@ function buildTypeahead(
   const importsIndicator = '/* Insert extra imports here */'
   var insertionIndex = mutableOriginalData.indexOf(importsIndicator)
 
-  const prefix = formType === 'add' ? '' : '../'
   const importData =
-    '\nimport ' + className + " from '" + prefix + '../ui/' + fileName + "'\n"
+    '\nimport ' + className + " from '" + '../../components/' + fileName + "'\n"
 
   var outputData = mutableOriginalData
   if (insertionIndex !== -1) {

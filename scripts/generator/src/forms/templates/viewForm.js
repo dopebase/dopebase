@@ -3,7 +3,7 @@ const viewFormTemplateDataByType = {
   string: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="LockedFieldValue">{originalData.user}</span>
+                <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData.user}</span>
             </div>
     `,
   boolean: `
@@ -162,9 +162,9 @@ const viewFormTemplateDataByType = {
   markdown: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <div className="markdownEditorReadOnly FormTextField">
+                <div className={\`\${styles.FormTextField} \${styles.markdownEditorReadOnly} markdownEditorReadOnly FormTextField\`}>
                   <Editor
-                    defaultValue={originalData.user}
+                    defaultValue={originalData?.user ?? ''}
                     readOnly={true}
                   />
                 </div>

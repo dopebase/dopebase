@@ -26,6 +26,7 @@ const CodeMirror = dynamic(
   },
   { ssr: false },
 )
+import styles from '../../../../../admin/themes/admin.module.css'
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -45,7 +46,7 @@ const Detailed$capitalcaseplural$View = props => {
         const response = await authFetch(
           baseAPIURL + '$lowercaseplural$/view?id=' + id,
         )
-        if (response.data) {
+        if (response?.data) {
           setOriginalData(response.data)
         } else {
           alert('Error fetching data - try refreshing the page')
@@ -78,11 +79,13 @@ const Detailed$capitalcaseplural$View = props => {
   const editPath = './update?id=' + id
 
   return (
-    <div className="Card FormCard">
+    <div className={`${styles.FormCard} ${styles.Card}`}>
       <div className="CardBody">
         <h1>
           {originalData && originalData.name}
-          <a className="Link EditLink" href={editPath}>
+          <a
+            className={`${styles.Link} ${styles.EditLink} Link EditLink`}
+            href={editPath}>
             Edit
           </a>
         </h1>

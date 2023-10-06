@@ -1,9 +1,9 @@
+'use client'
 import React, { useEffect, useState } from 'react'
-import useCurrentUser from '../../../hooks/useCurrentUser'
-import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-import { pluginsAPIURL } from '../../../../../config/config'
-import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-import styles from '../../../../../admin/themes/admin.module.css'
+import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
+import { authFetch } from '../../../../modules/auth/utils/authFetch'
+import { pluginsAPIURL } from '../../../../config/config'
+import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 

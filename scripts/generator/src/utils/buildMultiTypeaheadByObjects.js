@@ -7,7 +7,6 @@ function buildMultiTypeaheadByObjects(
   allSchemas,
   field,
   fieldName,
-  formType,
 ) {
   const foreignKeys = field.foreignKeys ? field.foreignKeys : field.foreignKey
   const foreignField = allSchemas[foreignKeys]
@@ -47,9 +46,8 @@ function buildMultiTypeaheadByObjects(
   // Then we import that class into the form code file
   const importsIndicator = '/* Insert extra imports here */'
   var insertionIndex = mutableOriginalData.indexOf(importsIndicator)
-  const prefix = formType === 'add' ? '' : '../'
   const importData =
-    '\nimport ' + className + " from '" + prefix + '../ui/' + fileName + "'\n"
+    '\nimport ' + className + " from '" + '../../components/' + fileName + "'\n"
 
   var outputData = mutableOriginalData
   if (insertionIndex !== -1) {

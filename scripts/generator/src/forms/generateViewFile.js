@@ -1,4 +1,8 @@
-var { templatesPath, outputPath } = require('../config')
+var fs = require('fs')
+
+var { decodeTemplate } = require('../utils/decodeTemplate')
+var { populatedDataWithFormFields } = require('./populatedDataWithFormFields')
+var { outputPath, templatesPath } = require('../config')
 
 function generateViewFile(
   fileName,
@@ -23,6 +27,7 @@ function generateViewFile(
   const finalDataNoForm = decodeTemplate(data, schema, allSchemas)
   var finalData = populatedDataWithFormFields(
     finalDataNoForm,
+    allSchemas,
     fields,
     viewMapData,
     viewKeyword,
@@ -31,62 +36,6 @@ function generateViewFile(
   )
   if (titleFieldKey && finalData && finalData.indexOf('titleFieldKey') != -1) {
     finalData = finalData.split('titleFieldKey').join(titleFieldKey)
-  }
-
-  // If we have non-modifiable data, we insert its initialization code
-  const nonmodifieableKeyword =
-    '/* Insert non modifiable initialization data here */'
-  const nonmodifieableIndex = finalData.indexOf(nonmodifieableKeyword)
-  if (nonmodifieableIndex != -1) {
-    const nonmodifiableTypes = [
-      'photo',
-      'photos',
-      'multimedia',
-      'multimedias',
-      'location',
-      'simpleLocation',
-      'date',
-      'object',
-      'array',
-      'enum',
-      'colors',
-      'color',
-      'address',
-      'boolean',
-      'code',
-    ]
-    // const nonmodifiableTypes = ["photo", "photos", "location", "date","object", "array", "enum", "colors","color"]
-    const nonmodifiableDateTemplateData = `
-          if (originalData.user && Date.parse(originalData.user)) {
-              nonFormData['user'] = new Date(originalData.user)
-          }
-          `
-
-    const nonmodifiableTemplateData = `
-          if (originalData.user) {
-              nonFormData['user'] = originalData.user
-          }
-          `
-    var nonmodifiableData = ''
-    Object.keys(fields).forEach(function (fieldName) {
-      const field = fields[fieldName]
-      const type = field.type
-      if (nonmodifiableTypes.indexOf(type) != -1) {
-        const data =
-          type == 'date'
-            ? nonmodifiableDateTemplateData
-            : nonmodifiableTemplateData
-        const chunkOutputData = decodeTemplate(data, schema, allSchemas)
-        nonmodifiableData = nonmodifiableData + chunkOutputData
-      }
-    })
-
-    const insertionIndex = nonmodifieableIndex + nonmodifieableKeyword.length
-    finalData = [
-      finalData.slice(0, insertionIndex),
-      nonmodifiableData,
-      finalData.slice(insertionIndex),
-    ].join('')
   }
 
   const filePath = dir + '/' + fileName
