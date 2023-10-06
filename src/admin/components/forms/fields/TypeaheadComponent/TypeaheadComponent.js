@@ -4,7 +4,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
 const baseAPIURL = pluginsAPIURL
 
-function IMTypeaheadComponent(props) {
+function TypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [elements, setElements] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
@@ -87,4 +87,4 @@ function IMTypeaheadComponent(props) {
   )
 }
 
-export default IMTypeaheadComponent
+export default TypeaheadComponent

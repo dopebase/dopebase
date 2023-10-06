@@ -1,4 +1,4 @@
-export { default as IMTypeaheadComponent } from './IMTypeaheadComponent/IMTypeaheadComponent'
+export { default as TypeaheadComponent } from './TypeaheadComponent/TypeaheadComponent'
 export { default as IMForeignKeyComponent } from './IMForeignKeyComponent/IMForeignKeyComponent'
 export { default as IMColorBoxComponent } from './IMColorBoxComponent/IMColorBoxComponent'
 export { default as IMStaticMultiSelectComponent } from './IMStaticMultiSelectComponent/IMStaticMultiSelectComponent'

@@ -19,7 +19,7 @@ const CodeMirror = dynamic(
 import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
 import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
-  IMTypeaheadComponent,
+  TypeaheadComponent,
   IMObjectInputComponent,
   IMMultimediaComponent,
   IMArrayInputComponent,
