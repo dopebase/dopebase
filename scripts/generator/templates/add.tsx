@@ -1,10 +1,23 @@
 // @ts-nocheck
+'use client'
 import React, { useEffect, useState } from 'react'
-import { GetStaticProps } from 'next'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
-import IMDatePicker from '../../../components/dashboard/IMDatePicker'
-import { IMLocationPicker } from '../../../components/dashboard/IMLocationPicker'
+import Editor from 'rich-markdown-editor'
+import dynamic from 'next/dynamic'
+const CodeMirror = dynamic(
+  () => {
+    import('codemirror')
+    // import('codemirror/mode/javascript/javascript')
+    // import('codemirror/mode/css/css')
+    // import('codemirror/mode/htmlmixed/htmlmixed')
+    // import('codemirror/mode/markdown/markdown')
+    return import('react-codemirror2').then(mod => mod.Controlled)
+  },
+  { ssr: false },
+)
+import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
   IMTypeaheadComponent,
   IMObjectInputComponent,
@@ -18,51 +31,39 @@ import {
   IMPhoto,
   IMModal,
   IMToggleSwitchComponent,
-} from '../../../components/dashboard/IMComponents'
-import dynamic from 'next/dynamic'
-import Editor from 'rich-markdown-editor'
-const CodeMirror = dynamic(
-  () => {
-    import('codemirror/mode/xml/xml')
-    import('codemirror/mode/javascript/javascript')
-    import('codemirror/mode/css/css')
-    import('codemirror/mode/htmlmixed/htmlmixed')
-    import('codemirror/mode/markdown/markdown')
-    return import('react-codemirror2').then(mod => mod.Controlled)
-  },
-  { ssr: false },
-)
+} from '../../../../../admin/components/forms/fields'
+import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
 
-const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-const baseAPIURL = pluginsAPIURL
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
 
-export const getStaticProps: GetStaticProps = async () => {
-  return { props: { isAdminRoute: true } }
-}
+const beautify_html = require('js-beautify').html
+const baseAPIURL = `${pluginsAPIURL}`
 
-const AddNewUserView = () => {
+const AddNew$capitalsingular$View = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
   const [originalData, setOriginalData] = useState(null)
 
   useEffect(() => {
-    setModifiedNonFormData({ created_at: new Date() })
+    setModifiedNonFormData({
+      created_at: Math.floor(new Date().getTime() / 1000).toString(),
+    })
   }, [])
 
-  const createUser = async (data, setSubmitting) => {
-    console.log(JSON.stringify(data))
+  const create$capitalsingular$ = async (data, setSubmitting) => {
     setIsLoading(true)
-    const response = await fetch(baseAPIURL + 'users/add', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...data, ...modifiedNonFormData }), // body data type must match "Content-Type" header
-    })
+    const url = `${baseAPIURL}admin/blog/article_categories/add`
+    const response = await authPost(
+      url,
+      JSON.stringify({ ...data, ...modifiedNonFormData }),
+    )
+    const resData = response.data
+    if (resData?.error) {
+      alert(resData?.error)
+    }
     setSubmitting(false)
     setIsLoading(false)
   }
@@ -349,9 +350,9 @@ const AddNewUserView = () => {
   }
 
   return (
-    <div className="Card FormCard">
+    <div className={styles.FormCard}>
       <div className="CardBody">
-        <h1>Create New User</h1>
+        <h1>Create New $capitalsingular$</h1>
         <Formik
           initialValues={{}}
           validate={values => {
@@ -364,7 +365,7 @@ const AddNewUserView = () => {
             return errors
           }}
           onSubmit={(values, { setSubmitting }) => {
-            createUser(values, setSubmitting)
+            create$capitalsingular$(values, setSubmitting)
           }}>
           {({
             values,
@@ -379,12 +380,12 @@ const AddNewUserView = () => {
             <form onSubmit={handleSubmit}>
               {/* Insert all add form fields here */}
 
-              <div className="FormActionContainer">
+              <div className={styles.FormActionContainer}>
                 <button
-                  className="PrimaryButton"
+                  className={styles.PrimaryButton}
                   type="submit"
                   disabled={isSubmitting}>
-                  Create user
+                  Create $lowercasesingular$
                 </button>
               </div>
             </form>
@@ -395,4 +396,4 @@ const AddNewUserView = () => {
   )
 }
 
-export default AddNewUserView
+export default AddNew$capitalsingular$View

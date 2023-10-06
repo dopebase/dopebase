@@ -10,7 +10,7 @@ function foreignKeysArrayIdTableCellBuilder(
   listTemplateData,
 ) {
   // For array data types, we first generate a custom cell for tables
-  var dir = outputPath
+  var dir = outputPath()
 
   var decode = {}
   decode['$capitalcase$'] = () => field.cellClassName
@@ -73,7 +73,7 @@ function arrayTableCellBuilder(
   listTemplateData,
 ) {
   // For array data types, we first generate a custom cell for tables
-  var dir = outputPath
+  var dir = outputPath()
 
   var decode = {}
   decode['$capitalcase$'] = () => field.cellClassName
@@ -135,7 +135,7 @@ function foreignKeysArrayTableCellBuilder(
   listTemplateData,
 ) {
   // For array data types, we first generate a custom cell for tables
-  var dir = outputPath
+  var dir = outputPath()
 
   var decode = {}
   decode['$capitalcase$'] = () => field.cellClassName
@@ -199,7 +199,7 @@ function objectTableCellBuilder(
 ) {
   /// In case we need custom object
   // For object data types, we first generate a custom cell for tables
-  var dir = outputPath
+  var dir = outputPath()
 
   var decode = {}
   decode['$capitalcase$'] = () => field.cellClassName

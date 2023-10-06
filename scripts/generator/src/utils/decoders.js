@@ -16,11 +16,14 @@ const decoders = (schema, allSchemas, extraQueryParams) => {
   decode['$capitalsingular$'] = () => singularCapitalName
   decode['$displayplural$'] = () => pluralDisplayName
   decode['$lowercasesingular$'] = () => lowercaseSingularName
+  decode['user'] = () => lowercaseSingularName
+  decode['User'] = () => lowercasePluralName
   decode['$columns$'] = template => {
     return buildColumns(fields, template, allSchemas)
   }
   decode['$extraQueryParams$'] = () =>
     extraQueryParams ? `"${extraQueryParams}"` : 'null'
+
   return decode
 }
 
@@ -33,6 +36,8 @@ const decoderKeys = [
   '$lowercasesingular$',
   '$columns$',
   '$extraQueryParams$',
+  'user',
+  'User',
 ]
 
 module.exports = { decoders, decoderKeys }

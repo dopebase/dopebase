@@ -72,7 +72,7 @@ function IMTypeaheadComponent(props) {
   return (
     <div className="TypeaheadComponent">
       <input
-        className="FormTextField"
+        className={`${styles.FormTextField} FormTextField`}
         type="text"
         name={name}
         value={inputValue}

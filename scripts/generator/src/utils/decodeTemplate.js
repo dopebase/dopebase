@@ -17,6 +17,7 @@ const decodeTemplate = (
       output = builder.templateData
       output = output && output.split(keyword).join(builder.columnsString)
     } else {
+      console.log(`replacing ${keyword} with ${decode[keyword]()}`)
       output = output && output.split(keyword).join(decode[keyword]())
     }
   })
@@ -32,7 +33,13 @@ const decodeFieldTemplate = (template, allSchemas, displayName, fieldName) => {
     lowercasePluralName: fieldName,
     singularCapitalName: fieldName,
   }
+  console.log('decode field template ' + fieldName)
   var decode = decoders(schema, allSchemas)
+
+  decode['$fielddisplay$'] = () => fieldName
+  decode['$fieldkey$'] = () => displayName
+  decode['user'] = () => fieldName
+  decode['User'] = () => displayName
 
   var output = template
   decoderKeys.forEach(keyword => {

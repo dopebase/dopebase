@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../hooks/useCurrentUser'
+import styles from '../../../../../admin.module.css'
 
 const baseAPIURL = 'http://localhost:3000/api/admin/'
 
@@ -116,7 +117,7 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
     <div className="TypeaheadComponent" style={{ verticalAlign: 'top' }}>
       <div className="FormSelectionField">{dataItems}</div>
       <input
-        className="FormTextField"
+        className={`${styles.FormTextField} FormTextField`}
         autocomplete="off"
         onFocus={onFocus}
         onBlur={onBlur}

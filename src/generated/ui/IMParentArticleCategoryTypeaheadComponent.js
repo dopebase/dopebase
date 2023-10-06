@@ -3,9 +3,9 @@ import useCurrentUser from '../../../hooks/useCurrentUser'
 
 const baseAPIURL = 'http://localhost:3000/api/admin/'
 
-function IM$className$TypeaheadComponent(props) {
+function IMParentArticleCategoryTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [$lowercaseplural$, set$capitalcaseplural$] = useState(null)
+  const [article_categories, setArticle_categories] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
   const [inputValue, setInputValue] = useState(null)
   const [isTypeaheadVisible, setIsTypeaheadVisible] = useState(false)
@@ -19,7 +19,7 @@ function IM$className$TypeaheadComponent(props) {
       setIsLoading(false)
       return
     }
-    fetch(baseAPIURL + '$lowercasesingular$/' + id)
+    fetch(baseAPIURL + ',/' + id)
       .then(response => response.json())
       .catch(err => {
         console.log(err)
@@ -27,9 +27,9 @@ function IM$className$TypeaheadComponent(props) {
       })
       .then(data => {
         if (data) {
-          setInputValue($originalDataFormatter$) // data.firstName + " " + data.lastName)
+          setInputValue(data.name) // data.firstName + " " + data.lastName)
         }
-        fetch(baseAPIURL + '$lowercaseplural$/' + id)
+        fetch(baseAPIURL + 'article_categories/' + id)
           .then(response => response.json())
           .catch(err => {
             console.log(err)
@@ -37,7 +37,7 @@ function IM$className$TypeaheadComponent(props) {
           })
           .then(data => {
             if (data) {
-              setInputValue($originalDataFormatter$) // data.firstName + " " + data.lastName)
+              setInputValue(data.name) // data.firstName + " " + data.lastName)
             }
             setIsLoading(false)
           })
@@ -52,7 +52,7 @@ function IM$className$TypeaheadComponent(props) {
       headers: { Authorization: token },
     }
     fetch(
-      baseAPIURL + '$lowercaseplural$/?limit=10&search=' + typeaheadValue,
+      baseAPIURL + 'article_categories/?limit=10&search=' + typeaheadValue,
       config,
     )
       .then(response => response.json())
@@ -61,8 +61,8 @@ function IM$className$TypeaheadComponent(props) {
       })
       .then(data => {
         console.log(data)
-        if (data && data.$lowercaseplural$) {
-          set$capitalcaseplural$(data.$lowercaseplural$)
+        if (data && data.article_categories) {
+          setArticle_categories(data.article_categories)
         }
       })
   }, [typeaheadValue, loading])
@@ -82,15 +82,15 @@ function IM$className$TypeaheadComponent(props) {
   }
 
   const onClick = data => {
-    setInputValue($originalDataFormatter$)
+    setInputValue(data.name)
     onSelect && onSelect(data.id)
     setIsTypeaheadVisible(false)
   }
 
   const listItems =
-    $lowercaseplural$ && $lowercaseplural$.length
-      ? $lowercaseplural$.map(
-          data => <li onClick={() => onClick(data)}>$dataItemRenderer$</li>, // <li>{element.firstName} {element.lastName}</li>
+    article_categories && article_categories.length
+      ? article_categories.map(
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><span>{data.name}</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -121,4 +121,4 @@ function IM$className$TypeaheadComponent(props) {
   )
 }
 
-export default IM$className$TypeaheadComponent
+export default IMParentArticleCategoryTypeaheadComponent

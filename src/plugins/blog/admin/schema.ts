@@ -85,7 +85,7 @@ const schema = {
     tableName: 'articles',
     singularName: 'article',
     singularCapitalName: 'Article',
-    pluralName: 'articles',
+    lowercasePluralName: 'articles',
     titleFieldKey: 'title',
   },
   article_categories: {
@@ -131,7 +131,7 @@ const schema = {
     tableName: 'article_tag_categories',
     singularName: 'category',
     singularCapitalName: 'Category',
-    pluralName: 'categories',
+    lowercasePluralName: 'categories',
     titleFieldKey: 'name',
   },
   article_tags: {
@@ -169,7 +169,7 @@ const schema = {
     tableName: 'article_tags',
     singularName: 'articleTag',
     singularCapitalName: 'ArticleTag',
-    pluralName: 'articleTags',
+    lowercasePluralName: 'articleTags',
     titleFieldKey: 'name',
   },
   author_articles: {
@@ -231,7 +231,7 @@ const schema = {
     tableName: 'articles',
     singularName: 'article',
     singularCapitalName: 'Article',
-    pluralName: 'articles',
+    lowercasePluralName: 'articles',
     titleFieldKey: 'title',
   },
 
@@ -262,7 +262,7 @@ const schema = {
     tableName: 'article_ideas',
     singularName: 'articleIdea',
     singularCapitalName: 'ArticleIdea',
-    pluralName: 'articleIdeas',
+    lowercasePluralName: 'articleIdeas',
     titleFieldKey: 'title',
   },
   users: {
@@ -270,7 +270,7 @@ const schema = {
     tableName: 'users',
     singularName: 'user',
     singularCapitalName: 'User',
-    pluralName: 'users',
+    lowercasePluralName: 'users',
     titleFieldKey: 'firstName',
     fields: {
       email: { type: 'string', required: true, displayName: 'Email' },
