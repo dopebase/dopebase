@@ -54,8 +54,8 @@ function ParentArticleCategoryTypeaheadComponent(props) {
         )
         if (response?.data) {
           console.log(response.data)
-          if (response?.data.article_categories) {
-            setArticle_categories(response.data.article_categories)
+          if (response?.data) {
+            setArticle_categories(response.data)
           }
         }
       } catch (err) {

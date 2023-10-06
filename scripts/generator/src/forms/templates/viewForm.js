@@ -125,19 +125,19 @@ const viewFormTemplateDataByType = {
   typeahead: (foreignKeySchema, displayName, fieldName) => `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeyComponent id={originalData.${fieldName}} apiRouteName="${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeyComponent id={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
     `,
   multiTypeaheadId: (foreignKeySchema, displayName, fieldName) => `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeysIdComponent ids={originalData.${fieldName}} apiRouteName="${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeysIdComponent ids={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
     `,
   multiTypeahead: (foreignKeySchema, displayName, fieldName) => `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeysComponent data={originalData.${fieldName}} apiRouteName="${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeysComponent data={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.singularName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
     `,
   code: `

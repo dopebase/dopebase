@@ -6,11 +6,11 @@ const baseAPIURL = pluginsAPIURL
 function IMForeignKeyTableCell(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [name, setName] = useState(null)
-  const { apiRouteName, id, titleKey } = props
+  const { apiRouteName, viewRoute, id, titleKey } = props
 
   useEffect(() => {
-    console.log(baseAPIURL + apiRouteName + '?id=' + id)
-    fetch(baseAPIURL + apiRouteName + '?id=' + id)
+    console.log(baseAPIURL + apiRouteName + '/view?id=' + id)
+    fetch(baseAPIURL + apiRouteName + '/view?id=' + id)
       .then(response => response.json())
       .catch(err => {
         console.log(err)
@@ -28,7 +28,7 @@ function IMForeignKeyTableCell(props) {
     return null
   }
 
-  const viewPath = '/admin/' + apiRouteName + '/' + id
+  const viewPath = '../' + viewRoute + '/view?id=' + id
   return (
     <div className="foreign-key-container">
       <a href={viewPath}>{name}</a>

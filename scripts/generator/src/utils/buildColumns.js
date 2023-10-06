@@ -408,9 +408,12 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
           Header: "${field.displayName || fieldName}",
           accessor: "${fieldName}",
           Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="${
-                allSchemas[field.foreignKey].lowercasePluralName
-              }" titleKey="${allSchemas[field.foreignKey].titleFieldKey}" />
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/${
+                global.pluginName
+              }/${
+          allSchemas[field.foreignKey].lowercasePluralName
+        }" viewRoute="${allSchemas[field.foreignKey].lowercasePluralName}"
+          titleKey="${allSchemas[field.foreignKey].titleFieldKey}" />
           )
       },`
     } else if (field.type == 'location') {

@@ -87,7 +87,8 @@ const articleCategoriesColumns = [
           Header: "Parent Category",
           accessor: "parent_id",
           Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="article_categories" titleKey="name" />
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
+          titleKey="name" />
           )
       },,
   {

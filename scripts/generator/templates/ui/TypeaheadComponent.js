@@ -54,8 +54,8 @@ function $className$TypeaheadComponent(props) {
         )
         if (response?.data) {
           console.log(response.data)
-          if (response?.data.$lowercaseplural$) {
-            set$capitalcaseplural$(response.data.$lowercaseplural$)
+          if (response?.data) {
+            set$capitalcaseplural$(response.data)
           }
         }
       } catch (err) {
