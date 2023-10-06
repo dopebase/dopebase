@@ -78,20 +78,20 @@ const UpdateCategoryView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-          if (originalData.user) {
-              nonFormData['user'] = originalData.user
+          if (originalData.description) {
+              nonFormData['description'] = originalData.description
           }
           
-          if (originalData.user) {
-              nonFormData['user'] = originalData.user
+          if (originalData.logo_url) {
+              nonFormData['logo_url'] = originalData.logo_url
           }
           
-          if (originalData.user) {
-              nonFormData['user'] = originalData.user
+          if (originalData.seo_image_url) {
+              nonFormData['seo_image_url'] = originalData.seo_image_url
           }
           
-          if (originalData.user) {
-              nonFormData['user'] = originalData.user
+          if (originalData.published) {
+              nonFormData['published'] = originalData.published
           }
           
 

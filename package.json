@@ -45,5 +45,8 @@
     "@types/react": "18.2.21",
     "prisma": "^5.2.0",
     "typescript": "^5.2.2"
-  }
+  },
+  "resolutions": {
+    "prosemirror-model": "1.9.1"
+}
 }

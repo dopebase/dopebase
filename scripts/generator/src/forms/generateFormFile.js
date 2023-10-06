@@ -158,7 +158,12 @@ function generateFormFile(
             : type === 'code'
             ? nonmodifiableCodeTemplateData
             : nonmodifiableTemplateData
-        const chunkOutputData = decodeTemplate(data, schema, allSchemas)
+        const chunkOutputData = decodeFieldTemplate(
+          data,
+          allSchemas,
+          field.displayName,
+          fieldName,
+        )
         nonmodifiableData = nonmodifiableData + chunkOutputData
       }
     })
