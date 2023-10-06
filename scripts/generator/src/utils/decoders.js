@@ -16,8 +16,8 @@ const decoders = (schema, allSchemas, extraQueryParams) => {
   decode['$capitalsingular$'] = () => singularCapitalName
   decode['$displayplural$'] = () => pluralDisplayName
   decode['$lowercasesingular$'] = () => lowercaseSingularName
-  decode['user'] = () => lowercaseSingularName
-  decode['User'] = () => lowercasePluralName
+  decode['user'] = () => 'user'
+  decode['User'] = () => 'User'
   decode['$columns$'] = template => {
     return buildColumns(fields, template, allSchemas)
   }

@@ -33,37 +33,63 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const categoriesColumns = [
-  {
-    Header: 'Name',
-    accessor: 'name',
-  },
-  {
-    Header: 'Slug',
-    accessor: 'slug',
-  },
-  {
-    Header: 'Logo',
-    accessor: 'logo_url',
-    Cell: data => <IMImagesTableCell singleImageURL={data.value} />,
-  },
-  {
-    Header: 'Published',
-    accessor: 'published',
-    Cell: data => <IMToggleSwitchComponent isChecked={data.value} disabled />,
-  },
-  {
-    Header: 'Parent Category',
-    accessor: 'parent_id',
-    Cell: data => (
-      <IMForeignKeyTableCell
-        id={data.value}
-        apiRouteName="admin/blog/article_categories/view"
-        titleKey="name"
-      />
-    ),
-  },
-  ,
+const articleCategoriesColumns = [
+  
+      {
+          Header: "Name",
+          accessor: "name",
+      },
+            {
+            Header: "Description",
+            accessor: "description",
+            Cell: data => (
+                <div className='markdownReadOnly'>{data?.value && data.value.substring(0, 100)}...</div>
+            )
+            },
+      {
+          Header: "Slug",
+          accessor: "slug",
+      },
+      {
+          Header: "Logo",
+          accessor: "logo_url",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
+      },
+      {
+          Header: "SEO Title",
+          accessor: "seo_title",
+      },
+      {
+          Header: "SEO Description",
+          accessor: "seo_description",
+      },
+      {
+          Header: "Canonical URL",
+          accessor: "canonical_url",
+      },
+      {
+          Header: "SEO Cover Image",
+          accessor: "seo_image_url",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
+      },
+      {
+          Header: "Published",
+          accessor: "published",
+          Cell: data => (
+              <IMToggleSwitchComponent isChecked={data.value} disabled />
+          )
+      },
+      {
+          Header: "Parent Category",
+          accessor: "parent_id",
+          Cell: data => (
+              <IMForeignKeyTableCell id={data.value} apiRouteName="article_categories" titleKey="name" />
+          )
+      },,
   {
     Header: 'Actions',
     accessor: 'actions',
@@ -120,15 +146,15 @@ function ActionsItemView(props) {
   )
 }
 
-function ArticleTagCategoriesListView(props) {
+function articleCategoriesListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [categories, setArticleTagCategories] = useState([])
+  const [articleCategories, setarticleCategories] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => categoriesColumns, [])
+  const columns = useMemo(() => articleCategoriesColumns, [])
 
   const {
     getTableProps,
@@ -151,7 +177,7 @@ function ArticleTagCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: categories,
+      data: articleCategories,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
@@ -180,8 +206,8 @@ function ArticleTagCategoriesListView(props) {
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const categories = data
-        setData(categories)
+        const article_categories = data
+        setData(article_categories)
 
         setIsLoading(false)
       })
@@ -194,7 +220,7 @@ function ArticleTagCategoriesListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    setArticleTagCategories(data.slice(startRow, endRow))
+    setarticleCategories(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
@@ -210,7 +236,7 @@ function ArticleTagCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Tag Categories</h1>
+                <h1>Article Categories</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -252,11 +278,11 @@ function ArticleTagCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={categoriesColumns.length - 1}>
+                          <td colSpan={articleCategoriesColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={categoriesColumns.length - 1}>
+                          <td colSpan={articleCategoriesColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -340,4 +366,4 @@ function ArticleTagCategoriesListView(props) {
   )
 }
 
-export default ArticleTagCategoriesListView
+export default articleCategoriesListView

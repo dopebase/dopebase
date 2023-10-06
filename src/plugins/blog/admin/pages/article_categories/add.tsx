@@ -35,7 +35,7 @@ import {
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
-import IMParentArticleCategoryTypeaheadComponent from '../ui/IMParentArticleCategoryTypeaheadComponent.js'
+// import IMParentArticleCategoryTypeaheadComponent from '../ui/IMParentArticleCategoryTypeaheadComponent.js'
 
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authPost } from '../../../../../modules/auth/utils/authFetch'
@@ -565,11 +565,7 @@ const AddNewCategoryView = () => {
                 <label className={`${styles.FormLabel} FormLabel`}>
                   Parent Category
                 </label>
-                <IMParentArticleCategoryTypeaheadComponent
-                  onSelect={value => onTypeaheadSelect(value, 'parent_id')}
-                  id={originalData && originalData.parent_id}
-                  name={originalData && originalData.parent_id}
-                />
+                {/* <IMParentArticleCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "parent_id")} id={originalData && originalData.parent_id} name={originalData && originalData.parent_id} /> */}
               </div>
 
               <div className={styles.FormActionContainer}>
