@@ -30,15 +30,15 @@ function buildTypeahead(
   decode['$dataItemRenderer$'] = () => typeaheadRenderers.dataItemRenderer
 
   const data = fs.readFileSync(
-    templatesPath + 'ui/IMTypeaheadComponent.js',
+    templatesPath + 'ui/TypeaheadComponent.js',
     'utf8',
   )
   const finalData = decodeData(data, decode)
 
-  const className = 'IM' + field.cellClassName + 'TypeaheadComponent'
+  const className = field.cellClassName + 'TypeaheadComponent'
   const fileName = className + '.js'
   const filePath = dir + 'ui/' + fileName
-  console.log('Generating ' + filePath)
+  console.log('Generating typeahead class' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
     console.log('Generated ' + filePath)

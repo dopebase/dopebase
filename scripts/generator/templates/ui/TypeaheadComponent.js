@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../hooks/useCurrentUser'
+import { authFetch } from '../../../../../modules/auth/utils/authFetch'
+import { pluginsAPIURL } from '../../../../../config/config'
+import { authFetch } from '../../../../../modules/auth/utils/authFetch'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const baseAPIURL = 'http://localhost:3000/api/admin/'
-
-function IM$className$TypeaheadComponent(props) {
+function $className$TypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [$lowercaseplural$, set$capitalcaseplural$] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
@@ -15,56 +17,51 @@ function IM$className$TypeaheadComponent(props) {
   const { id, name, onSelect } = props
 
   useEffect(() => {
-    if (!id) {
-      setIsLoading(false)
-      return
-    }
-    fetch(baseAPIURL + '$lowercasesingular$/' + id)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      if (!id) {
+        setIsLoading(false)
+        return
+      }
+      try {
+        const response = await authFetch(
+          baseAPIURL + '$lowercaseplural$/view?id=' + id,
+        )
+        if (response?.data) {
+          setInputValue($originalDataFormatter$) // data.firstName + " " + data.lastName)
+          initializeModifieableNonFormData(response.data)
+          setIsLoading(false)
+        }
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        if (data) {
-          setInputValue($originalDataFormatter$) // data.firstName + " " + data.lastName)
-        }
-        fetch(baseAPIURL + '$lowercaseplural$/' + id)
-          .then(response => response.json())
-          .catch(err => {
-            console.log(err)
-            setIsLoading(false)
-          })
-          .then(data => {
-            if (data) {
-              setInputValue($originalDataFormatter$) // data.firstName + " " + data.lastName)
-            }
-            setIsLoading(false)
-          })
-      })
-  }, [])
+      }
+    }
+    fetchData()
+  }, [id])
 
   useEffect(() => {
-    if (typeaheadValue == null || loading == true) {
-      return
-    }
-    const config = {
-      headers: { Authorization: token },
-    }
-    fetch(
-      baseAPIURL + '$lowercaseplural$/?limit=10&search=' + typeaheadValue,
-      config,
-    )
-      .then(response => response.json())
-      .catch(err => {
-        console.log(err)
-      })
-      .then(data => {
-        console.log(data)
-        if (data && data.$lowercaseplural$) {
-          set$capitalcaseplural$(data.$lowercaseplural$)
+    const fetchData = async () => {
+      if (typeaheadValue == null || loading == true) {
+        return
+      }
+      try {
+        const response = await authFetch(
+          baseAPIURL +
+            '$lowercaseplural$/list?limit=10&search=' +
+            typeaheadValue,
+        )
+        if (response?.data) {
+          console.log(response.data)
+          if (response?.data.$lowercaseplural$) {
+            set$capitalcaseplural$(response.data.$lowercaseplural$)
+          }
         }
-      })
+      } catch (err) {
+        console.log(err)
+        setIsLoading(false)
+      }
+    }
+    fetchData()
   }, [typeaheadValue, loading])
 
   const handleChange = event => {
@@ -121,4 +118,4 @@ function IM$className$TypeaheadComponent(props) {
   )
 }
 
-export default IM$className$TypeaheadComponent
+export default $className$TypeaheadComponent

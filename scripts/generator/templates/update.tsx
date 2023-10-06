@@ -7,7 +7,7 @@ import { ClipLoader } from 'react-spinners'
 import IMDatePicker from '../../../../../components/dashboard/IMDatePicker'
 import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
 import {
-  IMTypeaheadComponent,
+  TypeaheadComponent,
   IMColorPicker,
   IMMultimediaComponent,
   IMObjectInputComponent,
