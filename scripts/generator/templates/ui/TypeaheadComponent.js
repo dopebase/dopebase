@@ -3,6 +3,8 @@ import useCurrentUser from '../../../hooks/useCurrentUser'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
+import styles from '../../../../../admin/themes/admin.module.css'
+
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
 function $className$TypeaheadComponent(props) {
@@ -58,7 +60,6 @@ function $className$TypeaheadComponent(props) {
         }
       } catch (err) {
         console.log(err)
-        setIsLoading(false)
       }
     }
     fetchData()
@@ -96,7 +97,7 @@ function $className$TypeaheadComponent(props) {
   }
 
   return (
-    <div className="TypeaheadComponent">
+    <div className={`${styles.TypeaheadComponent} TypeaheadComponent`}>
       <input
         className={`${styles.FormTextField} FormTextField`}
         autoComplete="off"
@@ -108,8 +109,11 @@ function $className$TypeaheadComponent(props) {
         onChange={handleChange}
       />
       {isTypeaheadVisible && (
-        <div className="TypeaheadResultsContainer">
-          <ul className="TypeaheadResultsList" id={name}>
+        <div
+          className={`${styles.TypeaheadResultsContainer} TypeaheadResultsContainer`}>
+          <ul
+            className={`${styles.TypeaheadResultsList} TypeaheadResultsList`}
+            id={name}>
             {listItems}
           </ul>
         </div>
