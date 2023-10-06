@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useState, FunctionComponent, useEffect } from 'react'
+import React, { useState, FunctionComponent, useEffect, memo } from 'react'
 import useCurrentUser from '../../../modules/auth/hooks/useCurrentUser'
 import useComponentVisible from '../hooks/useComponentVisible'
 import { websiteURL } from '../../../config/config'
@@ -46,7 +46,7 @@ const ExpandedMenu: FunctionComponent<ExpandedMenuProps> = ({
   )
 }
 
-const UserProfileMenu: React.FC = () => {
+const UserProfileMenu: React.FC = memo(() => {
   const [user, , loading] = useCurrentUser()
   const [isExpanded, setIsExpanded] = useState(false)
   const onClick = () => {
@@ -80,6 +80,6 @@ const UserProfileMenu: React.FC = () => {
       )}
     </>
   )
-}
+})
 
 export default UserProfileMenu

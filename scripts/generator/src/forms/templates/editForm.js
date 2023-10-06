@@ -11,7 +11,7 @@ const editFormTemplateDataByType = {
                             onBlur={handleBlur}
                             value={values.user}
                         />
-                        <p className="ErrorMessage">
+                        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                             {errors.user && touched.user && errors.user}
                         </p>
                     </div>
@@ -20,7 +20,7 @@ const editFormTemplateDataByType = {
                     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
                         <IMToggleSwitchComponent isChecked={modifiedNonFormData.user} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["user"], "user")} />
-                        <p className="ErrorMessage">
+                        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                             {errors.user && touched.user && errors.user}
                         </p>
                     </div>
@@ -125,7 +125,7 @@ const editFormTemplateDataByType = {
                                 handleDelete={(key) => handleObjectDelete(key, "user")} 
                                 data={modifiedNonFormData["user"]}
                             />
-                            <p className="ErrorMessage">
+                            <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                                 {errors.user && touched.user && errors.user}
                             </p>
                         </div>
@@ -141,7 +141,7 @@ const editFormTemplateDataByType = {
                                 defaultColor='red'
                             />
                         </div>
-                        <p className="ErrorMessage">
+                        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                             {errors.user && touched.user && errors.user}
                         </p>
                     </div>
@@ -156,7 +156,7 @@ const editFormTemplateDataByType = {
                                 defaultColor='red'
                             />
                         </div>
-                        <p className="ErrorMessage">
+                        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                             {errors.user && touched.user && errors.user}
                         </p>
                     </div>
@@ -166,7 +166,7 @@ const editFormTemplateDataByType = {
                         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
                         <div className="FormArrayField">
                             <IMArrayInputComponent handleClick={(value) => handleArrayInput(value, "user")} handleDelete={(index) => handleArrayDelete(index, "user")} data={modifiedNonFormData["user"]}/>
-                            <p className="ErrorMessage">
+                            <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                                 {errors.user && touched.user && errors.user}
                             </p>
                         </div>
@@ -183,7 +183,7 @@ const editFormTemplateDataByType = {
                             handleDelete={(key) => handleObjectDelete(key, "user")} 
                             data={modifiedNonFormData["user"]}
                         />
-                            <p className="ErrorMessage">
+                            <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                                 {errors.user && touched.user && errors.user}
                             </p>
                         </div>
@@ -206,7 +206,7 @@ const editFormTemplateDataByType = {
                                 onCodeChange(value, 'user')
                             }}
                         />
-                        <p className="ErrorMessage">
+                        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                             {errors.user && touched.user && errors.user}
                         </p>
                     </div>
@@ -215,7 +215,7 @@ const editFormTemplateDataByType = {
     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
 
-        <div className="FormEditorContainer FormTextField">
+        <div className={\`\${styles.FormEditorContainer} FormEditorContainer FormTextField\`}>
           <Editor
             defaultValue={modifiedNonFormData.user}
             onChange={value => {
@@ -223,7 +223,7 @@ const editFormTemplateDataByType = {
             }}
           />
         </div>
-        <p className="ErrorMessage">
+        <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
             {errors.user && touched.user && errors.user}
         </p>
     </div>

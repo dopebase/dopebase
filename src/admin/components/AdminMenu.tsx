@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Link from 'next/link'
 import useCurrentUser from '../../modules/auth/hooks/useCurrentUser'
 import styles from '../themes/admin.module.css'
+import hookSystem from '../../system/triggers/HookSystem'
 
-const adminMenuItems = [
+const adminMenuItemsTop = [
   {
     title: 'Dashboard',
     path: '',
@@ -25,35 +26,9 @@ const adminMenuItems = [
       { title: 'Plugins', path: 'plugins' },
     ],
   },
-  {
-    title: 'Users',
-    path: 'users',
-    icon: 'user',
-  },
-  {
-    title: 'Articles',
-    path: 'articles',
-    subItems: [
-      { title: 'Articles', path: 'articles' },
-      { title: 'Categories', path: 'categories' },
-      { title: 'Tags', path: 'articleTags' },
-    ],
-    icon: 'font',
-  },
-  {
-    title: 'E-mails',
-    path: 'emails',
-    subItems: [
-      { title: 'Subscribers', path: 'emailSubscribers' },
-      { title: 'Campaigns', path: 'emailCampaigns' },
-      { title: 'Newsletters', path: 'newsletters' },
-      { title: 'Job Queue', path: 'jobs' },
-      { title: 'Settings', path: 'emailSettings' },
-      { title: 'Subscriber Tags', path: 'emailSubscriberTags' },
-      { title: 'Stats', path: 'emails' },
-    ],
-    icon: 'envelope-o',
-  },
+]
+
+const adminMenuItemsBottom = [
   {
     title: 'My Account',
     path: 'settings/profile',
@@ -68,11 +43,25 @@ const adminMenuItems = [
   },
 ]
 
-const AdminMenu: React.FC = () => {
+const AdminMenu: React.FC = memo(() => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedSubindex, setSelectedSubindex] = useState(0)
   const [user, , loading] = useCurrentUser()
-  const menuItems = user?.role === 'admin' ? adminMenuItems : []
+  const [menuItems, setMenuItems] = useState(null)
+
+  console.log('admin menu render')
+
+  useEffect(() => {
+    if (menuItems === null && user) {
+      const items = user?.role === 'admin' ? adminMenuItemsTop : []
+      const menuItemsAfterApplyingHooks = hookSystem.executeHook(
+        'beforeRenderAdminPanel',
+        items,
+      )
+      console.log('menuItems', menuItems)
+      setMenuItems(menuItemsAfterApplyingHooks.concat(adminMenuItemsBottom))
+    }
+  }, [menuItems, user?.id])
 
   const onSelect = (index, subindex) => {
     // const item = menuItems[index]
@@ -151,6 +140,6 @@ const AdminMenu: React.FC = () => {
       </div>
     </div>
   )
-}
+})
 
 export default AdminMenu

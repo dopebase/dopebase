@@ -394,7 +394,7 @@ ul.ArrayTableCell li span {
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
   background-color: var(--primary-background-color);
-  color: #252422;
+  color: var(--primary-text-color);
   z-index: 3;
   max-height: 200px;
   overflow: scroll;
@@ -404,7 +404,9 @@ ul.ArrayTableCell li span {
   list-style-type: none;
   padding: 0px;
 }
-
+.TypeaheadResultsList li {
+  padding: 12px;
+}
 .TypeaheadResultsList li:hover {
   background-color: #d9e8fc;
   cursor: pointer;
@@ -576,6 +578,13 @@ ul.ArrayTableCell li span {
 .FormEditorContainer {
   background-color: #f7fafc !important;
   padding: 32px 16px !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .FormEditorContainer {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    padding: 32px 16px !important;
+  }
 }
 
 .navUserBox {

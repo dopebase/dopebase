@@ -41,7 +41,7 @@ function resolveObjectOfEnumFormField(field, fieldName, formType) {
                           handleDelete={(key) => handleObjectDelete(key, "user")} 
                           data={modifiedNonFormData["user"]}
                       />
-                      <p className="ErrorMessage">
+                      <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                           {errors.user && touched.user && errors.user}
                       </p>
                   </div>
@@ -60,7 +60,7 @@ function resolveObjectOfEnumFormField(field, fieldName, formType) {
                           data={modifiedNonFormData["user"]} 
                           initialData={{${enumValuesString}}}
                       />
-                      <p className="ErrorMessage">
+                      <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                           {errors.user && touched.user && errors.user}
                       </p>
                   </div>
@@ -94,7 +94,7 @@ function resolveArrayOfEnumFormField(field, fieldName, formType) {
                       onChange={handleSelectChange}
                       selectedOptions={modifiedNonFormData.user}
                   />
-                  <p className="ErrorMessage">
+                  <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                       {errors.user && touched.user && errors.user}
                   </p>
               </div>
@@ -107,7 +107,7 @@ function resolveArrayOfEnumFormField(field, fieldName, formType) {
                       name="user"
                       onChange={handleSelectChange}
                   />
-                  <p className="ErrorMessage">
+                  <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                       {errors.user && touched.user && errors.user}
                   </p>
               </div>
@@ -140,7 +140,7 @@ function resolveEnumFormField(field, fieldName, formType) {
                       onChange={handleSelectChange}
                       selectedOption={modifiedNonFormData.user}
                   />
-                  <p className="ErrorMessage">
+                  <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                       {errors.user && touched.user && errors.user}
                   </p>
               </div>
@@ -153,7 +153,7 @@ function resolveEnumFormField(field, fieldName, formType) {
                       name="user"
                       onChange={handleSelectChange}
                   />
-                  <p className="ErrorMessage">
+                  <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                       {errors.user && touched.user && errors.user}
                   </p>
               </div>

@@ -434,7 +434,7 @@ const UpdateCategoryView = props => {
                             onBlur={handleBlur}
                             value={values.name}
                         />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.name && touched.name && errors.name}
                         </p>
                     </div>
@@ -443,7 +443,7 @@ const UpdateCategoryView = props => {
     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
         <label className={`${styles.FormLabel} FormLabel`}>Description</label>
 
-        <div className="FormEditorContainer FormTextField">
+        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
           <Editor
             defaultValue={modifiedNonFormData.description}
             onChange={value => {
@@ -451,7 +451,7 @@ const UpdateCategoryView = props => {
             }}
           />
         </div>
-        <p className="ErrorMessage">
+        <p className={`${styles.ErrorMessage} ErrorMessage`}>
             {errors.description && touched.description && errors.description}
         </p>
     </div>
@@ -467,7 +467,7 @@ const UpdateCategoryView = props => {
                             onBlur={handleBlur}
                             value={values.slug}
                         />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.slug && touched.slug && errors.slug}
                         </p>
                     </div>
@@ -494,7 +494,7 @@ const UpdateCategoryView = props => {
                             onBlur={handleBlur}
                             value={values.seo_title}
                         />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.seo_title && touched.seo_title && errors.seo_title}
                         </p>
                     </div>
@@ -510,7 +510,7 @@ const UpdateCategoryView = props => {
                             onBlur={handleBlur}
                             value={values.seo_description}
                         />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.seo_description && touched.seo_description && errors.seo_description}
                         </p>
                     </div>
@@ -526,7 +526,7 @@ const UpdateCategoryView = props => {
                             onBlur={handleBlur}
                             value={values.canonical_url}
                         />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.canonical_url && touched.canonical_url && errors.canonical_url}
                         </p>
                     </div>
@@ -546,7 +546,7 @@ const UpdateCategoryView = props => {
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Published</label>
                         <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
-                        <p className="ErrorMessage">
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.published && touched.published && errors.published}
                         </p>
                     </div>
