@@ -1,7 +1,7 @@
 'use strict'
 
 /*
-to use this project, run "node generate.js plugin_name"
+to use this project, run "node generate.js schema subschema plugin_name"
 */
 var decodeData = require('./src/utils/decodeData')
 var { generateFormFile } = require('./src/forms/generateFormFile')
@@ -79,15 +79,7 @@ function generateMenuItems(schema) {
 }
 
 function generateScaffold(schema) {
-  const {
-    tableName,
-    fields,
-    displayName,
-    singularName,
-    lowercasePluralName,
-    singularCapitalName,
-    orderBy,
-  } = schema
+  const { lowercasePluralName, orderBy } = schema
 
   const dir = outputPath() + lowercasePluralName
 
@@ -107,49 +99,33 @@ function generateScaffold(schema) {
     addFormKeyword,
     true,
   )
-  // generateFile(
-  //   'index.tsx',
-  //   lowercasePluralName,
-  //   fields,
-  //   displayName,
-  //   singularName,
-  //   lowercasePluralName,
-  //   singularCapitalName,
-  // )
-  // if (orderBy) {
-  //   const { field, desc } = orderBy
-  //   var orderByStr = '?orderBy=' + field
-  //   if (desc) {
-  //     orderByStr += '&desc=true'
-  //   }
-  //   generateFile(
-  //     'list.tsx',
-  //     lowercasePluralName,
-  //     fields,
-  //     displayName,
-  //     singularName,
-  //     lowercasePluralName,
-  //     singularCapitalName,
-  //     orderByStr,
-  //   )
-  // } else {
-  generateFile('list.tsx', schema)
-  // }
-  // generateFormFile(
-  //   'update/[id].tsx',
-  //   'update',
-  //   schema,
-  //   allSchemas,
-  //   editFormTemplateDataByType,
-  //   editFormKeyword,
-  // )
-  // generateViewFile(
-  //   '[id].tsx',
-  //   'view',
-  //   schema,
-  //   viewFormTemplateDataByType,
-  //   viewFormKeyword,
-  // )
+  generateFile('index.tsx', schema)
+  if (orderBy) {
+    const { field, desc } = orderBy
+    var orderByStr = '?orderBy=' + field
+    if (desc) {
+      orderByStr += '&desc=true'
+    }
+    generateFile('list.tsx', schema, orderByStr)
+  } else {
+    generateFile('list.tsx', schema)
+  }
+  generateFormFile(
+    'update.tsx',
+    'update',
+    schema,
+    allSchemas,
+    editFormTemplateDataByType,
+    editFormKeyword,
+  )
+  generateViewFile(
+    'view.tsx',
+    'view',
+    schema,
+    allSchemas,
+    viewFormTemplateDataByType,
+    viewFormKeyword,
+  )
 
   // // Generate admin view http routes
   // generateHTTPRoutes(schema)

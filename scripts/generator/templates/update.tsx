@@ -1,11 +1,11 @@
 // @ts-nocheck
+'use client'
 import React, { useEffect, useState } from 'react'
-import { GetStaticProps } from 'next'
+import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
-import { GetServerSideProps } from 'next'
 import { ClipLoader } from 'react-spinners'
-import IMDatePicker from '../../../../components/dashboard/IMDatePicker'
-import { IMLocationPicker } from '../../../../components/dashboard/IMLocationPicker'
+import IMDatePicker from '../../../../../components/dashboard/IMDatePicker'
+import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
 import {
   IMTypeaheadComponent,
   IMColorPicker,
@@ -19,53 +19,58 @@ import {
   IMPhoto,
   IMModal,
   IMToggleSwitchComponent,
-} from '../../../../components/dashboard/IMComponents'
-import dynamic from 'next/dynamic'
+} from '../../../../../admin/components/forms/fields'
 import Editor from 'rich-markdown-editor'
+import dynamic from 'next/dynamic'
 const CodeMirror = dynamic(
   () => {
-    import('codemirror/mode/xml/xml')
-    import('codemirror/mode/javascript/javascript')
-    import('codemirror/mode/css/css')
-    import('codemirror/mode/htmlmixed/htmlmixed')
-    import('codemirror/mode/markdown/markdown')
+    import('codemirror')
+    // import('codemirror/mode/javascript/javascript')
+    // import('codemirror/mode/css/css')
+    // import('codemirror/mode/htmlmixed/htmlmixed')
+    // import('codemirror/mode/markdown/markdown')
     return import('react-codemirror2').then(mod => mod.Controlled)
   },
   { ssr: false },
 )
+import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-const baseAPIURL = pluginsAPIURL
+import {
+  authFetch,
+  authPost,
+} from '../../../../../modules/auth/utils/authFetch'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return { props: { isAdminRoute: true, userId: params?.id } }
-}
-
-const UpdateUserView = props => {
-  let { userId } = props
-
+const Update$capitalsingular$View = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
 
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
   useEffect(() => {
-    fetch(baseAPIURL + 'admin/users/' + userId)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      try {
+        const response = await authFetch(
+          baseAPIURL + '$lowercaseplural$/view?id=' + id,
+        )
+        if (response?.data) {
+          setOriginalData(response.data)
+          initializeModifieableNonFormData(response.data)
+          setIsLoading(false)
+        }
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        setOriginalData(data)
-        if (data) {
-          initializeModifieableNonFormData(data)
-        }
-        setIsLoading(false)
-      })
-  }, [userId])
+      }
+    }
+    fetchData()
+  }, [id])
 
   const initializeModifieableNonFormData = originalData => {
     var nonFormData = {}
@@ -77,17 +82,18 @@ const UpdateUserView = props => {
   }
 
   const saveChanges = async (modifiedData, setSubmitting) => {
-    console.log(JSON.stringify({ ...modifiedData, ...modifiedNonFormData }))
-    const response = await fetch(baseAPIURL + 'admin/users/update/' + userId, {
-      method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...modifiedData, ...modifiedNonFormData }), // body data type must match "Content-Type" header
-    })
-    if (response.ok == true) {
+    const response = await authPost(
+      baseAPIURL + '$lowercaseplural$/update?id=' + id,
+      JSON.stringify({
+        ...modifiedData,
+        ...modifiedNonFormData,
+      }),
+    )
+    const { data } = response
+    if (data.success == true) {
       window.location.reload()
+    } else {
+      alert(data.error)
     }
     setSubmitting(false)
   }
@@ -371,9 +377,9 @@ const UpdateUserView = props => {
   }
 
   return (
-    <div className="Card FormCard">
-      <div className="CardBody">
-        <h1>{originalData && originalData.titleFieldKey}</h1>
+    <div className={`${styles.Card} ${styles.FormCard}`}>
+      <div className={`${styles.CardBody}`}>
+        <h1>{originalData && originalData.name}</h1>
         <Formik
           initialValues={originalData}
           validate={values => {
@@ -401,12 +407,12 @@ const UpdateUserView = props => {
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
 
-              <div className="FormActionContainer">
+              <div className={`${styles.FormActionContainer}`}>
                 <button
-                  className="PrimaryButton"
+                  className={`${styles.PrimaryButton}`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save user
+                  Save $lowercasesingular$
                 </button>
               </div>
             </form>
@@ -417,4 +423,4 @@ const UpdateUserView = props => {
   )
 }
 
-export default UpdateUserView
+export default Update$capitalsingular$View

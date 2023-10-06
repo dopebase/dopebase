@@ -1,9 +1,8 @@
 // @ts-nocheck
-'use client'
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { GetServerSideProps } from 'next'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../utils'
+import { formatDate } from '../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,
@@ -12,16 +11,16 @@ import {
   IMPhoto,
   IMToggleSwitchComponent,
   IMColorBoxComponent,
-} from '../../../../../admin/components/forms/fields'
-import Editor from 'rich-markdown-editor'
+} from '../../../components/dashboard/IMComponents'
 import dynamic from 'next/dynamic'
+import Editor from 'rich-markdown-editor'
 const CodeMirror = dynamic(
   () => {
-    import('codemirror')
-    // import('codemirror/mode/javascript/javascript')
-    // import('codemirror/mode/css/css')
-    // import('codemirror/mode/htmlmixed/htmlmixed')
-    // import('codemirror/mode/markdown/markdown')
+    import('codemirror/mode/xml/xml')
+    import('codemirror/mode/javascript/javascript')
+    import('codemirror/mode/css/css')
+    import('codemirror/mode/htmlmixed/htmlmixed')
+    import('codemirror/mode/markdown/markdown')
     return import('react-codemirror2').then(mod => mod.Controlled)
   },
   { ssr: false },
@@ -29,35 +28,30 @@ const CodeMirror = dynamic(
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
-import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = pluginsAPIURL
 
-const Detailed$capitalcaseplural$View = props => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  return { props: { isAdminRoute: true, userId: params?.id } }
+}
+
+const DetailedUserView = props => {
+  let { userId } = props
+
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authFetch(
-          baseAPIURL + '$lowercaseplural$/view?id=' + id,
-        )
-        if (response.data) {
-          setOriginalData(response.data)
-        } else {
-          alert('Error fetching data - try refreshing the page')
-        }
-        setIsLoading(false)
-      } catch (err) {
+    fetch(baseAPIURL + 'users/' + userId)
+      .then(response => response.json())
+      .catch(err => {
         console.log(err)
         setIsLoading(false)
-      }
-    }
-    fetchData()
-  }, [id])
+      })
+      .then(data => {
+        setOriginalData(data)
+        setIsLoading(false)
+      })
+  }, [userId])
 
   if (isLoading || !originalData) {
     return (
@@ -75,13 +69,13 @@ const Detailed$capitalcaseplural$View = props => {
     )
   }
 
-  const editPath = './update?id=' + id
+  const editPath = '/admin/users/update/' + userId
 
   return (
     <div className="Card FormCard">
       <div className="CardBody">
         <h1>
-          {originalData && originalData.name}
+          {originalData && originalData.titleFieldKey}
           <a className="Link EditLink" href={editPath}>
             Edit
           </a>
@@ -93,4 +87,4 @@ const Detailed$capitalcaseplural$View = props => {
   )
 }
 
-export default Detailed$capitalcaseplural$View
+export default DetailedUserView
