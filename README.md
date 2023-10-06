@@ -1,4 +1,4 @@
-# Dopebase - All-in-one Web & Mobile Development Platform
+# Dopebase - All-in-one Web & Mobile Development Platform Powered by AI
 
 ---
 
