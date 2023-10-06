@@ -4,7 +4,7 @@ import { list } from '../../../../../core/db'
 
 export async function GET(req) {
   const res = NextResponse
-  const result = await list('article_categories', 'order by updated_at desc')
+  const result = await list('$lowercaseplural$', 'order by updated_at desc')
   return NextResponse.json(result, { status: 200 })
 
   // const articles = await instamobileDB.list(

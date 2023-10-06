@@ -1,11 +1,15 @@
 // import instamobileDB from '../../../db'
 import { NextResponse } from 'next/server'
-import { list } from '../../../../../core/db'
+import { getOne } from '../../../../../core/db'
 
 export async function GET(req) {
-  const res = NextResponse
-  const result = await list('article_categories', 'order by updated_at desc')
-  return NextResponse.json(result, { status: 200 })
+  const url = new URL(req.url)
+  const id = url.searchParams.get('id')
+  const result = await getOne('$lowercaseplural$', id)
+  if (result) {
+    return NextResponse.json(result, { status: 200 })
+  }
+  return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
 
   // const articles = await instamobileDB.list(
   //   'articles',

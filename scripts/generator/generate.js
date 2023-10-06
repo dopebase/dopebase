@@ -6,6 +6,7 @@ to use this project, run "node generate.js schema subschema plugin_name"
 var decodeData = require('./src/utils/decodeData')
 var { generateFormFile } = require('./src/forms/generateFormFile')
 var { generateViewFile } = require('./src/forms/generateViewFile')
+var { generateAPIs } = require('./src/api/generateAPI')
 
 var {
   addFormTemplateDataByType,
@@ -126,6 +127,8 @@ function generateScaffold(schema) {
     viewFormTemplateDataByType,
     viewFormKeyword,
   )
+
+  generateAPIs(schema, allSchemas)
 
   // // Generate admin view http routes
   // generateHTTPRoutes(schema)
