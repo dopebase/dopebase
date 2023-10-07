@@ -44,7 +44,7 @@ const DetailedArticleCategoriesView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'categories/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)

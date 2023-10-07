@@ -1,25 +1,8 @@
 // @ts-nocheck
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
-import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
-import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
-import {
-  TypeaheadComponent,
-  IMColorPicker,
-  IMMultimediaComponent,
-  IMObjectInputComponent,
-  IMArrayInputComponent,
-  IMColorsContainer,
-  IMColorBoxComponent,
-  IMStaticMultiSelectComponent,
-  IMStaticSelectComponent,
-  IMPhoto,
-  IMModal,
-  IMToggleSwitchComponent,
-} from '../../../../../admin/components/forms/fields'
 import Editor from 'rich-markdown-editor'
 import dynamic from 'next/dynamic'
 const CodeMirror = dynamic(
@@ -33,87 +16,56 @@ const CodeMirror = dynamic(
   },
   { ssr: false },
 )
+import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
+import {
+  TypeaheadComponent,
+  IMObjectInputComponent,
+  IMMultimediaComponent,
+  IMArrayInputComponent,
+  IMColorPicker,
+  IMColorsContainer,
+  IMColorBoxComponent,
+  IMStaticMultiSelectComponent,
+  IMStaticSelectComponent,
+  IMPhoto,
+  IMModal,
+  IMToggleSwitchComponent,
+} from '../../../../../admin/components/forms/fields'
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
-import ParentArticleCategoryTypeaheadComponent from '../../components/ParentArticleCategoryTypeaheadComponent.js'
 
+import { pluginsAPIURL } from '../../../../../config/config'
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
 
 const beautify_html = require('js-beautify').html
-import { pluginsAPIURL } from '../../../../../config/config'
-import {
-  authFetch,
-  authPost,
-} from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = `${pluginsAPIURL}`
 
-const UpdateCategoryView = props => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [originalData, setOriginalData] = useState(null)
+const AddNewArticleTagView = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
-
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
+  const [originalData, setOriginalData] = useState(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
-        )
-        if (response?.data) {
-          setOriginalData(response.data)
-          initializeModifieableNonFormData(response.data)
-          setIsLoading(false)
-        }
-      } catch (err) {
-        console.log(err)
-        setIsLoading(false)
-      }
-    }
-    fetchData()
-  }, [id])
+    setModifiedNonFormData({
+      created_at: Math.floor(new Date().getTime() / 1000).toString(),
+    })
+  }, [])
 
-  const initializeModifieableNonFormData = originalData => {
-    var nonFormData = {}
-
-    /* Insert non modifiable initialization data here */
-          if (originalData.description) {
-              nonFormData['description'] = originalData.description
-          }
-          
-          if (originalData.logo_url) {
-              nonFormData['logo_url'] = originalData.logo_url
-          }
-          
-          if (originalData.seo_image_url) {
-              nonFormData['seo_image_url'] = originalData.seo_image_url
-          }
-          
-          if (originalData.published) {
-              nonFormData['published'] = originalData.published
-          }
-          
-
-    console.log(nonFormData)
-    setModifiedNonFormData(nonFormData)
-  }
-
-  const saveChanges = async (modifiedData, setSubmitting) => {
+  const createArticleTag = async (data, setSubmitting) => {
+    setIsLoading(true)
+    const url = `${baseAPIURL}admin/blog/article_tags/add`
     const response = await authPost(
-      baseAPIURL + 'article_categories/update?id=' + id,
-      JSON.stringify({
-        ...modifiedData,
-        ...modifiedNonFormData,
-      }),
+      url,
+      JSON.stringify({ ...data, ...modifiedNonFormData }),
     )
-    const { data } = response
-    if (data.success == true) {
-      window.location.reload()
-    } else {
-      alert(data.error)
+    const resData = response.data
+    if (resData?.error) {
+      alert(resData?.error)
     }
     setSubmitting(false)
+    setIsLoading(false)
   }
 
   const onTypeaheadSelect = (value, fieldName) => {
@@ -158,7 +110,7 @@ const UpdateCategoryView = props => {
 
   const handleColorDelete = fieldName => {
     var newData = { ...modifiedNonFormData }
-    newData[fieldName] = null
+    delete newData[fieldName]
     setModifiedNonFormData(newData)
   }
 
@@ -226,6 +178,9 @@ const UpdateCategoryView = props => {
 
   const onLocationChange = (addressObject, fieldName) => {
     var newData = { ...modifiedNonFormData }
+    if (!addressObject || !addressObject.location || !addressObject.gmaps) {
+      return
+    }
     const location = {
       longitude: addressObject.location.lng,
       latitude: addressObject.location.lat,
@@ -395,22 +350,30 @@ const UpdateCategoryView = props => {
   }
 
   return (
-    <div className={`${styles.Card} ${styles.FormCard}`}>
-      <div className={`${styles.CardBody}`}>
-        <h1>{originalData && originalData.name}</h1>
+    <div className={styles.FormCard}>
+      <div className="CardBody">
+        <h1>Create New ArticleTag</h1>
         <Formik
-          initialValues={originalData}
+          initialValues={{}}
           validate={values => {
             values = { ...values, ...modifiedNonFormData }
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.name) {
+            errors.name = 'Field Required!'
+        }
+
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
+
             }
 
             return errors
           }}
           onSubmit={(values, { setSubmitting }) => {
-            saveChanges(values, setSubmitting)
+            createArticleTag(values, setSubmitting)
           }}>
           {({
             values,
@@ -423,7 +386,7 @@ const UpdateCategoryView = props => {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
-              {/* Insert all edit form fields here */}
+              {/* Insert all add form fields here */}
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Name</label>
                         <input
@@ -440,47 +403,29 @@ const UpdateCategoryView = props => {
                     </div>
     
 
-    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-        <label className={`${styles.FormLabel} FormLabel`}>Description</label>
-
-        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
-          <Editor
-            defaultValue={modifiedNonFormData.description}
-            onChange={value => {
-              onCodeChange(value(), 'description')
-            }}
-          />
-        </div>
-        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-            {errors.description && touched.description && errors.description}
-        </p>
-    </div>
-
-
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="slug"
-                            name="slug"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.slug}
-                        />
+                        <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+
+                        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+                          <Editor
+                            defaultValue={modifiedNonFormData.description}
+                            onChange={value => {
+                              onCodeChange(value(), 'description')
+                            }}
+                          />
+                        </div>
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.slug && touched.slug && errors.slug}
+                            {errors.description && touched.description && errors.description}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                        {modifiedNonFormData.logo_url && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.logo_url} onDelete={(src) => handleDeletePhoto(src, "logo_url", false) } />
-                        )}
-                        <input className="FormFileField" id="logo_url" name="logo_url" type="file" onChange={(event) => {
-                            handleImageUpload(event, "logo_url", false);
-                        }} />
+                        <label className={`${styles.FormLabel} FormLabel`}>Published</label>
+                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.published && touched.published && errors.published}
+                        </p>
                     </div>
     
 
@@ -544,27 +489,21 @@ const UpdateCategoryView = props => {
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.published && touched.published && errors.published}
-                        </p>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
+                        />
                     </div>
     
 
-          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-              <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-              <ParentArticleCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "parent_id")} id={originalData && originalData.parent_id} name={originalData && originalData.parent_id} />
-          </div>
-      
 
-
-              <div className={`${styles.FormActionContainer}`}>
+              <div className={styles.FormActionContainer}>
                 <button
-                  className={`${styles.PrimaryButton}`}
+                  className={styles.PrimaryButton}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save category
+                  Create article_tag
                 </button>
               </div>
             </form>
@@ -575,4 +514,4 @@ const UpdateCategoryView = props => {
   )
 }
 
-export default UpdateCategoryView
+export default AddNewArticleTagView

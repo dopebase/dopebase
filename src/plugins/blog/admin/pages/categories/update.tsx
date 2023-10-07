@@ -59,7 +59,7 @@ const UpdateCategoryView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'categories/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -101,7 +101,7 @@ const UpdateCategoryView = props => {
 
   const saveChanges = async (modifiedData, setSubmitting) => {
     const response = await authPost(
-      baseAPIURL + 'article_categories/update?id=' + id,
+      baseAPIURL + 'categories/update?id=' + id,
       JSON.stringify({
         ...modifiedData,
         ...modifiedNonFormData,

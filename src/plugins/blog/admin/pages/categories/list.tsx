@@ -87,7 +87,7 @@ const ArticleCategoriesColumns = [
           Header: "Parent Category",
           accessor: "parent_id",
           Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/categories" viewRoute="categories"
           titleKey="title" />
           )
       },,
@@ -114,7 +114,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'categories/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -200,15 +200,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'categories/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const categories = data
+        setData(categories)
 
         setIsLoading(false)
       })

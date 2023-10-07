@@ -47,14 +47,10 @@ const ArticleCategoriesColumns = [
             )
             },
       {
-          Header: "Slug",
-          accessor: "slug",
-      },
-      {
-          Header: "Logo",
-          accessor: "logo_url",
+          Header: "Published",
+          accessor: "published",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
+              <IMToggleSwitchComponent isChecked={data.value} disabled />
           )
       },
       {
@@ -77,18 +73,10 @@ const ArticleCategoriesColumns = [
           )
       },
       {
-          Header: "Published",
-          accessor: "published",
+          Header: "Created Date",
+          accessor: "created_at",
           Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
-      },
-      {
-          Header: "Parent Category",
-          accessor: "parent_id",
-          Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
-          titleKey="title" />
+              <IMDateTableCell date={data.value} />
           )
       },,
   {
@@ -114,7 +102,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'article_tags/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -200,15 +188,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'article_tags/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const article_tags = data
+        setData(article_tags)
 
         setIsLoading(false)
       })
@@ -237,7 +225,7 @@ function ArticleCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Categories</h1>
+                <h1>Article Tags</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>

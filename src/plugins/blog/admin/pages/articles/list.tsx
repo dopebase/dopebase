@@ -26,6 +26,8 @@ import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
 import { authPost } from '../../../../../modules/auth/utils/authFetch'
 import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports for table cells here */
+import IMArticleTagsForeignKeysArrayIdTableCell from '../../components/tableCells/IMArticleTagsForeignKeysArrayIdTableCell.js'
+
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
@@ -33,29 +35,58 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const ArticleCategoriesColumns = [
+const ArticlesColumns = [
   
       {
-          Header: "Name",
-          accessor: "name",
+          Header: "Title",
+          accessor: "title",
       },
             {
-            Header: "Description",
-            accessor: "description",
+            Header: "Content",
+            accessor: "content",
             Cell: data => (
                 <div className='markdownReadOnly'>{data?.value && data.value.substring(0, 100)}...</div>
             )
             },
       {
-          Header: "Slug",
-          accessor: "slug",
-      },
-      {
-          Header: "Logo",
-          accessor: "logo_url",
+          Header: "Cover Photo",
+          accessor: "cover_photo",
           Cell: data => (
               <IMImagesTableCell singleImageURL={data.value} />
           )
+      },
+      {
+          Header: "Photos",
+          accessor: "photo_urls",
+          Cell: data => (
+              <IMImagesTableCell imageURLs={data.value} />
+          )
+      },
+      {
+          Header: "Github URL",
+          accessor: "source_code_url",
+      },
+      {
+          Header: "Canonical URL",
+          accessor: "canonical_url",
+      },
+      {
+          Header: "Published",
+          accessor: "published",
+          Cell: data => (
+              <IMToggleSwitchComponent isChecked={data.value} disabled />
+          )
+      },
+      {
+          Header: "Outdated",
+          accessor: "outdated",
+          Cell: data => (
+              <IMToggleSwitchComponent isChecked={data.value} disabled />
+          )
+      },
+      {
+          Header: "Slug",
+          accessor: "slug",
       },
       {
           Header: "SEO Title",
@@ -66,29 +97,44 @@ const ArticleCategoriesColumns = [
           accessor: "seo_description",
       },
       {
-          Header: "Canonical URL",
-          accessor: "canonical_url",
+          Header: "SEO Keyword",
+          accessor: "seo_keyword",
       },
       {
-          Header: "SEO Cover Image",
-          accessor: "seo_image_url",
+          Header: "Author",
+          accessor: "author_id",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/users" viewRoute="users"
+          titleKey="title" />
           )
       },
       {
-          Header: "Published",
-          accessor: "published",
-          Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
-      },
-      {
-          Header: "Parent Category",
-          accessor: "parent_id",
+          Header: "Category",
+          accessor: "category_id",
           Cell: data => (
               <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
           titleKey="title" />
+          )
+      },
+      {
+          Header: "ArticleTags",
+          accessor: "tags",
+          Cell: data => (
+              <IMArticleTagsForeignKeysArrayIdTableCell tagsArray={data.value} />
+          )
+      },
+      {
+          Header: "Created At",
+          accessor: "created_at",
+          Cell: data => (
+              <IMDateTableCell date={data.value} />
+          )
+      },
+      {
+          Header: "Updated At",
+          accessor: "updated_at",
+          Cell: data => (
+              <IMDateTableCell date={data.value} />
           )
       },,
   {
@@ -114,7 +160,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'articles/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -147,15 +193,15 @@ function ActionsItemView(props) {
   )
 }
 
-function ArticleCategoriesListView(props) {
+function ArticlesListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [ArticleCategories, setArticleCategories] = useState([])
+  const [Articles, setArticles] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => ArticleCategoriesColumns, [])
+  const columns = useMemo(() => ArticlesColumns, [])
 
   const {
     getTableProps,
@@ -178,7 +224,7 @@ function ArticleCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: ArticleCategories,
+      data: Articles,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
@@ -200,15 +246,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'articles/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const articles = data
+        setData(articles)
 
         setIsLoading(false)
       })
@@ -221,7 +267,7 @@ function ArticleCategoriesListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    setArticleCategories(data.slice(startRow, endRow))
+    setArticles(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
@@ -237,7 +283,7 @@ function ArticleCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Categories</h1>
+                <h1>Articles</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -279,11 +325,11 @@ function ArticleCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={ArticlesColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={ArticlesColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -367,4 +413,4 @@ function ArticleCategoriesListView(props) {
   )
 }
 
-export default ArticleCategoriesListView
+export default ArticlesListView

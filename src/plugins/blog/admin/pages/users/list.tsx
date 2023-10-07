@@ -33,62 +33,66 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const ArticleCategoriesColumns = [
+const UsersColumns = [
   
       {
-          Header: "Name",
-          accessor: "name",
+          Header: "Email",
+          accessor: "email",
+      },
+      {
+          Header: "First Name",
+          accessor: "first_name",
+      },
+      {
+          Header: "Last Name",
+          accessor: "last_name",
+      },
+      {
+          Header: "Phone",
+          accessor: "phone",
+      },
+      {
+          Header: "Role",
+          accessor: "role",
+      },
+      {
+          Header: "Short Bio",
+          accessor: "bio_title",
       },
             {
-            Header: "Description",
-            accessor: "description",
+            Header: "Long Bio",
+            accessor: "bio_description",
             Cell: data => (
                 <div className='markdownReadOnly'>{data?.value && data.value.substring(0, 100)}...</div>
             )
             },
       {
-          Header: "Slug",
-          accessor: "slug",
+          Header: "Website URL",
+          accessor: "website_url",
       },
       {
-          Header: "Logo",
-          accessor: "logo_url",
-          Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
+          Header: "Username",
+          accessor: "username",
       },
       {
-          Header: "SEO Title",
-          accessor: "seo_title",
-      },
-      {
-          Header: "SEO Description",
-          accessor: "seo_description",
-      },
-      {
-          Header: "Canonical URL",
-          accessor: "canonical_url",
-      },
-      {
-          Header: "SEO Cover Image",
-          accessor: "seo_image_url",
-          Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
-      },
-      {
-          Header: "Published",
-          accessor: "published",
+          Header: "Banned",
+          accessor: "banned",
           Cell: data => (
               <IMToggleSwitchComponent isChecked={data.value} disabled />
           )
       },
       {
-          Header: "Parent Category",
-          accessor: "parent_id",
+          Header: "Created At",
+          accessor: "created_at",
           Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
-          titleKey="title" />
+              <IMDateTableCell date={data.value} />
+          )
+      },
+      {
+          Header: "Updated At",
+          accessor: "updated_at",
+          Cell: data => (
+              <IMDateTableCell date={data.value} />
           )
       },,
   {
@@ -114,7 +118,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'users/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -147,15 +151,15 @@ function ActionsItemView(props) {
   )
 }
 
-function ArticleCategoriesListView(props) {
+function UsersListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [ArticleCategories, setArticleCategories] = useState([])
+  const [Users, setUsers] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => ArticleCategoriesColumns, [])
+  const columns = useMemo(() => UsersColumns, [])
 
   const {
     getTableProps,
@@ -178,7 +182,7 @@ function ArticleCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: ArticleCategories,
+      data: Users,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
@@ -200,15 +204,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'users/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const users = data
+        setData(users)
 
         setIsLoading(false)
       })
@@ -221,7 +225,7 @@ function ArticleCategoriesListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    setArticleCategories(data.slice(startRow, endRow))
+    setUsers(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
@@ -237,7 +241,7 @@ function ArticleCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Categories</h1>
+                <h1>Users</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -279,11 +283,11 @@ function ArticleCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={UsersColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={UsersColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -367,4 +371,4 @@ function ArticleCategoriesListView(props) {
   )
 }
 
-export default ArticleCategoriesListView
+export default UsersListView

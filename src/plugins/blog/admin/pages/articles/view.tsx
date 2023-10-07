@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const DetailedArticleCategoriesView = props => {
+const DetailedArticlesView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedArticleCategoriesView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'articles/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -92,16 +92,16 @@ const DetailedArticleCategoriesView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Title</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.title}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+                <label className={`${styles.FormLabel} FormLabel`}>Content</label>
                 <div className={`${styles.FormTextField} ${styles.markdownEditorReadOnly} markdownEditorReadOnly FormTextField`}>
                   <Editor
-                    defaultValue={originalData?.description ?? ''}
+                    defaultValue={originalData?.content ?? ''}
                     readOnly={true}
                   />
                 </div>
@@ -109,16 +109,48 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Cover Photo</label>
+                {originalData.cover_photo && (
+                    <IMPhoto openable className="photo" src={originalData.cover_photo} />
+                )}
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                {originalData.logo_url && (
-                    <IMPhoto openable className="photo" src={originalData.logo_url} />
+                <label className={`${styles.FormLabel} FormLabel`}>Photos</label>
+                {originalData.photo_urls && originalData.photo_urls.map((url) =>
+                    <IMPhoto openable className="photo" src={url} />
                 )}
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Github URL</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.source_code_url}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Canonical URL</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.canonical_url}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
+                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Outdated</label>
+                <IMToggleSwitchComponent isChecked={originalData.outdated} disabled />
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
             </div>
     
 
@@ -135,28 +167,38 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Canonical URL</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.canonical_url}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>SEO Cover Image</label>
-                {originalData.seo_image_url && (
-                    <IMPhoto openable className="photo" src={originalData.seo_image_url} />
-                )}
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
+                <label className={`${styles.FormLabel} FormLabel`}>SEO Keyword</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.seo_keyword}</span>
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/category" titleKey="title" />
+                <label className={`${styles.FormLabel} FormLabel`}>Author</label>
+                <IMForeignKeyComponent id={originalData.author_id} apiRouteName="admin/blog/user" titleKey="title" />
+            </div>
+    
+
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Category</label>
+                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/category" titleKey="title" />
+            </div>
+    
+
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>ArticleTags</label>
+                <IMForeignKeysIdComponent ids={originalData.tags} apiRouteName="admin/blog/article_tag" titleKey="title" />
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                <span className="LockedFieldValue">{originalData.created_at && formatDate(originalData.created_at)}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                <span className="LockedFieldValue">{originalData.updated_at && formatDate(originalData.updated_at)}</span>
             </div>
     
 
@@ -165,4 +207,4 @@ const DetailedArticleCategoriesView = props => {
   )
 }
 
-export default DetailedArticleCategoriesView
+export default DetailedArticlesView

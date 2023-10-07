@@ -33,62 +33,60 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const ArticleCategoriesColumns = [
+const ArticleIdeasColumns = [
   
       {
-          Header: "Name",
-          accessor: "name",
-      },
-            {
-            Header: "Description",
-            accessor: "description",
-            Cell: data => (
-                <div className='markdownReadOnly'>{data?.value && data.value.substring(0, 100)}...</div>
-            )
-            },
-      {
-          Header: "Slug",
-          accessor: "slug",
+          Header: "Title",
+          accessor: "title",
       },
       {
-          Header: "Logo",
-          accessor: "logo_url",
-          Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
+          Header: "Sections",
+          accessor: "sections",
       },
       {
-          Header: "SEO Title",
-          accessor: "seo_title",
+          Header: "Tags",
+          accessor: "tags",
+      },
+      {
+          Header: "Status",
+          accessor: "status",
+      },
+      {
+          Header: "Extra Prompt",
+          accessor: "extra_prompt",
+      },
+      {
+          Header: "Social Media",
+          accessor: "tweet",
       },
       {
           Header: "SEO Description",
           accessor: "seo_description",
       },
       {
-          Header: "Canonical URL",
-          accessor: "canonical_url",
+          Header: "Summary",
+          accessor: "summary",
       },
       {
-          Header: "SEO Cover Image",
-          accessor: "seo_image_url",
+          Header: "Topic",
+          accessor: "topic",
+      },
+      {
+          Header: "Category",
+          accessor: "category",
+      },
+      {
+          Header: "Created Date",
+          accessor: "created_at",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
+              <IMDateTableCell date={data.value} />
           )
       },
       {
-          Header: "Published",
-          accessor: "published",
+          Header: "Created Date",
+          accessor: "updated_at",
           Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
-      },
-      {
-          Header: "Parent Category",
-          accessor: "parent_id",
-          Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
-          titleKey="title" />
+              <IMDateTableCell date={data.value} />
           )
       },,
   {
@@ -114,7 +112,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'article_ideas/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -147,15 +145,15 @@ function ActionsItemView(props) {
   )
 }
 
-function ArticleCategoriesListView(props) {
+function ArticleIdeasListView(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [controlledPageCount, setControlledPageCount] = useState(0)
-  const [ArticleCategories, setArticleCategories] = useState([])
+  const [ArticleIdeas, setArticleIdeas] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => ArticleCategoriesColumns, [])
+  const columns = useMemo(() => ArticleIdeasColumns, [])
 
   const {
     getTableProps,
@@ -178,7 +176,7 @@ function ArticleCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: ArticleCategories,
+      data: ArticleIdeas,
       initialState: { pageIndex: 0 },
       manualPagination: true,
       pageCount: controlledPageCount,
@@ -200,15 +198,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'article_ideas/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const article_ideas = data
+        setData(article_ideas)
 
         setIsLoading(false)
       })
@@ -221,7 +219,7 @@ function ArticleCategoriesListView(props) {
     const startRow = pageSize * pageIndex
     const endRow = startRow + pageSize
 
-    setArticleCategories(data.slice(startRow, endRow))
+    setArticleIdeas(data.slice(startRow, endRow))
     setControlledPageCount(Math.ceil(data.length / pageSize))
   }, [pageIndex, pageSize, data])
 
@@ -237,7 +235,7 @@ function ArticleCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Categories</h1>
+                <h1>Ideas</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -279,11 +277,11 @@ function ArticleCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={ArticleIdeasColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={ArticleIdeasColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -367,4 +365,4 @@ function ArticleCategoriesListView(props) {
   )
 }
 
-export default ArticleCategoriesListView
+export default ArticleIdeasListView

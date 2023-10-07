@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const DetailedArticleCategoriesView = props => {
+const DetailedArticleIdeasView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedArticleCategoriesView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'article_ideas/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -92,39 +92,38 @@ const DetailedArticleCategoriesView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Title</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.title}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
-                <div className={`${styles.FormTextField} ${styles.markdownEditorReadOnly} markdownEditorReadOnly FormTextField`}>
-                  <Editor
-                    defaultValue={originalData?.description ?? ''}
-                    readOnly={true}
-                  />
-                </div>
+                <label className={`${styles.FormLabel} FormLabel`}>Sections</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.sections}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Tags</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.tags}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                {originalData.logo_url && (
-                    <IMPhoto openable className="photo" src={originalData.logo_url} />
-                )}
+                <label className={`${styles.FormLabel} FormLabel`}>Status</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.status}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>SEO Title</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.seo_title}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Extra Prompt</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.extra_prompt}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Social Media</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.tweet}</span>
             </div>
     
 
@@ -135,28 +134,32 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Canonical URL</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.canonical_url}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Summary</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.summary}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>SEO Cover Image</label>
-                {originalData.seo_image_url && (
-                    <IMPhoto openable className="photo" src={originalData.seo_image_url} />
-                )}
+                <label className={`${styles.FormLabel} FormLabel`}>Topic</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.topic}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
+                <label className={`${styles.FormLabel} FormLabel`}>Category</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.category}</span>
             </div>
     
 
-             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/category" titleKey="title" />
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                <span className="LockedFieldValue">{originalData.created_at && formatDate(originalData.created_at)}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                <span className="LockedFieldValue">{originalData.updated_at && formatDate(originalData.updated_at)}</span>
             </div>
     
 
@@ -165,4 +168,4 @@ const DetailedArticleCategoriesView = props => {
   )
 }
 
-export default DetailedArticleCategoriesView
+export default DetailedArticleIdeasView

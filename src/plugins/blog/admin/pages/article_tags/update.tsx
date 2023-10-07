@@ -36,8 +36,6 @@ const CodeMirror = dynamic(
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
-import ParentArticleCategoryTypeaheadComponent from '../../components/ParentArticleCategoryTypeaheadComponent.js'
-
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -47,7 +45,7 @@ import {
 } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const UpdateCategoryView = props => {
+const UpdateArticleTagView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
@@ -59,7 +57,7 @@ const UpdateCategoryView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'article_tags/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -82,16 +80,16 @@ const UpdateCategoryView = props => {
               nonFormData['description'] = originalData.description
           }
           
-          if (originalData.logo_url) {
-              nonFormData['logo_url'] = originalData.logo_url
+          if (originalData.published) {
+              nonFormData['published'] = originalData.published
           }
           
           if (originalData.seo_image_url) {
               nonFormData['seo_image_url'] = originalData.seo_image_url
           }
           
-          if (originalData.published) {
-              nonFormData['published'] = originalData.published
+          if (originalData.created_at && Date.parse(originalData.created_at)) {
+              nonFormData['created_at'] = new Date(originalData.created_at)
           }
           
 
@@ -101,7 +99,7 @@ const UpdateCategoryView = props => {
 
   const saveChanges = async (modifiedData, setSubmitting) => {
     const response = await authPost(
-      baseAPIURL + 'article_categories/update?id=' + id,
+      baseAPIURL + 'article_tags/update?id=' + id,
       JSON.stringify({
         ...modifiedData,
         ...modifiedNonFormData,
@@ -405,6 +403,14 @@ const UpdateCategoryView = props => {
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.name) {
+            errors.name = 'Field Required!'
+        }
+
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -458,29 +464,11 @@ const UpdateCategoryView = props => {
 
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="slug"
-                            name="slug"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.slug}
-                        />
+                        <label className={`${styles.FormLabel} FormLabel`}>Published</label>
+                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.slug && touched.slug && errors.slug}
+                            {errors.published && touched.published && errors.published}
                         </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                        {modifiedNonFormData.logo_url && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.logo_url} onDelete={(src) => handleDeletePhoto(src, "logo_url", false) } />
-                        )}
-                        <input className="FormFileField" id="logo_url" name="logo_url" type="file" onChange={(event) => {
-                            handleImageUpload(event, "logo_url", false);
-                        }} />
                     </div>
     
 
@@ -544,19 +532,13 @@ const UpdateCategoryView = props => {
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.published && touched.published && errors.published}
-                        </p>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
+                        />
                     </div>
     
-
-          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-              <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-              <ParentArticleCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "parent_id")} id={originalData && originalData.parent_id} name={originalData && originalData.parent_id} />
-          </div>
-      
 
 
               <div className={`${styles.FormActionContainer}`}>
@@ -564,7 +546,7 @@ const UpdateCategoryView = props => {
                   className={`${styles.PrimaryButton}`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save category
+                  Save article_tag
                 </button>
               </div>
             </form>
@@ -575,4 +557,4 @@ const UpdateCategoryView = props => {
   )
 }
 
-export default UpdateCategoryView
+export default UpdateArticleTagView

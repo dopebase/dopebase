@@ -44,7 +44,7 @@ const DetailedArticleCategoriesView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_categories/view?id=' + id,
+          baseAPIURL + 'article_tags/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -109,16 +109,8 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                {originalData.logo_url && (
-                    <IMPhoto openable className="photo" src={originalData.logo_url} />
-                )}
+                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
+                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
             </div>
     
 
@@ -149,14 +141,8 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                <IMToggleSwitchComponent isChecked={originalData.published} disabled />
-            </div>
-    
-
-             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/category" titleKey="title" />
+                <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                <span className="LockedFieldValue">{originalData.created_at && formatDate(originalData.created_at)}</span>
             </div>
     
 
