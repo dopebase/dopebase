@@ -13,7 +13,7 @@ function buildTypeahead(mutableOriginalData, allSchemas, field, fieldName) {
   var decode = {}
   decode['$className$'] = () => field.cellClassName
   decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
-  decode['$lowercasesingular$'] = () => foreignField.singularName
+  decode['$lowercasesingular$'] = () => foreignField.lowercaseSingularName
   decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
   decode['$capitalcaseplural$'] = () =>
     foreignField.lowercasePluralName.charAt(0).toUpperCase() +

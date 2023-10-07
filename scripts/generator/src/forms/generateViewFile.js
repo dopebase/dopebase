@@ -16,7 +16,7 @@ function generateViewFile(
   const {
     fields,
     displayName,
-    singularName,
+    lowercaseSingularName,
     lowercasePluralName,
     titleFieldKey,
     singularCapitalName,

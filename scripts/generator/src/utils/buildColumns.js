@@ -1,6 +1,7 @@
 var fs = require('fs')
 
 var { outputPath, templatesPath, nodeAPIOutputPath } = require('../config')
+var { decodeData } = require('./decodeData')
 
 function foreignKeysArrayIdTableCellBuilder(
   itemRendererString,
@@ -27,8 +28,12 @@ function foreignKeysArrayIdTableCellBuilder(
 
   const className = 'IM' + field.cellClassName + 'ForeignKeysArrayIdTableCell'
   const fileName = className + '.js'
-  const filePath = dir + 'tableCells/' + fileName
+  const folderPath = dir + '../components/tableCells/'
+  const filePath = folderPath + fileName
   console.log('Generating ' + filePath)
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
     console.log('Generated ' + filePath)
@@ -38,7 +43,11 @@ function foreignKeysArrayIdTableCellBuilder(
   const importsIndicator = '/* Insert extra imports for table cells here */'
   var insertionIndex = listTemplateData.indexOf(importsIndicator)
   const importData =
-    '\nimport ' + className + " from '../tableCells/" + fileName + "'\n"
+    '\nimport ' +
+    className +
+    " from '../../components/tableCells/" +
+    fileName +
+    "'\n"
 
   var outputData = listTemplateData
   if (insertionIndex !== -1) {
@@ -88,8 +97,12 @@ function arrayTableCellBuilder(
 
   const className = 'IM' + field.cellClassName + 'ArrayTableCell'
   const fileName = className + '.js'
-  const filePath = dir + 'tableCells/' + fileName
+  const folderPath = dir + 'tableCells/'
+  const filePath = folderPath + fileName
   console.log('Generating ' + filePath)
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
     console.log('Generated ' + filePath)
@@ -99,7 +112,11 @@ function arrayTableCellBuilder(
   const importsIndicator = '/* Insert extra imports for table cells here */'
   var insertionIndex = listTemplateData.indexOf(importsIndicator)
   const importData =
-    '\nimport ' + className + " from '../tableCells/" + fileName + "'\n"
+    '\nimport ' +
+    className +
+    " from '../../components/tableCells/" +
+    fileName +
+    "'\n"
 
   var outputData = listTemplateData
   if (insertionIndex !== -1) {
@@ -152,7 +169,7 @@ function foreignKeysArrayTableCellBuilder(
 
   const className = 'IM' + field.cellClassName + 'ForeignKeysArrayTableCell'
   const fileName = className + '.js'
-  const filePath = dir + 'tableCells/' + fileName
+  const filePath = dir + '../components/tableCells/' + fileName
   console.log('Generating ' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
@@ -214,7 +231,7 @@ function objectTableCellBuilder(
 
   const className = 'IM' + field.cellClassName + 'ObjectTableCell'
   const fileName = className + '.js'
-  const filePath = dir + 'tableCells/' + fileName
+  const filePath = dir + '../components/tableCells/' + fileName
   console.log('Generating ' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
@@ -350,10 +367,12 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
       },`
     } else if (field.type == 'array' && field.foreignKeys) {
       if (field.subtype === 'ids') {
+        console.log('foreign keys array id table cell builder')
+        console.log(fieldName)
         const builder = foreignKeysArrayIdTableCellBuilder(
-          schema.mapRenderers[fieldName],
+          allSchemas.mapRenderers[fieldName],
           fieldName,
-          schema[field.foreignKeys].singularName,
+          allSchemas[field.foreignKeys].lowercaseSingularName,
           field,
           outputListTemplateData,
         )
@@ -361,9 +380,9 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
         outputListTemplateData = builder.templateData
       } else if (field.subtype === 'objects') {
         const builder = foreignKeysArrayTableCellBuilder(
-          schema.mapRenderers[fieldName],
+          allSchemas.mapRenderers[fieldName],
           fieldName,
-          schema[field.foreignKeys].singularName,
+          allSchemas[field.foreignKeys].lowercaseSingularName,
           field,
           outputListTemplateData,
         )
@@ -372,7 +391,7 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
       }
     } else if (field.type == 'array') {
       const builder = arrayTableCellBuilder(
-        schema.mapRenderers[fieldName],
+        allSchemas.mapRenderers[fieldName],
         fieldName,
         field,
         outputListTemplateData,
@@ -382,7 +401,7 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
     } else if (field.type == 'object') {
       ///In case we ever want to add custom objects
       const builder = objectTableCellBuilder(
-        schema.mapRenderers[fieldName],
+        allSchemas.mapRenderers[fieldName],
         fieldName,
         field,
         outputListTemplateData,

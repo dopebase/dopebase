@@ -9,8 +9,11 @@ const generateAPI = (fileName, schema, allSchemas) => {
 
   const data = fs.readFileSync(`${templatesPath}api/` + fileName, 'utf8')
   const finalData = decodeTemplate(data, schema, allSchemas)
-
-  const filePath = dir + '/' + fileName
+  const folderPath = dir + '/'
+  const filePath = folderPath + fileName
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   console.log('Generating ' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)

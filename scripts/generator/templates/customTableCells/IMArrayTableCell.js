@@ -1,5 +1,6 @@
+'use client'
 import React from 'react'
-import { IMColorBoxComponent } from '../../../common'
+import { IMColorBoxComponent } from '../../../../../admin/components/forms/fields'
 
 function IM$capitalcase$ArrayTableCell(props) {
   const { $lowercase$Array } = props

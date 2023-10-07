@@ -29,7 +29,7 @@ const decodeFieldTemplate = (template, allSchemas, displayName, fieldName) => {
   const schema = {
     fields: [],
     displayName,
-    singularName: fieldName,
+    lowercaseSingularName: fieldName,
     lowercasePluralName: fieldName,
     singularCapitalName: fieldName,
   }

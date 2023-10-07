@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
-import IMDatePicker from '../../../../../components/dashboard/IMDatePicker'
+import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
 import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
 import {
   TypeaheadComponent,

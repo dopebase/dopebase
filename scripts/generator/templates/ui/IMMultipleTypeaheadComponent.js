@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
-import useCurrentUser from '../../../hooks/useCurrentUser'
-import styles from '../../../../../admin.module.css'
+import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
+import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = 'http://localhost:3000/api/admin/'
 

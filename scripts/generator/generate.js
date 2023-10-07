@@ -1,8 +1,9 @@
 'use strict'
 
-/*
-to use this project, run "node generate.js schema subschema plugin_name"
-*/
+/***
+ * to use this project, run "node generate.js path/to/schema plugin_name"
+ * node generate.js ../src/plugins/blog/admin/schema.ts blog
+ ***/
 var decodeData = require('./src/utils/decodeData')
 var { generateFormFile } = require('./src/forms/generateFormFile')
 var { generateViewFile } = require('./src/forms/generateViewFile')
@@ -25,9 +26,9 @@ var fs = require('fs')
 
 var myArgs = process.argv.slice(2)
 
-const allSchemas = require('./schemas/' + myArgs[0])
-var schemaKey = myArgs[1]
-var pluginName = myArgs.length > 1 ? myArgs[2] : 'generated'
+const allSchemas = require(myArgs[0])
+var pluginName = myArgs.length > 0 ? myArgs[1] : 'generated'
+console.log('Generating ' + pluginName + ' plugin')
 global.pluginName = pluginName
 
 var { outputPath, templatesPath } = require('./src/config')
@@ -142,14 +143,20 @@ function generateScaffold(schema) {
   //   tableName,
   //   fields,
   //   displayName,
-  //   singularName,
+  //   lowercaseSingularName,
   //   lowercasePluralName,
   //   singularCapitalName,
   // )
   // // add API routes
   // generateAPIRoutes(schema)
 }
-
-console.log('Starting scaffoling for ' + schemaKey)
-var currentTable = allSchemas[schemaKey]
-generateScaffold(currentTable)
+console.log(Object.keys(allSchemas))
+Object.keys(allSchemas).forEach(schemaKey => {
+  console.log(schemaKey)
+  if (schemaKey !== 'mapRenderers' && schemaKey !== 'users') {
+    console.log('Starting scaffolding for ' + schemaKey)
+    var currentTable = allSchemas[schemaKey]
+    console.log(currentTable)
+    generateScaffold(currentTable)
+  }
+})

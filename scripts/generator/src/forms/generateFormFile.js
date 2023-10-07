@@ -72,7 +72,7 @@ function generateFormFile(
   const {
     fields,
     displayName,
-    singularName,
+    lowercaseSingularName,
     lowercasePluralName,
     titleFieldKey,
     singularCapitalName,

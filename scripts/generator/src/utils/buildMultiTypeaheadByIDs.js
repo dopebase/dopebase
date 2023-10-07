@@ -20,7 +20,7 @@ function buildMultiTypeaheadByIDs(
   decode['$className$'] = () => field.cellClassName
   decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
   decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
-  decode['$lowercasesingular$'] = () => foreignField.singularName
+  decode['$lowercasesingular$'] = () => foreignField.lowercaseSingularName
   decode['$capitalcaseplural$'] = () =>
     foreignField.lowercasePluralName.charAt(0).toUpperCase() +
     foreignField.lowercasePluralName.slice(1)
@@ -37,8 +37,12 @@ function buildMultiTypeaheadByIDs(
 
   const className = 'IM' + field.cellClassName + 'MultipleTypeaheadIdComponent'
   const fileName = className + '.js'
-  const filePath = dir + 'ui/' + fileName
+  const folderPath = dir + '../components/'
+  const filePath = folderPath + fileName
   console.log('Generating ' + filePath)
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
     console.log('Generated ' + filePath)
