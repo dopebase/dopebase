@@ -35,6 +35,7 @@ export async function POST(req) {
   if (!json) {
     return res.json({}, { status: 500 })
   }
+
   // Form validation
   const { errors, isValid } = validateLoginInput(json)
   // Check validation

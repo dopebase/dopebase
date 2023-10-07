@@ -1,6 +1,14 @@
-// Prisma database
+// Firebase database
+
 export {
   loginWithEmailAndPassword,
   register,
   resetPassword,
-} from "./prisma/authDB";
+} from './firebase/authDB'
+
+// Prisma database
+// export {
+//   loginWithEmailAndPassword,
+//   register,
+//   resetPassword,
+// } from './prisma/authDB'

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
 import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './types'
 import setAuthToken from '../utils/setAuthToken'
 import { websiteURL } from '../../../config/config'

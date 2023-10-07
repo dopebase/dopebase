@@ -1,7 +1,15 @@
-// Prisma database
+// Firebase database
 export {
   getUserByID,
   getUserByEmail,
   createNewUser,
   getUserByToken,
-} from "./prisma/usersDB";
+} from './firebase/usersDB'
+
+// Prisma database
+// export {
+//   getUserByID,
+//   getUserByEmail,
+//   createNewUser,
+//   getUserByToken,
+// } from "./prisma/usersDB";

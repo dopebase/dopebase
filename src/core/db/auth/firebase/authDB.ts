@@ -1,7 +1,7 @@
 import { unescapeString } from '../../../../utils'
 import { prisma } from '../../common/prisma/prismaClient'
 import { getUserByEmail, createNewUser, getUserByToken } from '../../users'
-import { updateOne } from '../../../../core/db/common'
+import { findOne, updateOne } from '../../../../core/db/common'
 
 const bcrypt = require('bcryptjs')
 
@@ -11,8 +11,8 @@ async function loginWithEmailAndPassword(email: string, password: string) {
     return { error: { email: 'No user registered with this email' } }
   }
 
-  const auth = await prisma.auth.findFirst({
-    where: { userId: user.id },
+  const auth = await findOne('auth', {
+    userID: user.id,
   })
 
   const encryptedPassword = auth?.encryptedPassword
