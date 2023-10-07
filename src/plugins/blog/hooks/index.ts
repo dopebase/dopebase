@@ -1,6 +1,12 @@
 import hookSystem from '../../../system/triggers/HookSystem'
 
 export const registerHooks = () => {
+  registerAdminPanelHooks()
+}
+
+const registerAdminPanelHooks = () => {
+  /* Insert any admin hooks here */
+
   hookSystem.addHookCallback('beforeRenderAdminPanel', items => {
     return items.concat([
       {
@@ -11,17 +17,18 @@ export const registerHooks = () => {
           {
             title: 'Posts',
             path: 'articles/list',
-            icon: 'fa fa-newspaper-o',
           },
           {
             title: 'Categories',
             path: 'article_categories/list',
-            icon: 'fa fa-newspaper-o',
+          },
+          {
+            title: 'Users',
+            path: 'users/list',
           },
           {
             title: 'Tags',
             path: 'article_tags/list',
-            icon: 'fa fa-newspaper-o',
           },
         ],
       },

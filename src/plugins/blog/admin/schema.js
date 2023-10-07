@@ -5,11 +5,6 @@ const schema = {
     fields: {
       title: { type: 'string', required: false, displayName: 'Title' },
       content: { type: 'markdown', required: false, displayName: 'Content' },
-      table_of_contents: {
-        type: 'code',
-        required: false,
-        displayName: 'Table Of Contents',
-      },
       cover_photo: {
         type: 'photo',
         required: false,
@@ -81,9 +76,10 @@ const schema = {
       created_at: { type: 'date', required: true, displayName: 'Created At' },
       updated_at: { type: 'date', required: true, displayName: 'Updated At' },
     },
-    displayName: 'Articles',
+    pluralDisplayName: 'Articles',
+    capitalPluralName: 'Articles',
     tableName: 'articles',
-    singularName: 'article',
+    lowercaseSingularName: 'article',
     singularCapitalName: 'Article',
     lowercasePluralName: 'articles',
     titleFieldKey: 'title',
@@ -127,12 +123,13 @@ const schema = {
         },
       },
     },
-    displayName: 'Article Tag Categories',
-    tableName: 'article_tag_categories',
-    singularName: 'category',
+    pluralDisplayName: 'Article Categories',
+    capitalPluralName: 'ArticleCategories',
+    tableName: 'article_categories',
+    lowercaseSingularName: 'category',
     singularCapitalName: 'Category',
-    lowercasePluralName: 'categories',
-    titleFieldKey: 'name',
+    lowercasePluralName: 'article_categories',
+    titleFieldKey: 'title',
   },
   article_tags: {
     fields: {
@@ -165,73 +162,13 @@ const schema = {
       },
       created_at: { type: 'date', required: true, displayName: 'Created Date' },
     },
-    displayName: 'ArticleTags',
+
+    pluralDisplayName: 'Article Tags',
+    capitalPluralName: 'ArticleCategories',
     tableName: 'article_tags',
-    singularName: 'articleTag',
+    lowercaseSingularName: 'article_tag',
     singularCapitalName: 'ArticleTag',
-    lowercasePluralName: 'articleTags',
-    titleFieldKey: 'name',
-  },
-  author_articles: {
-    fields: {
-      title: { type: 'string', required: false, displayName: 'Title' },
-      content: { type: 'markdown', required: false, displayName: 'Content' },
-      table_of_contents: {
-        type: 'code',
-        required: false,
-        displayName: 'Table Of Contents',
-      },
-      cover_photo: {
-        type: 'photo',
-        required: false,
-        displayName: 'Cover Photo',
-      },
-      photo_urls: {
-        type: 'photos',
-        required: false,
-        displayName: 'Photos',
-      },
-      source_code_url: {
-        type: 'string',
-        required: false,
-        displayName: 'Github URL',
-      },
-      canonical_url: {
-        type: 'string',
-        required: false,
-        displayName: 'Canonical URL',
-      },
-      slug: { type: 'string', required: false, displayName: 'Slug' },
-      seo_title: { type: 'string', required: false, displayName: 'SEO Title' },
-      seo_description: {
-        type: 'string',
-        required: false,
-        displayName: 'SEO Description',
-      },
-      seo_keyword: {
-        type: 'string',
-        required: false,
-        displayName: 'SEO Keyword',
-      },
-      category_id: {
-        type: 'string',
-        required: false,
-        displayName: 'Category',
-        foreignKey: 'article_categories',
-        cellClassName: 'ArticleCategory',
-        typeaheadRenderers: {
-          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.name}</span></td></tr></table>`,
-          originalDataFormatter: `data.name`,
-        },
-      },
-      created_at: { type: 'date', required: true, displayName: 'Created At' },
-      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
-    },
-    displayName: 'Articles',
-    tableName: 'articles',
-    singularName: 'article',
-    singularCapitalName: 'Article',
-    lowercasePluralName: 'articles',
+    lowercasePluralName: 'article_tags',
     titleFieldKey: 'title',
   },
 
@@ -258,20 +195,24 @@ const schema = {
       created_at: { type: 'date', required: true, displayName: 'Created Date' },
       updated_at: { type: 'date', required: true, displayName: 'Created Date' },
     },
-    displayName: 'Ideas',
+
+    pluralDisplayName: 'Ideas',
+    capitalPluralName: 'ArticleIdeas',
     tableName: 'article_ideas',
-    singularName: 'articleIdea',
+    lowercaseSingularName: 'article_idea',
     singularCapitalName: 'ArticleIdea',
-    lowercasePluralName: 'articleIdeas',
+    lowercasePluralName: 'article_ideas',
     titleFieldKey: 'title',
   },
   users: {
-    displayName: 'Users',
+    pluralDisplayName: 'Users',
+    capitalPluralName: 'Users',
     tableName: 'users',
-    singularName: 'user',
+    lowercaseSingularName: 'user',
     singularCapitalName: 'User',
     lowercasePluralName: 'users',
-    titleFieldKey: 'firstName',
+    titleFieldKey: 'title',
+
     fields: {
       email: { type: 'string', required: true, displayName: 'Email' },
       first_name: {
@@ -310,6 +251,20 @@ const schema = {
       created_at: { type: 'date', required: true, displayName: 'Created At' },
       updated_at: { type: 'date', required: true, displayName: 'Updated At' },
     },
+  },
+  mapRenderers: {
+    tags: `{
+            const path = viewPath && viewPath[index]
+            return (
+                <li>
+                    <span>
+                        <a href={data.canonical_url}>
+                            {data.name}
+                        </a>
+                    </span>
+                </li>
+            )
+        }`,
   },
 }
 
