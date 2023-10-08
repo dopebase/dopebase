@@ -52,7 +52,7 @@ const AdminMenu: React.FC = memo(() => {
   console.log('admin menu render')
 
   useEffect(() => {
-    if (menuItems === null && user) {
+    if (user) {
       const items = user?.role === 'admin' ? adminMenuItemsTop : []
       const menuItemsAfterApplyingHooks = hookSystem.executeHook(
         'beforeRenderAdminPanel',
@@ -61,7 +61,7 @@ const AdminMenu: React.FC = memo(() => {
       console.log('menuItems', menuItems)
       setMenuItems(menuItemsAfterApplyingHooks.concat(adminMenuItemsBottom))
     }
-  }, [menuItems, user?.id])
+  }, [user?.id])
 
   const onSelect = (index, subindex) => {
     // const item = menuItems[index]

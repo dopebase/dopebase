@@ -25,6 +25,12 @@ export async function GET(req) {
   }
 
   // Find the plugin by the route
+  console.log(
+    `Importing module for GET for ${pluginID} plugin from ${
+      `./../../../../../plugins` +
+      `/${pluginID}/admin/api/${pathItems.slice(5).join('/')}`
+    }`,
+  )
   const file = await import(
     `./../../../../../plugins` +
       `/${pluginID}/admin/api/${pathItems.slice(5).join('/')}`
