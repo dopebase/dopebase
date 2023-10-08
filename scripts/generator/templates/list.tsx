@@ -27,7 +27,7 @@ import { authPost } from '../../../../../modules/auth/utils/authFetch'
 import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
 
 export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }

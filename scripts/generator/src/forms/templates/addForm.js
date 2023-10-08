@@ -94,7 +94,7 @@ const addFormTemplateDataByType = {
   location: `
                     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                        <IMLocationPicker
+                        <LocationPicker
                             initialValue={modifiedNonFormData.user && modifiedNonFormData.user.address}
                             onLocationChange={(addressObject) => onLocationChange(addressObject, "user")}                    
                         />
@@ -108,7 +108,7 @@ const addFormTemplateDataByType = {
                                 lat: {modifiedNonFormData.user && modifiedNonFormData.user.lat}<br/>
                                 lng: {modifiedNonFormData.user && modifiedNonFormData.user.lng}<br/>
                             </div>
-                            <IMLocationPicker
+                            <LocationPicker
                                 onLocationChange={(addressObject) => onSimpleLocationChange(addressObject, "user")}                    
                             />
                         </span>

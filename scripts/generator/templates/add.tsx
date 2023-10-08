@@ -55,7 +55,7 @@ const AddNew$capitalsingular$View = () => {
 
   const create$capitalsingular$ = async (data, setSubmitting) => {
     setIsLoading(true)
-    const url = `${baseAPIURL}admin/blog/$lowercaseplural$/add`
+    const url = `${baseAPIURL}admin/$pluginname$/$lowercaseplural$/add`
     const response = await authPost(
       url,
       JSON.stringify({ ...data, ...modifiedNonFormData }),

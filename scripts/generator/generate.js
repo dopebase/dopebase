@@ -153,7 +153,8 @@ function generateScaffold(schema) {
 console.log(Object.keys(allSchemas))
 Object.keys(allSchemas).forEach(schemaKey => {
   console.log(schemaKey)
-  if (schemaKey !== 'mapRenderers' && schemaKey !== 'users') {
+  if (schemaKey !== 'mapRenderers') {
+    // && schemaKey !== 'users') {
     console.log('Starting scaffolding for ' + schemaKey)
     var currentTable = allSchemas[schemaKey]
     console.log(currentTable)

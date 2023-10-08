@@ -16,6 +16,7 @@ const decoders = (schema, allSchemas, extraQueryParams) => {
   decode['$capitalsingular$'] = () => singularCapitalName
   decode['$displayplural$'] = () => pluralDisplayName
   decode['$lowercasesingular$'] = () => lowercaseSingularName
+  decode['$pluginname$'] = () => global.pluginName
   decode['user'] = () => 'user'
   decode['User'] = () => 'User'
   decode['$columns$'] = template => {
@@ -29,6 +30,7 @@ const decoders = (schema, allSchemas, extraQueryParams) => {
 
 // order is important here - we want to replace the longest strings first
 const decoderKeys = [
+  '$pluginname$',
   '$capitalcaseplural$',
   '$lowercaseplural$',
   '$capitalsingular$',

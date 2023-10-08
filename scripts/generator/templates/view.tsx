@@ -31,7 +31,7 @@ import styles from '../../../../../admin/themes/admin.module.css'
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
 
 const Detailed$capitalcaseplural$View = props => {
   const [isLoading, setIsLoading] = useState(true)

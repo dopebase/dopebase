@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
 import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
-import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
   TypeaheadComponent,
   IMColorPicker,
@@ -43,7 +43,7 @@ import {
   authFetch,
   authPost,
 } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
 
 const Update$capitalsingular$View = props => {
   const [isLoading, setIsLoading] = useState(true)
