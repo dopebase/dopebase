@@ -24,6 +24,7 @@ export const getAllPluginsAndUpdateIfNeeded = async () => {
   const storedPlugins = await getStoredPlugins()
   const supportedPlugins = [
     'blog',
+    'taxi',
     // 'booking',
     // 'chat',
     // 'ecommerce',
