@@ -1,19 +1,19 @@
-import fs from 'fs'
-import { websiteURL } from '../../../config/config'
-
 const firebaseAdmin = require('firebase-admin')
-const serviceAccount = '' // require('../../config/firebase/dopebase-9b89b-firebase-adminsdk-1e5r9-a0bb4c1a43.json')
-const dbURL = 'https://dopebase-9b89b.firebaseio.com'
-const bucketURL = 'dopebase-9b89b.appspot.com'
 const { v4: uuidv4 } = require('uuid')
 
-export const upload = async (files, callback) => {
+export const upload = async files => {
   if (!firebaseAdmin.apps.length) {
-    firebaseAdmin.initializeApp({
-      credential: firebaseAdmin.credential.cert(serviceAccount),
-      databaseURL: dbURL,
-      storageBucket: bucketURL,
-    })
+    const firebaseAdminConfig = {
+      credential: firebaseAdmin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID, // I get no error here
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL, // I get no error here
+        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'), // NOW THIS WORKS!!!),
+      }),
+      databaseURL: process.env.FIREBASE_DATABASE_URL,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    }
+
+    firebaseAdmin.initializeApp(firebaseAdminConfig)
   }
   const firebaseStorage = firebaseAdmin.storage()
 
@@ -21,53 +21,44 @@ export const upload = async (files, callback) => {
   // Uncomment this to upload data to the server instead
   const dataToBeUploadedToFirebase = []
 
-  files.forEach(file => {
-    // push file details
-    const path = file.path.replace('public/', '')
-    // console.log(file)
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i]
+    console.log(file)
 
-    const data = fs.readFileSync(file.path)
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
     dataToBeUploadedToFirebase.push({
-      name: file.originalname,
+      name: file.name,
       mimetype: file.mimetype,
       size: file.size,
-      url: websiteURL + path,
-      relativePath: path,
-      data: data,
+      data: buffer,
     })
-  })
+  }
 
-  Promise.all(
-    dataToBeUploadedToFirebase.map(media => {
-      const uuid = uuidv4()
-      return new Promise((resolve, reject) => {
-        bucket
-          .file(media.name)
-          .save(media.data, {
-            uploadType: 'media',
-            metadata: {
-              contentType: media.mimetype,
-              firebaseStorageDownloadTokens: uuid,
-            },
-          })
-          .then(
-            response => {
-              // console.log(response)
-              const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${media.name}?alt=media&token=${uuid}`
-              const myData = {
-                url,
-                name: media.name,
-                mimetype: media.mimetype,
-              }
-              resolve(myData)
-            },
-            err => {
-              reject(err)
-            },
-          )
-      })
-    }),
-  ).then(data => {
-    callback(data)
-  })
+  var result = []
+
+  for (var i = 0; i < dataToBeUploadedToFirebase.length; i++) {
+    const media = dataToBeUploadedToFirebase[i]
+
+    const uuid = uuidv4()
+    console.log(`Uploading to Firebase Storage: ${media.name}`)
+    const response = await bucket.file(media.name).save(media.data, {
+      uploadType: 'media',
+      metadata: {
+        contentType: media.mimetype,
+        firebaseStorageDownloadTokens: uuid,
+      },
+    })
+    console.log('File uploaded to Firebase Storage')
+    const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${media.name}?alt=media&token=${uuid}`
+    const myData = {
+      url,
+      name: media.name,
+      mimetype: media.mimetype,
+    }
+    result.push(myData)
+  }
+
+  return result
 }

@@ -1,15 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server'
 import multer from 'multer'
-import fs, { mkdirSync } from 'fs'
-import { writeFile } from 'fs/promises'
 import initMiddleware from '../../../../system/media/initMiddleware'
-import { websiteURL } from '../../../../config/config'
 import { upload } from '../../../../core/storage'
 
-const firebaseAdmin = require('firebase-admin')
-const serviceAccount = '' // require('../../config/firebase/dopebase-9b89b-firebase-adminsdk-1e5r9-a0bb4c1a43.json')
-const dbURL = 'https://dopebase-9b89b.firebaseio.com'
-const bucketURL = 'dopebase-9b89b.appspot.com'
 const { v4: uuidv4 } = require('uuid')
 
 const uploadMulter = multer({
