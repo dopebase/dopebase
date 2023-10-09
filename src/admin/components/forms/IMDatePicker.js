@@ -1,5 +1,6 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
+import styles from '../../themes/admin.module.css'
 
 const IMDatePicker = props => {
   const { selected, onChange } = props
@@ -13,8 +14,8 @@ const IMDatePicker = props => {
   const date = temp.getTime() === temp.getTime() ? temp : new Date()
 
   return (
-    <div className="card-calendar-input Card">
-      <div className="CardBody">
+    <div className={`${styles.Card} card-calendar-input Card`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <DatePicker
           selected={date}
           onChange={onSelect}

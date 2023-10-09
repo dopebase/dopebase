@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styles from '../../../../themes/admin.module.css'
 
 function IMObjectInputComponent(props) {
   const [keyInput, setKeyInput] = useState('')
@@ -82,18 +83,18 @@ function IMObjectInputComponent(props) {
 
   return (
     <div style={{ paddingBottom: dataItems ? inputPadding : '40px' }}>
-      <span className="FieldsHolder">{dataItems}</span>
+      <span className={`${styles.FieldsHolder} FieldsHolder`}>{dataItems}</span>
       {(!nonModifiable || !dataItems) && (
-        <div className="InputContainer">
+        <div className={`${styles.InputContainer} InputContainer`}>
           <input
-            className="InputStyling KeyStyling"
+            className={`${styles.InputStyling} ${styles.KeyStyling} InputStyling KeyStyling`}
             type="text"
             placeholder={keyPlaceholder ? keyPlaceholder : 'key'}
             value={keyInput}
             onChange={event => setKeyInput(event.target.value)}
           />
           <input
-            className="InputStyling"
+            className={`${styles.InputStyling} ${styles.ValueStyling} InputStyling ValueStyling`}
             type="text"
             placeholder={valuePlaceholder ? valuePlaceholder : 'value'}
             value={valueInput}
@@ -102,7 +103,7 @@ function IMObjectInputComponent(props) {
           <button
             onClick={onClick}
             type="button"
-            className="btn-icon btn btn-secondary btn-sm ButtonStyling">
+            className={`${styles.btSm} ${styles.ButtonStyling} btn-icon btn btn-secondary btnSm ButtonStyling`}>
             <i className="fa fa-plus"></i>
           </button>
         </div>

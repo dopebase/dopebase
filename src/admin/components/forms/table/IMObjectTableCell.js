@@ -10,11 +10,13 @@ function IMObjectTableCell(props) {
 
   const listItems =
     data && Object.keys(data).length
-      ? Object.keys(data).map(key => (
-          <li>
-            {key}: {data[key]}
-          </li>
-        ))
+      ? Object.keys(data).map(key =>
+          typeof data[key] === 'object' ? null : (
+            <li>
+              {key}: {data[key]}
+            </li>
+          ),
+        )
       : null
 
   return <ul className="ObjectCellContainer">{listItems}</ul>
