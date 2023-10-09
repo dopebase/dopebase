@@ -85,14 +85,14 @@ const UsersColumns = [
           Header: "Created At",
           accessor: "created_at",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },
       {
           Header: "Updated At",
           accessor: "updated_at",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {

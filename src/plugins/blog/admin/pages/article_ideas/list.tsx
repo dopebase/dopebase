@@ -79,14 +79,14 @@ const ArticleIdeasColumns = [
           Header: "Created Date",
           accessor: "created_at",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },
       {
           Header: "Created Date",
           accessor: "updated_at",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {

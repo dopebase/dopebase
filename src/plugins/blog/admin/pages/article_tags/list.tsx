@@ -76,7 +76,7 @@ const ArticleCategoriesColumns = [
           Header: "Created Date",
           accessor: "created_at",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {

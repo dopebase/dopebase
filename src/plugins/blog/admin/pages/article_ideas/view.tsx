@@ -79,8 +79,8 @@ const DetailedArticleIdeasView = props => {
   const editPath = './update?id=' + id
 
   return (
-    <div className={`${styles.FormCard} ${styles.Card}`}>
-      <div className="CardBody">
+    <div className={`${styles.FormCard} ${styles.Card} Card FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>
           {originalData && originalData.name}
           <a
@@ -153,13 +153,13 @@ const DetailedArticleIdeasView = props => {
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
-                <span className="LockedFieldValue">{originalData.created_at && formatDate(originalData.created_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.created_at && formatDate(originalData.created_at)}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
-                <span className="LockedFieldValue">{originalData.updated_at && formatDate(originalData.updated_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updated_at && formatDate(originalData.updated_at)}</span>
             </div>
     
 

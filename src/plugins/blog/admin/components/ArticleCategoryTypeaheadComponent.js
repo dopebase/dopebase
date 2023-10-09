@@ -5,7 +5,7 @@ import { authFetch } from '../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../config/config'
 import styles from '../../../../admin/themes/admin.module.css'
 
-const baseAPIURL = `${pluginsAPIURL}admin/blog/`
+const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
 
 function ArticleCategoryTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)

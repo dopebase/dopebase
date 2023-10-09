@@ -356,8 +356,8 @@ const AddNewArticleView = () => {
   }
 
   return (
-    <div className={styles.FormCard}>
-      <div className="CardBody">
+    <div className={`${styles.FormCard} FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>Create New Article</h1>
         <Formik
           initialValues={{}}
@@ -599,9 +599,10 @@ const AddNewArticleView = () => {
     
 
 
-              <div className={styles.FormActionContainer}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
-                  className={styles.PrimaryButton}
+                  className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
                   Create article

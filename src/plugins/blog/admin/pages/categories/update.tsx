@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
 import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
-import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
   TypeaheadComponent,
   IMColorPicker,
@@ -37,7 +37,6 @@ import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
 import ParentArticleCategoryTypeaheadComponent from '../../components/ParentArticleCategoryTypeaheadComponent.js'
-
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -78,22 +77,21 @@ const UpdateCategoryView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-          if (originalData.description) {
-              nonFormData['description'] = originalData.description
-          }
-          
-          if (originalData.logo_url) {
-              nonFormData['logo_url'] = originalData.logo_url
-          }
-          
-          if (originalData.seo_image_url) {
-              nonFormData['seo_image_url'] = originalData.seo_image_url
-          }
-          
-          if (originalData.published) {
-              nonFormData['published'] = originalData.published
-          }
-          
+    if (originalData.description) {
+      nonFormData['description'] = originalData.description
+    }
+
+    if (originalData.logo_url) {
+      nonFormData['logo_url'] = originalData.logo_url
+    }
+
+    if (originalData.seo_image_url) {
+      nonFormData['seo_image_url'] = originalData.seo_image_url
+    }
+
+    if (originalData.published) {
+      nonFormData['published'] = originalData.published
+    }
 
     console.log(nonFormData)
     setModifiedNonFormData(nonFormData)
@@ -424,140 +422,198 @@ const UpdateCategoryView = props => {
           }) => (
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Name</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="name"
-                            name="name"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.name}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.name && touched.name && errors.name}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="name"
+                  name="name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.name && touched.name && errors.name}
+                </p>
+              </div>
 
-    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-        <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Description
+                </label>
 
-        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
-          <Editor
-            defaultValue={modifiedNonFormData.description}
-            onChange={value => {
-              onCodeChange(value(), 'description')
-            }}
-          />
-        </div>
-        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-            {errors.description && touched.description && errors.description}
-        </p>
-    </div>
+                <div
+                  className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+                  <Editor
+                    defaultValue={modifiedNonFormData.description}
+                    onChange={value => {
+                      onCodeChange(value(), 'description')
+                    }}
+                  />
+                </div>
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.description &&
+                    touched.description &&
+                    errors.description}
+                </p>
+              </div>
 
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="slug"
+                  name="slug"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.slug}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.slug && touched.slug && errors.slug}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="slug"
-                            name="slug"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.slug}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.slug && touched.slug && errors.slug}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
+                {modifiedNonFormData.logo_url && (
+                  <IMPhoto
+                    openable
+                    dismissable
+                    className="photo"
+                    src={modifiedNonFormData.logo_url}
+                    onDelete={src => handleDeletePhoto(src, 'logo_url', false)}
+                  />
+                )}
+                <input
+                  className="FormFileField"
+                  id="logo_url"
+                  name="logo_url"
+                  type="file"
+                  onChange={event => {
+                    handleImageUpload(event, 'logo_url', false)
+                  }}
+                />
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Logo</label>
-                        {modifiedNonFormData.logo_url && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.logo_url} onDelete={(src) => handleDeletePhoto(src, "logo_url", false) } />
-                        )}
-                        <input className="FormFileField" id="logo_url" name="logo_url" type="file" onChange={(event) => {
-                            handleImageUpload(event, "logo_url", false);
-                        }} />
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  SEO Title
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="seo_title"
+                  name="seo_title"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.seo_title}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.seo_title && touched.seo_title && errors.seo_title}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>SEO Title</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="seo_title"
-                            name="seo_title"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.seo_title}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.seo_title && touched.seo_title && errors.seo_title}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  SEO Description
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="seo_description"
+                  name="seo_description"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.seo_description}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.seo_description &&
+                    touched.seo_description &&
+                    errors.seo_description}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>SEO Description</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="seo_description"
-                            name="seo_description"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.seo_description}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.seo_description && touched.seo_description && errors.seo_description}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Canonical URL
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="canonical_url"
+                  name="canonical_url"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.canonical_url}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.canonical_url &&
+                    touched.canonical_url &&
+                    errors.canonical_url}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Canonical URL</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="canonical_url"
-                            name="canonical_url"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.canonical_url}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.canonical_url && touched.canonical_url && errors.canonical_url}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  SEO Cover Image
+                </label>
+                {modifiedNonFormData.seo_image_url && (
+                  <IMPhoto
+                    openable
+                    dismissable
+                    className="photo"
+                    src={modifiedNonFormData.seo_image_url}
+                    onDelete={src =>
+                      handleDeletePhoto(src, 'seo_image_url', false)
+                    }
+                  />
+                )}
+                <input
+                  className="FormFileField"
+                  id="seo_image_url"
+                  name="seo_image_url"
+                  type="file"
+                  onChange={event => {
+                    handleImageUpload(event, 'seo_image_url', false)
+                  }}
+                />
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>SEO Cover Image</label>
-                        {modifiedNonFormData.seo_image_url && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.seo_image_url} onDelete={(src) => handleDeletePhoto(src, "seo_image_url", false) } />
-                        )}
-                        <input className="FormFileField" id="seo_image_url" name="seo_image_url" type="file" onChange={(event) => {
-                            handleImageUpload(event, "seo_image_url", false);
-                        }} />
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Published
+                </label>
+                <IMToggleSwitchComponent
+                  isChecked={modifiedNonFormData.published}
+                  onSwitchChange={() =>
+                    handleSwitchChange(
+                      modifiedNonFormData['published'],
+                      'published',
+                    )
+                  }
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.published && touched.published && errors.published}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Published</label>
-                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.published} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["published"], "published")} />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.published && touched.published && errors.published}
-                        </p>
-                    </div>
-    
-
-          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-              <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-              <ParentArticleCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "parent_id")} id={originalData && originalData.parent_id} name={originalData && originalData.parent_id} />
-          </div>
-      
-
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Parent Category
+                </label>
+                <ParentArticleCategoryTypeaheadComponent
+                  onSelect={value => onTypeaheadSelect(value, 'parent_id')}
+                  id={originalData && originalData.parent_id}
+                  name={originalData && originalData.parent_id}
+                />
+              </div>
 
               <div className={`${styles.FormActionContainer}`}>
                 <button

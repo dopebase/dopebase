@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
 import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
-import { IMLocationPicker } from '../../../../../components/dashboard/IMLocationPicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
   TypeaheadComponent,
   IMColorPicker,
@@ -395,8 +395,8 @@ const UpdateCategoryView = props => {
   }
 
   return (
-    <div className={`${styles.Card} ${styles.FormCard}`}>
-      <div className={`${styles.CardBody}`}>
+    <div className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>{originalData && originalData.name}</h1>
         <Formik
           initialValues={originalData}
@@ -559,9 +559,9 @@ const UpdateCategoryView = props => {
       
 
 
-              <div className={`${styles.FormActionContainer}`}>
+              <div className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
-                  className={`${styles.PrimaryButton}`}
+                  className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
                   Save category
