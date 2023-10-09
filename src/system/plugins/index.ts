@@ -76,6 +76,7 @@ export const getAllPlugins = async () => {
 
   const supportedPlugins = [
     'blog',
+    'taxi',
     // 'booking',
     // 'chat',
     // 'ecommerce',

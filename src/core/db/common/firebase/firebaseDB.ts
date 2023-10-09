@@ -7,7 +7,11 @@ async function getOne(tableName, id) {
   const ref = firestore.collection(tableName).doc(id)
   const doc = await ref.get()
   if (!doc.exists) {
-    console.log(`Collection ${tableName} does not have an entry with id ${id}`)
+    console.log(
+      `Collection ${tableName} does not have an entry with id ${JSON.stringify(
+        id,
+      )}`,
+    )
     return null
   }
   const data = doc.data()
