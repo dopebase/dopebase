@@ -38,17 +38,21 @@ function IMPhoto(props) {
       <img className={allClasses} src={unescapedSrc} />
       {dismissable && (
         <IMDismissButton
-          className="PhotoDismissContainer"
+          className={`${styles.PhotoDismissContainer} PhotoDismissContainer`}
           onPress={onDismiss}
         />
       )}
       {openable && (
         <IMModal
-          className="PhotoModal"
+          className={`${styles.PhotoModal} PhotoModal`}
           visible={isOpen}
           onDismiss={onModalDismiss}>
-          <div className="PhotoModalImgContainer">
-            <img className="PhotoFullscreen" src={src} />
+          <div
+            className={`${styles.PhotoModalImgContainer} PhotoModalImgContainer`}>
+            <img
+              className={`${styles.PhotoFullscreen} PhotoFullscreen`}
+              src={src}
+            />
           </div>
         </IMModal>
       )}
