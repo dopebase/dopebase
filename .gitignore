@@ -2,6 +2,7 @@
 .env.dev
 .env.prod
 
+public/uploads
 # Logs
 logs
 *.log
