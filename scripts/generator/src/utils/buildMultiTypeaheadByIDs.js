@@ -21,6 +21,7 @@ function buildMultiTypeaheadByIDs(
   decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
   decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
   decode['$lowercasesingular$'] = () => foreignField.lowercaseSingularName
+  decode['$pluginname$'] = () => global.pluginName
   decode['$capitalcaseplural$'] = () =>
     foreignField.lowercasePluralName.charAt(0).toUpperCase() +
     foreignField.lowercasePluralName.slice(1)

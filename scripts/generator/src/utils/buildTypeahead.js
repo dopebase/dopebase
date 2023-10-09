@@ -15,6 +15,7 @@ function buildTypeahead(mutableOriginalData, allSchemas, field, fieldName) {
   decode['$lowercaseplural$'] = () => foreignField.lowercasePluralName
   decode['$lowercasesingular$'] = () => foreignField.lowercaseSingularName
   decode['$capitalcasePluralDisplay$'] = () => foreignField.lowercasePluralName
+  decode['$pluginname$'] = () => global.pluginName
   decode['$capitalcaseplural$'] = () =>
     foreignField.lowercasePluralName.charAt(0).toUpperCase() +
     foreignField.lowercasePluralName.slice(1)

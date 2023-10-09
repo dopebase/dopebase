@@ -350,8 +350,8 @@ const AddNew$capitalsingular$View = () => {
   }
 
   return (
-    <div className={styles.FormCard}>
-      <div className="CardBody">
+    <div className={`${styles.FormCard} FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>Create New $capitalsingular$</h1>
         <Formik
           initialValues={{}}
@@ -380,9 +380,10 @@ const AddNew$capitalsingular$View = () => {
             <form onSubmit={handleSubmit}>
               {/* Insert all add form fields here */}
 
-              <div className={styles.FormActionContainer}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
-                  className={styles.PrimaryButton}
+                  className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
                   Create $lowercasesingular$

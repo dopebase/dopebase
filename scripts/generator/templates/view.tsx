@@ -79,8 +79,8 @@ const Detailed$capitalcaseplural$View = props => {
   const editPath = './update?id=' + id
 
   return (
-    <div className={`${styles.FormCard} ${styles.Card}`}>
-      <div className="CardBody">
+    <div className={`${styles.FormCard} ${styles.Card} Card FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>
           {originalData && originalData.name}
           <a

@@ -179,9 +179,13 @@ function foreignKeysArrayTableCellBuilder(
   // Then we import that custom class into the list
   const importsIndicator = '/* Insert extra imports for table cells here */'
   var insertionIndex = listTemplateData.indexOf(importsIndicator)
-  const importData =
-    '\nimport ' + className + " from '../tableCells/" + fileName + "'\n"
 
+  const importData =
+    '\nimport ' +
+    className +
+    " from '../../components/tableCells/" +
+    fileName +
+    "'\n"
   var outputData = listTemplateData
   if (insertionIndex !== -1) {
     insertionIndex = insertionIndex + importsIndicator.length
@@ -214,7 +218,7 @@ function objectTableCellBuilder(
   field,
   listTemplateData,
 ) {
-  /// In case we need custom object
+  console.log(`generating custom table cell for ${fieldName}`)
   // For object data types, we first generate a custom cell for tables
   var dir = outputPath()
 
@@ -224,14 +228,18 @@ function objectTableCellBuilder(
   decode['$dataItemRenderer$'] = () => itemRendererString
 
   const data = fs.readFileSync(
-    templatesPath + 'customTableCells/IMObjectTableCell.js',
+    templatesPath + 'customTableCells/ObjectTableCell.js',
     'utf8',
   )
   const finalData = decodeData(data, decode)
 
-  const className = 'IM' + field.cellClassName + 'ObjectTableCell'
+  const className = field.cellClassName + 'ObjectTableCell'
   const fileName = className + '.js'
-  const filePath = dir + '../components/tableCells/' + fileName
+  const folderPath = dir + '../components/tableCells/'
+  const filePath = folderPath + fileName
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+  }
   console.log('Generating ' + filePath)
   fs.writeFile(filePath, finalData, function (err) {
     if (err) return console.log(err)
@@ -242,8 +250,11 @@ function objectTableCellBuilder(
   const importsIndicator = '/* Insert extra imports for table cells here */'
   var insertionIndex = listTemplateData.indexOf(importsIndicator)
   const importData =
-    '\nimport ' + className + " from '../tableCells/" + fileName + "'\n"
-
+    '\nimport ' +
+    className +
+    " from '../../components/tableCells/" +
+    fileName +
+    "'\n"
   var outputData = listTemplateData
   if (insertionIndex !== -1) {
     insertionIndex = insertionIndex + importsIndicator.length
@@ -260,7 +271,7 @@ function objectTableCellBuilder(
           Header: "${field.displayName || fieldName}",
           accessor: "${fieldName}",
           Cell: data => (
-              <${className} ${fieldName}Object={data.value} />
+              <${className} data={data.value} />
           )
       },`
 
@@ -354,7 +365,22 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
               <IMColorsTableCell data={data.value} />
           )
       },`
+    } else if (
+      field.type == 'object' &&
+      allSchemas.mapRenderers &&
+      allSchemas.mapRenderers[fieldName]
+    ) {
+      // Render object types in list cells using custom renderers
+      const builder = objectTableCellBuilder(
+        allSchemas.mapRenderers[fieldName],
+        fieldName,
+        field,
+        outputListTemplateData,
+      )
+      columnsString = columnsString + builder.columnString
+      outputListTemplateData = builder.templateData
     } else if (field.type == 'object') {
+      // Render object types in list cells using default renderers
       columnsString =
         columnsString +
         `
@@ -398,16 +424,6 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
       )
       columnsString = columnsString + builder.columnString
       outputListTemplateData = builder.templateData
-    } else if (field.type == 'object') {
-      ///In case we ever want to add custom objects
-      const builder = objectTableCellBuilder(
-        allSchemas.mapRenderers[fieldName],
-        fieldName,
-        field,
-        outputListTemplateData,
-      )
-      columnsString = columnsString + builder.columnString
-      outputListTemplateData = builder.templateData
     } else if (field.type == 'date') {
       columnsString =
         columnsString +
@@ -416,7 +432,7 @@ const buildColumns = (fields, listTemplateData, allSchemas) => {
           Header: "${field.displayName || fieldName}",
           accessor: "${fieldName}",
           Cell: data => (
-              <IMDateTableCell date={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },`
     } else if (field.foreignKey) {

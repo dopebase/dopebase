@@ -117,7 +117,7 @@ const addFormTemplateDataByType = {
   address: `
                 <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                     <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                    <div className="FormArrayField">
+                    <div className={\`\${styles.FormArrayField} FormArrayField\`}>
                         <IMObjectInputComponent 
                             nonModifiable 
                             keyPlaceholder="User Field" 
@@ -166,7 +166,7 @@ const addFormTemplateDataByType = {
   array: `
                     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                        <div className="FormArrayField">
+                        <div className={\`\${styles.FormArrayField} FormArrayField\`}>
                             <IMArrayInputComponent handleClick={(value) => handleArrayInput(value, "user")} handleDelete={(index) => handleArrayDelete(index, "user")} data={modifiedNonFormData["user"]}/>
                             <p className={\`\${styles.ErrorMessage} ErrorMessage\`}>
                                 {errors.user && touched.user && errors.user}
@@ -177,7 +177,7 @@ const addFormTemplateDataByType = {
   object: `
                     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                        <div className="FormArrayField">
+                        <div className={\`\${styles.FormArrayField} FormArrayField\`}>
                             <IMObjectInputComponent 
                                 keyPlaceholder="User Name" 
                                 valuePlaceholder="User Value" 

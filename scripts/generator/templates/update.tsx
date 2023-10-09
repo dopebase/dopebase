@@ -377,8 +377,8 @@ const Update$capitalsingular$View = props => {
   }
 
   return (
-    <div className={`${styles.Card} ${styles.FormCard}`}>
-      <div className={`${styles.CardBody}`}>
+    <div className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
+      <div className={`${styles.CardBody} CardBody`}>
         <h1>{originalData && originalData.name}</h1>
         <Formik
           initialValues={originalData}
@@ -407,9 +407,9 @@ const Update$capitalsingular$View = props => {
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
 
-              <div className={`${styles.FormActionContainer}`}>
+              <div className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
-                  className={`${styles.PrimaryButton}`}
+                  className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
                   Save $lowercasesingular$

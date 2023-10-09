@@ -56,14 +56,14 @@ const viewFormTemplateDataByType = {
   date: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="LockedFieldValue">{originalData.user && formatDate(originalData.user)}</span>
+                <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData.user && formatDate(originalData.user)}</span>
             </div>
     `,
   location: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
                 {originalData.user && originalData.user.address && (
-                    <span className="LockedFieldValue">{originalData.user.address}</span>
+                    <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData.user.address}</span>
                 )}
             </div>
     `,
@@ -71,7 +71,7 @@ const viewFormTemplateDataByType = {
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
                 {originalData.user && (
-                    <span className="LockedFieldValue" style={{verticalAlign: "bottom"}}>
+                    <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`} style={{verticalAlign: "bottom"}}>
                         lat: {originalData.user && originalData.user.lat}<br/>
                         lng: {originalData.user && originalData.user.lng}
                     </span>
@@ -81,7 +81,7 @@ const viewFormTemplateDataByType = {
   address: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="FormArrayField">
+                <span className={\`\${styles.FormArrayField} FormArrayField\`}>
                     { originalData.user && Object.keys(originalData.user).map( key => {
                         if(typeof originalData.user[key] === "string" || typeof originalData.user[key] === "number") {
                             return (<li>{key}: {originalData.user[key]}</li>)} 
@@ -105,7 +105,7 @@ const viewFormTemplateDataByType = {
   array: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="FormArrayField">
+                <span className={\`\${styles.FormArrayField} FormArrayField\`}>
                     { originalData.user && originalData.user.map( data => {
                         return (<li>{data}</li>)} 
                     )}
@@ -115,9 +115,11 @@ const viewFormTemplateDataByType = {
   object: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="FormArrayField">
+                <span className={\`\${styles.FormArrayField} FormArrayField\`}>
                     { originalData.user && Object.keys(originalData.user).map( key => {
-                        return (<li>{key}: {originalData.user[key]}</li>)} 
+                        if(typeof originalData.user[key] === "string" || typeof originalData.user[key] === "number") {
+                            return (<li>{key}: {originalData.user[key]}</li>)}
+                        }
                     )}
                 </span>
             </div>

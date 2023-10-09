@@ -9,7 +9,7 @@ var {
 const nonEditableFormFieldTemplateData = `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                <span className="LockedFieldValue">{originalData && originalData.user}</span>
+                <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData && originalData.user}</span>
             </div>
 `
 
@@ -20,7 +20,7 @@ function resolveObjectOfEnumFormField(field, fieldName, formType) {
     view: `
               <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                   <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                  <span className="FormArrayField">
+                  <span className={\`\${styles.FormArrayField} FormArrayField\`}>
                       { originalData.user && Object.keys(originalData.user).map( key => {
                           if(typeof originalData.user[key] === "string" || typeof originalData.user[key] === "number") {
                               return (<li>{key}: {originalData.user[key]}</li>)} 
@@ -32,7 +32,7 @@ function resolveObjectOfEnumFormField(field, fieldName, formType) {
     update: `
               <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                   <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                  <div className="FormArrayField">
+                  <div className={\`\${styles.FormArrayField} FormArrayField\`}>
                       <IMObjectInputComponent 
                           nonModifiable
                           keyPlaceholder="User Field" 
@@ -50,7 +50,7 @@ function resolveObjectOfEnumFormField(field, fieldName, formType) {
     add: `
               <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                   <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                  <div className="FormArrayField">
+                  <div className={\`\${styles.FormArrayField} FormArrayField\`}>
                       <IMObjectInputComponent 
                           nonModifiable 
                           keyPlaceholder="User Field" 
@@ -82,7 +82,7 @@ function resolveArrayOfEnumFormField(field, fieldName, formType) {
     view: `
               <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                   <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                  <span className="LockedFieldValue">{originalData && originalData.user}</span>
+                  <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData && originalData.user}</span>
               </div>
           `,
     update: `
@@ -128,7 +128,7 @@ function resolveEnumFormField(field, fieldName, formType) {
     view: `
               <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                   <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                  <span className="LockedFieldValue">{originalData && originalData.user}</span>
+                  <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData && originalData.user}</span>
               </div>
           `,
     update: `
