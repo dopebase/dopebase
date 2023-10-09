@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../../../../themes/admin.module.css'
+import adminStyles from '../../../../themes/admin.module.css'
+import styles from './IMObjectInputComponent.module.css'
 
 function IMObjectInputComponent(props) {
   const [keyInput, setKeyInput] = useState('')
@@ -56,12 +57,12 @@ function IMObjectInputComponent(props) {
             typeof myData[key] === 'number'
           ) {
             return (
-              <li className="FieldStyling">
+              <li className={`${styles.FieldStyling} FieldStyling`}>
                 {key}:
-                <div className="ObjectInputs">
+                <div className={`${styles.ObjectInputs} ObjectInputs`}>
                   <input
                     type="text"
-                    className="ObjectInputStyling"
+                    className={`${styles.ObjectInputStyling} ObjectInputStyling`}
                     value={myData[key]}
                     onChange={event => {
                       handleClick(key, event.target.value)
@@ -71,7 +72,7 @@ function IMObjectInputComponent(props) {
                   <button
                     onClick={() => handleDelete(key)}
                     type="button"
-                    className="ObjectDeleteButton">
+                    className={`${styles.ObjectDeleteButton}`}>
                     x
                   </button>
                 </div>
@@ -103,7 +104,7 @@ function IMObjectInputComponent(props) {
           <button
             onClick={onClick}
             type="button"
-            className={`${styles.btSm} ${styles.ButtonStyling} btn-icon btn btn-secondary btnSm ButtonStyling`}>
+            className={`${adminStyles.btSm} ${styles.ButtonStyling} btn-icon btn btn-secondary btnSm ButtonStyling`}>
             <i className="fa fa-plus"></i>
           </button>
         </div>

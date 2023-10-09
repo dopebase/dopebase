@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from '../../../../themes/admin.module.css'
 
 function IMStaticSelectComponent(props) {
   const { options, selectedOption, onChange, name } = props
@@ -36,7 +37,7 @@ function IMStaticSelectComponent(props) {
 
   return (
     <select
-      className="SingleSelectComponent FormTextField"
+      className={`${styles.SingleSelectComponent} ${styles.FormTextField} SingleSelectComponent FormTextField`}
       name={name}
       onChange={handleChange}>
       {renderItems}
