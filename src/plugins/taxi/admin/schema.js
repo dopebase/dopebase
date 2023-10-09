@@ -3,7 +3,7 @@
 const schema = {
   taxi_trips: {
     fields: {
-      title: { type: 'string', required: false, displayName: 'Title' },
+      id: { type: 'string', required: false, displayName: 'ID' },
       pickup: {
         type: 'location',
         required: false,
@@ -27,9 +27,15 @@ const schema = {
         ],
       },
       passenger: {
-        type: 'string',
+        type: 'object',
         required: false,
         displayName: 'Passenger',
+        cellClassName: 'TaxiTripPassenger',
+      },
+      passengerID: {
+        type: 'string',
+        required: false,
+        displayName: 'Passenger ID',
         foreignKey: 'users',
         cellClassName: 'TripPassenger',
         typeaheadRenderers: {
@@ -88,7 +94,12 @@ const schema = {
       numberOfPassengers: {
         type: 'string',
         required: false,
-        displayName: 'Number of passengers',
+        displayName: 'Max number of passengers',
+      },
+      averageSpeedPerMin: {
+        type: 'string',
+        required: false,
+        displayName: 'Average speed per min (km / minute)',
       },
     },
     pluralDisplayName: 'Prices & Categories',
@@ -142,6 +153,12 @@ const schema = {
         type: 'string',
         required: false,
         displayName: 'In Progress Order ID',
+        foreignKey: 'taxi_trips',
+        cellClassName: 'DriverInProgressTrip',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.id}</span></td></tr></table>`,
+          originalDataFormatter: `data.id + " - " + data.passenger.firstName + " " + data.passenger.lastName`,
+        },
       },
       banned: {
         type: 'boolean',
@@ -152,7 +169,13 @@ const schema = {
       updatedAt: { type: 'date', required: true, displayName: 'Updated At' },
     },
   },
-  mapRenderers: {},
+  mapRenderers: {
+    passenger: `<li>
+                    <a href={data.id}>
+                       {data.firstName} {data.lastName}
+                    </a>
+                </li>`,
+  },
 }
 
 module.exports = schema
