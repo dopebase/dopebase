@@ -71,7 +71,7 @@ const TripsColumns = [
           accessor: "passengerID",
           Cell: data => (
               <IMForeignKeyTableCell id={data.value} apiRouteName="admin/taxi/users" viewRoute="users"
-          titleKey="title" />
+          titleKey="email" />
           )
       },
       {

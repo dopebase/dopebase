@@ -38,6 +38,8 @@ import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports here */
 import TripPassengerTypeaheadComponent from '../../components/TripPassengerTypeaheadComponent.js'
 
+import TaxiTripPassengerTypeaheadComponent from '../../components/TaxiTripPassengerTypeaheadComponent.js'
+
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -102,12 +104,12 @@ const UpdateTaxiTripView = props => {
               nonFormData['carDrive'] = originalData.carDrive
           }
           
-          if (originalData.createdAt && Date.parse(originalData.createdAt)) {
-              nonFormData['createdAt'] = new Date(originalData.createdAt)
+          if (originalData.createdAt) {
+              nonFormData['createdAt'] = originalData.createdAt
           }
           
-          if (originalData.updatedAt && Date.parse(originalData.updatedAt)) {
-              nonFormData['updatedAt'] = new Date(originalData.updatedAt)
+          if (originalData.updatedAt) {
+              nonFormData['updatedAt'] = originalData.updatedAt
           }
           
 
@@ -286,7 +288,7 @@ const UpdateTaxiTripView = props => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -339,7 +341,7 @@ const UpdateTaxiTripView = props => {
       formData.append('multimedias', files[i])
     }
 
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -425,6 +427,10 @@ const UpdateTaxiTripView = props => {
             errors.status = 'Field Required!'
         }
 
+        if (!values.passenger) {
+            errors.passenger = 'Field Required!'
+        }
+
         if (!values.createdAt) {
             errors.createdAt = 'Field Required!'
         }
@@ -500,22 +506,11 @@ const UpdateTaxiTripView = props => {
               </div>
               
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
-                        <div className={`${styles.FormArrayField} FormArrayField`}>
-                            <IMObjectInputComponent 
-                            keyPlaceholder="Passenger Name" 
-                            valuePlaceholder="Passenger Value" 
-                            handleClick={(key, value) => handleObjectInput(key, value, "passenger")} 
-                            handleDelete={(key) => handleObjectDelete(key, "passenger")} 
-                            data={modifiedNonFormData["passenger"]}
-                        />
-                            <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                                {errors.passenger && touched.passenger && errors.passenger}
-                            </p>
-                        </div>
-                    </div>
-    
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
+              <TaxiTripPassengerTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "passenger")} id={originalData && originalData.passenger} name={originalData && originalData.passenger} />
+          </div>
+      
 
           <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
               <label className={`${styles.FormLabel} FormLabel`}>Passenger ID</label>
@@ -600,7 +595,8 @@ const UpdateTaxiTripView = props => {
     
 
 
-              <div className={`${styles.FormActionContainer} FormActionContainer`}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"

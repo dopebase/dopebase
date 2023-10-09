@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import DatePicker from 'react-datepicker'
 import styles from '../../themes/admin.module.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
-const IMDatePicker = props => {
+const IMDatePicker = memo(props => {
   const { selected, onChange } = props
 
   const onSelect = date => {
@@ -10,7 +11,9 @@ const IMDatePicker = props => {
     onChange && onChange(timestamp)
   }
 
-  const temp = new Date(selected * 1000)
+  const selectedNo =
+    typeof selected === 'number' ? selected : parseInt(selected)
+  const temp = new Date(selectedNo * 1000)
   const date = temp.getTime() === temp.getTime() ? temp : new Date()
 
   return (
@@ -25,6 +28,6 @@ const IMDatePicker = props => {
       </div>
     </div>
   )
-}
+})
 
 export default IMDatePicker

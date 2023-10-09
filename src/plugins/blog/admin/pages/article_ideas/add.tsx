@@ -225,7 +225,7 @@ const AddNewArticleIdeaView = () => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -277,8 +277,7 @@ const AddNewArticleIdeaView = () => {
     for (var i = 0; i < files.length; ++i) {
       formData.append('multimedias', files[i])
     }
-
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })

@@ -252,7 +252,7 @@ const UpdateTaxiCarCategoryView = props => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -305,7 +305,7 @@ const UpdateTaxiCarCategoryView = props => {
       formData.append('multimedias', files[i])
     }
 
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -551,7 +551,8 @@ const UpdateTaxiCarCategoryView = props => {
     
 
 
-              <div className={`${styles.FormActionContainer} FormActionContainer`}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"

@@ -131,14 +131,14 @@ function generateFormFile(
       'markdown',
     ]
     const nonmodifiableDateTemplateData = `
-          if (originalData.user && Date.parse(originalData.user)) {
-              nonFormData['user'] = new Date(originalData.user)
+          if (originalData.user) {
+              nonFormData['user'] = originalData.user
           }
           `
 
     const nonmodifiableCodeTemplateData = `
           if (originalData.user) {
-              nonFormData['user'] =  beautify_html(originalData.user, { indent_size: 2 })
+              nonFormData['user'] = beautify_html(originalData.user, { indent_size: 2 })
           }
           `
 

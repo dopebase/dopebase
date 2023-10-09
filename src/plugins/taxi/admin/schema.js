@@ -28,9 +28,14 @@ const schema = {
       },
       passenger: {
         type: 'object',
-        required: false,
+        required: true,
         displayName: 'Passenger',
+        foreignKey: 'users',
         cellClassName: 'TaxiTripPassenger',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
+          originalDataFormatter: `data.firstName + " " + data.lastName`,
+        },
       },
       passengerID: {
         type: 'string',
@@ -117,7 +122,7 @@ const schema = {
     lowercaseSingularName: 'user',
     singularCapitalName: 'User',
     lowercasePluralName: 'users',
-    titleFieldKey: 'title',
+    titleFieldKey: 'email',
 
     fields: {
       email: { type: 'string', required: true, displayName: 'Email' },
@@ -130,7 +135,7 @@ const schema = {
       phone: { type: 'string', required: false, displayName: 'Phone' },
       role: {
         type: 'enum',
-        required: true,
+        required: false,
         displayName: 'Role',
         enum: ['passenger', 'driver', 'admin', 'other'],
       },
@@ -165,13 +170,13 @@ const schema = {
         required: true,
         displayName: 'Banned',
       },
-      createdAt: { type: 'date', required: true, displayName: 'Created At' },
-      updatedAt: { type: 'date', required: true, displayName: 'Updated At' },
+      createdAt: { type: 'date', required: false, displayName: 'Created At' },
+      updatedAt: { type: 'date', required: false, displayName: 'Updated At' },
     },
   },
   mapRenderers: {
     passenger: `<li>
-                    <a href={data.id}>
+                    <a href={\`../users/view?id=\${data.id}\`}>
                        {data.firstName} {data.lastName}
                     </a>
                 </li>`,

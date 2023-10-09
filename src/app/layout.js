@@ -23,6 +23,7 @@ export default function RootLayout({ session, children }) {
               href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
               rel="stylesheet"
             />
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKyP60M6uX8_TUqeE5qoZiq2bsEdm9dEE&libraries=places"></script>
           </head>
           <body className={inter.className}>{children}</body>
         </html>

@@ -88,8 +88,8 @@ const UpdateArticleTagView = props => {
               nonFormData['seo_image_url'] = originalData.seo_image_url
           }
           
-          if (originalData.created_at && Date.parse(originalData.created_at)) {
-              nonFormData['created_at'] = new Date(originalData.created_at)
+          if (originalData.created_at) {
+              nonFormData['created_at'] = originalData.created_at
           }
           
 
@@ -268,7 +268,7 @@ const UpdateArticleTagView = props => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -321,7 +321,7 @@ const UpdateArticleTagView = props => {
       formData.append('multimedias', files[i])
     }
 
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -541,7 +541,8 @@ const UpdateArticleTagView = props => {
     
 
 
-              <div className={`${styles.FormActionContainer} FormActionContainer`}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../../utils'
+import { formatTimestamp } from '../../../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,
@@ -156,7 +156,7 @@ const DetailedArticleCategoriesView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/category" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/article_categories" titleKey="title" />
             </div>
     
 

@@ -212,3 +212,36 @@ a:hover {
 .geosuggest__item__matched-text {
   font-weight: bold;
 }
+
+
+/* Date picker */
+
+.react-datepicker__input-container input,
+.geosuggest__input {
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: left;
+  color: rgb(60, 66, 87);
+  text-decoration: none;
+  border-radius: 4px;
+  border: 0px;
+  padding: 5px 20px;
+  min-width: 250px;
+
+  background-color: var(--primary-background-color);
+  border: 1px solid var(--hairline-color);
+  border-radius: 4px;
+  color: var(--primary-text-color);
+  -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  box-shadow: none;
+}
+
+.geosuggest, 
+.react-datepicker__input-container .geosuggest__input:focus {
+  margin-left: 20px;
+}

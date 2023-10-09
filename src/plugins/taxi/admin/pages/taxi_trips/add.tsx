@@ -37,6 +37,8 @@ import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports here */
 import TripPassengerTypeaheadComponent from '../../components/TripPassengerTypeaheadComponent.js'
 
+import TaxiTripPassengerTypeaheadComponent from '../../components/TaxiTripPassengerTypeaheadComponent.js'
+
 
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authPost } from '../../../../../modules/auth/utils/authFetch'
@@ -227,7 +229,7 @@ const AddNewTaxiTripView = () => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -279,8 +281,7 @@ const AddNewTaxiTripView = () => {
     for (var i = 0; i < files.length; ++i) {
       formData.append('multimedias', files[i])
     }
-
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -366,6 +367,10 @@ const AddNewTaxiTripView = () => {
             errors.status = 'Field Required!'
         }
 
+        if (!values.passenger) {
+            errors.passenger = 'Field Required!'
+        }
+
         if (!values.createdAt) {
             errors.createdAt = 'Field Required!'
         }
@@ -440,22 +445,11 @@ const AddNewTaxiTripView = () => {
               </div>
           
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
-                        <div className={`${styles.FormArrayField} FormArrayField`}>
-                            <IMObjectInputComponent 
-                                keyPlaceholder="Passenger Name" 
-                                valuePlaceholder="Passenger Value" 
-                                handleClick={(key, value) => handleObjectInput(key, value, "passenger")} 
-                                handleDelete={(key) => handleObjectDelete(key, "passenger")} 
-                                data={modifiedNonFormData["passenger"]}
-                            />
-                            <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                                {errors.passenger && touched.passenger && errors.passenger}
-                            </p>
-                        </div>
-                    </div>
-    
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
+              <TaxiTripPassengerTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "passenger")} id={originalData && originalData.passenger} name={originalData && originalData.passenger} />
+          </div>
+      
 
           <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
               <label className={`${styles.FormLabel} FormLabel`}>Passenger ID</label>

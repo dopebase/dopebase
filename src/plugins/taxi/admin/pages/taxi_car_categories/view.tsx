@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../../utils'
+import { formatTimestamp } from '../../../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,

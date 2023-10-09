@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../../utils'
+import { formatTimestamp } from '../../../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,
@@ -174,31 +174,31 @@ const DetailedArticlesView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Author</label>
-                <IMForeignKeyComponent id={originalData.author_id} apiRouteName="admin/blog/user" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.author_id} apiRouteName="admin/blog/users" titleKey="title" />
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/category" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/article_categories" titleKey="title" />
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>ArticleTags</label>
-                <IMForeignKeysIdComponent ids={originalData.tags} apiRouteName="admin/blog/article_tag" titleKey="title" />
+                <IMForeignKeysIdComponent ids={originalData.tags} apiRouteName="admin/blog/article_tags" titleKey="title" />
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.created_at && formatDate(originalData.created_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.created_at && formatTimestamp(originalData.created_at)}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updated_at && formatDate(originalData.updated_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updated_at && formatTimestamp(originalData.updated_at)}</span>
             </div>
     
 

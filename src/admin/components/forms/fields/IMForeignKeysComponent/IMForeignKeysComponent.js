@@ -25,11 +25,11 @@ function IMForeignKeysComponent(props) {
   var urls =
     myData &&
     myData.legnth &&
-    myData.map(elem => baseAPIURL + apiRouteName + '/' + elem.id)
+    myData.map(elem => baseAPIURL + apiRouteName + '/view?id=' + elem.id)
   const viewPath =
     myData &&
     myData.legnth &&
-    myData.map(elem => '/admin/' + apiRouteName + '/' + elem.id)
+    myData.map(elem => '/admin/' + apiRouteName + '/view?id=' + elem.id)
 
   return (
     <div className="ForeignKeysComponent">

@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import IMModal from '../IMModal/IMModal'
 import IMDismissButton from '../IMDismissButton/IMDismissButton'
+import styles from '../../../../themes/admin.module.css'
+import './styles.css'
+import { unescapeString } from '../../../../../utils'
 
 function IMPhoto(props) {
   const { src, onDelete, className, openable, dismissable } = props
+  const unescapedSrc = unescapeString(src)
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const allClasses = className + ' Photo'
-  const allContainerClasses = 'PhotoContainer' + (openable ? ' Openable' : '')
+  const allClasses =
+    styles.Photo + ' ' + styles.photo + ' ' + className + ' Photo'
+  const allContainerClasses =
+    styles.PhotoContainer +
+    ' PhotoContainer' +
+    (openable ? ' Openable' : '') +
+    (openable ? styles.Openable : '')
 
   const onDismiss = event => {
     event.stopPropagation()
@@ -26,7 +35,7 @@ function IMPhoto(props) {
 
   return (
     <div className={allContainerClasses} onClick={onClick}>
-      <img className={allClasses} src={src} />
+      <img className={allClasses} src={unescapedSrc} />
       {dismissable && (
         <IMDismissButton
           className="PhotoDismissContainer"
@@ -47,4 +56,4 @@ function IMPhoto(props) {
   )
 }
 
-export default IMPhoto
+export default memo(IMPhoto)

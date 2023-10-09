@@ -24,7 +24,7 @@ function IMForeignKeysIdComponent(props) {
 
   useEffect(() => {
     if (ids) {
-      urls = ids.map(id => baseAPIURL + apiRouteName + '/' + id)
+      urls = ids.map(id => baseAPIURL + apiRouteName + '/view?id=' + id)
     }
     getData(urls)
   }, [props.ids])
@@ -38,9 +38,13 @@ function IMForeignKeysIdComponent(props) {
   }
 
   var urls =
-    ids && ids.length && ids.map(id => baseAPIURL + apiRouteName + '/' + id)
+    ids &&
+    ids.length &&
+    ids.map(id => baseAPIURL + apiRouteName + '/view?id=' + id)
   const viewPath =
-    ids && ids.length && ids.map(id => '/admin/' + apiRouteName + '/' + id)
+    ids &&
+    ids.length &&
+    ids.map(id => '/admin/' + apiRouteName + '/view?id=' + id)
 
   return (
     <div className="ForeignKeysComponent">

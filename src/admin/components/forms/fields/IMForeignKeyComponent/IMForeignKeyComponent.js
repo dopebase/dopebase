@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { pluginsAPIURL } from '../../../../../config/config'
+import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 
 const baseAPIURL = `${pluginsAPIURL}`
 
@@ -9,18 +10,23 @@ function IMForeignKeyComponent(props) {
   const { apiRouteName, id, titleKey } = props
 
   useEffect(() => {
-    fetch(baseAPIURL + apiRouteName + '/' + id)
-      .then(response => response.json())
-      .catch(err => {
+    const fetchData = async () => {
+      console.log('xxxx')
+      console.log(baseAPIURL + apiRouteName + '/view?id=' + id)
+      try {
+        const response = await authFetch(
+          baseAPIURL + apiRouteName + '/view?id=' + id,
+        )
+        if (response?.data) {
+          setName(response.data[titleKey])
+          setIsLoading(false)
+        }
+      } catch (err) {
         console.log(err)
         setIsLoading(false)
-      })
-      .then(data => {
-        if (data) {
-          setName(data[titleKey])
-        }
-        setIsLoading(false)
-      })
+      }
+    }
+    fetchData()
   }, [props.id])
 
   if (isLoading) {

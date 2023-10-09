@@ -76,12 +76,12 @@ const UpdateArticleIdeaView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-          if (originalData.created_at && Date.parse(originalData.created_at)) {
-              nonFormData['created_at'] = new Date(originalData.created_at)
+          if (originalData.created_at) {
+              nonFormData['created_at'] = originalData.created_at
           }
           
-          if (originalData.updated_at && Date.parse(originalData.updated_at)) {
-              nonFormData['updated_at'] = new Date(originalData.updated_at)
+          if (originalData.updated_at) {
+              nonFormData['updated_at'] = originalData.updated_at
           }
           
 
@@ -260,7 +260,7 @@ const UpdateArticleIdeaView = props => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -313,7 +313,7 @@ const UpdateArticleIdeaView = props => {
       formData.append('multimedias', files[i])
     }
 
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -605,7 +605,8 @@ const UpdateArticleIdeaView = props => {
     
 
 
-              <div className={`${styles.FormActionContainer} FormActionContainer`}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"

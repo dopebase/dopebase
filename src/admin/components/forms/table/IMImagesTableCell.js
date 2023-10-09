@@ -1,5 +1,6 @@
 import React from 'react'
 import { IMPhoto } from '../fields'
+import styles from '../../../themes/admin.module.css'
 
 function IMImagesTableCell(props) {
   const { singleImageURL, imageURLs } = props
@@ -8,16 +9,29 @@ function IMImagesTableCell(props) {
   }
   if (singleImageURL) {
     return (
-      <div className="imageCellContainer">
-        <IMPhoto openable className="imageCell" src={singleImageURL} />
+      <div className={`${styles.imageCellContainer} imageCellContainer`}>
+        <IMPhoto
+          openable
+          className={`${styles.imageCell} imageCell`}
+          src={singleImageURL}
+        />
       </div>
     )
   }
 
   const imageItems = imageURLs.map(url => (
-    <IMPhoto className="multiImageCell" key={url} src={url} openable />
+    <IMPhoto
+      className={`${styles.multiImageCell} multiImageCell`}
+      key={url}
+      src={url}
+      openable
+    />
   ))
-  return <div className="imageCellContainer">{imageItems}</div>
+  return (
+    <div className={`${styles.imageCellContainer} imageCellContainer`}>
+      {imageItems}
+    </div>
+  )
 }
 
 export default IMImagesTableCell

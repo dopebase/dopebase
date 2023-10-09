@@ -227,7 +227,7 @@ const AddNewUserView = () => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -279,8 +279,7 @@ const AddNewUserView = () => {
     for (var i = 0; i < files.length; ++i) {
       formData.append('multimedias', files[i])
     }
-
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -364,18 +363,6 @@ const AddNewUserView = () => {
               /* Insert all form errors here */
         if (!values.email) {
             errors.email = 'Field Required!'
-        }
-
-        if (!values.role) {
-            errors.role = 'Field Required!'
-        }
-
-        if (!values.createdAt) {
-            errors.createdAt = 'Field Required!'
-        }
-
-        if (!values.updatedAt) {
-            errors.updatedAt = 'Field Required!'
         }
 
             }

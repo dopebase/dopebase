@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../../utils'
+import { formatTimestamp } from '../../../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,
@@ -143,7 +143,7 @@ const DetailedUsersView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>In Progress Order ID</label>
-                <IMForeignKeyComponent id={originalData.inProgressOrderID} apiRouteName="admin/taxi/taxi_trip" titleKey="id" />
+                <IMForeignKeyComponent id={originalData.inProgressOrderID} apiRouteName="admin/taxi/taxi_trips" titleKey="id" />
             </div>
     
 
@@ -155,13 +155,13 @@ const DetailedUsersView = props => {
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.createdAt && formatDate(originalData.createdAt)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.createdAt && formatTimestamp(originalData.createdAt)}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updatedAt && formatDate(originalData.updatedAt)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updatedAt && formatTimestamp(originalData.updatedAt)}</span>
             </div>
     
 

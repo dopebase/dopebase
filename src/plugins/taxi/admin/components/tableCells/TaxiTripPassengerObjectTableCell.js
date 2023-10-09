@@ -9,7 +9,7 @@ function ObjectTableCell(props) {
 
   const render = data => {
     return <li>
-                    <a href={data.id}>
+                    <a href={`../users/view?id=${data.id}`}>
                        {data.firstName} {data.lastName}
                     </a>
                 </li>

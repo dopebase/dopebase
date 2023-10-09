@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack5: true,
   webpack: (
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },

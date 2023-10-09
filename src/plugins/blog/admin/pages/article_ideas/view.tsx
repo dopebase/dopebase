@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from '../../../../../utils'
+import { formatTimestamp } from '../../../../../utils'
 import {
   IMForeignKeyComponent,
   IMForeignKeysComponent,
@@ -153,13 +153,13 @@ const DetailedArticleIdeasView = props => {
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.created_at && formatDate(originalData.created_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.created_at && formatTimestamp(originalData.created_at)}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updated_at && formatDate(originalData.updated_at)}</span>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.updated_at && formatTimestamp(originalData.updated_at)}</span>
             </div>
     
 

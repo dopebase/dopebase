@@ -252,7 +252,7 @@ const Update$capitalsingular$View = props => {
       formData.append('photos', files[i])
     }
 
-    fetch(baseAPIURL + 'upload', {
+    fetch(pluginsAPIURL + '../media/upload', {
       method: 'POST',
       body: formData,
     })
@@ -305,7 +305,7 @@ const Update$capitalsingular$View = props => {
       formData.append('multimedias', files[i])
     }
 
-    fetch(baseAPIURL + 'uploadMultimedias', {
+    fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
     })
@@ -407,7 +407,8 @@ const Update$capitalsingular$View = props => {
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
 
-              <div className={`${styles.FormActionContainer} FormActionContainer`}>
+              <div
+                className={`${styles.FormActionContainer} FormActionContainer`}>
                 <button
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
