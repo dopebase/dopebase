@@ -129,7 +129,6 @@ function ActionsItemView(props) {
 
 function TaxiCarCategoriesListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [controlledPageCount, setControlledPageCount] = useState(0)
   const [TaxiCarCategories, setTaxiCarCategories] = useState([])
   const [data, setData] = useState([])
 
@@ -159,9 +158,6 @@ function TaxiCarCategoriesListView(props) {
     {
       columns,
       data: TaxiCarCategories,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
     },
     useGlobalFilter,
     usePagination,
@@ -198,11 +194,7 @@ function TaxiCarCategoriesListView(props) {
   }, [loading])
 
   useEffect(() => {
-    const startRow = pageSize * pageIndex
-    const endRow = startRow + pageSize
-
-    setTaxiCarCategories(data.slice(startRow, endRow))
-    setControlledPageCount(Math.ceil(data.length / pageSize))
+    setTaxiCarCategories(data)
   }, [pageIndex, pageSize, data])
 
   return (

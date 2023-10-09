@@ -168,7 +168,6 @@ function ActionsItemView(props) {
 
 function TripsListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [controlledPageCount, setControlledPageCount] = useState(0)
   const [Trips, setTrips] = useState([])
   const [data, setData] = useState([])
 
@@ -198,9 +197,6 @@ function TripsListView(props) {
     {
       columns,
       data: Trips,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
     },
     useGlobalFilter,
     usePagination,
@@ -237,11 +233,7 @@ function TripsListView(props) {
   }, [loading])
 
   useEffect(() => {
-    const startRow = pageSize * pageIndex
-    const endRow = startRow + pageSize
-
-    setTrips(data.slice(startRow, endRow))
-    setControlledPageCount(Math.ceil(data.length / pageSize))
+    setTrips(data)
   }, [pageIndex, pageSize, data])
 
   return (

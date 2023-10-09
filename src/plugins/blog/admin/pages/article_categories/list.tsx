@@ -149,7 +149,6 @@ function ActionsItemView(props) {
 
 function ArticleCategoriesListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [controlledPageCount, setControlledPageCount] = useState(0)
   const [ArticleCategories, setArticleCategories] = useState([])
   const [data, setData] = useState([])
 
@@ -179,9 +178,6 @@ function ArticleCategoriesListView(props) {
     {
       columns,
       data: ArticleCategories,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
     },
     useGlobalFilter,
     usePagination,
@@ -218,11 +214,7 @@ function ArticleCategoriesListView(props) {
   }, [loading])
 
   useEffect(() => {
-    const startRow = pageSize * pageIndex
-    const endRow = startRow + pageSize
-
-    setArticleCategories(data.slice(startRow, endRow))
-    setControlledPageCount(Math.ceil(data.length / pageSize))
+    setArticleCategories(data)
   }, [pageIndex, pageSize, data])
 
   return (

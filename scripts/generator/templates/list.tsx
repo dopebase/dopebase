@@ -93,7 +93,6 @@ function ActionsItemView(props) {
 
 function $capitalcaseplural$ListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [controlledPageCount, setControlledPageCount] = useState(0)
   const [$capitalcaseplural$, set$capitalcaseplural$] = useState([])
   const [data, setData] = useState([])
 
@@ -123,9 +122,6 @@ function $capitalcaseplural$ListView(props) {
     {
       columns,
       data: $capitalcaseplural$,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
     },
     useGlobalFilter,
     usePagination,
@@ -162,11 +158,7 @@ function $capitalcaseplural$ListView(props) {
   }, [loading])
 
   useEffect(() => {
-    const startRow = pageSize * pageIndex
-    const endRow = startRow + pageSize
-
-    set$capitalcaseplural$(data.slice(startRow, endRow))
-    setControlledPageCount(Math.ceil(data.length / pageSize))
+    set$capitalcaseplural$(data)
   }, [pageIndex, pageSize, data])
 
   return (

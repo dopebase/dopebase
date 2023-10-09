@@ -38,6 +38,7 @@ import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports here */
 import DriverInProgressTripTypeaheadComponent from '../../components/DriverInProgressTripTypeaheadComponent.js'
 
+
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
 import {
@@ -57,7 +58,9 @@ const UpdateUserView = props => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await authFetch(baseAPIURL + 'users/view?id=' + id)
+        const response = await authFetch(
+          baseAPIURL + 'users/view?id=' + id,
+        )
         if (response?.data) {
           setOriginalData(response.data)
           initializeModifieableNonFormData(response.data)
@@ -75,25 +78,26 @@ const UpdateUserView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-    if (originalData.role) {
-      nonFormData['role'] = originalData.role
-    }
-
-    if (originalData.carPictureURL) {
-      nonFormData['carPictureURL'] = originalData.carPictureURL
-    }
-
-    if (originalData.banned) {
-      nonFormData['banned'] = originalData.banned
-    }
-
-    if (originalData.createdAt) {
-      nonFormData['createdAt'] = originalData.createdAt
-    }
-
-    if (originalData.updatedAt) {
-      nonFormData['updatedAt'] = originalData.updatedAt
-    }
+          if (originalData.role) {
+              nonFormData['role'] = originalData.role
+          }
+          
+          if (originalData.carPictureURL) {
+              nonFormData['carPictureURL'] = originalData.carPictureURL
+          }
+          
+          if (originalData.banned) {
+              nonFormData['banned'] = originalData.banned
+          }
+          
+          if (originalData.createdAt) {
+              nonFormData['createdAt'] = originalData.createdAt
+          }
+          
+          if (originalData.updatedAt) {
+              nonFormData['updatedAt'] = originalData.updatedAt
+          }
+          
 
     console.log(nonFormData)
     setModifiedNonFormData(nonFormData)
@@ -405,9 +409,10 @@ const UpdateUserView = props => {
             const errors = {}
             {
               /* Insert all form errors here */
-              if (!values.email) {
-                errors.email = 'Field Required!'
-              }
+        if (!values.email) {
+            errors.email = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -427,202 +432,160 @@ const UpdateUserView = props => {
           }) => (
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Email</label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="email"
-                  name="email"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.email && touched.email && errors.email}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Email</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="email"
+                            name="email"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.email}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.email && touched.email && errors.email}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  First Name
-                </label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="firstName"
-                  name="firstName"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.firstName}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.firstName && touched.firstName && errors.firstName}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="firstName"
+                            name="firstName"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.firstName}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.firstName && touched.firstName && errors.firstName}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Last Name
-                </label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="lastName"
-                  name="lastName"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastName}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.lastName && touched.lastName && errors.lastName}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="lastName"
+                            name="lastName"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.lastName}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.lastName && touched.lastName && errors.lastName}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Phone</label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="phone"
-                  name="phone"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phone}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.phone && touched.phone && errors.phone}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Phone</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="phone"
+                            name="phone"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.phone}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.phone && touched.phone && errors.phone}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Role</label>
-                <IMStaticSelectComponent
-                  options={['passenger', 'driver', 'admin', 'other']}
-                  name="role"
-                  onChange={handleSelectChange}
-                  selectedOption={modifiedNonFormData.role}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.role && touched.role && errors.role}
-                </p>
-              </div>
-
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Car Photo
-                </label>
-                {modifiedNonFormData.carPictureURL && (
-                  <IMPhoto
-                    openable
-                    dismissable
-                    className="photo"
-                    src={modifiedNonFormData.carPictureURL}
-                    onDelete={src =>
-                      handleDeletePhoto(src, 'carPictureURL', false)
-                    }
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Role</label>
+                  <IMStaticSelectComponent
+                      options={["passenger","driver","admin","other"]}
+                      name="role"
+                      onChange={handleSelectChange}
+                      selectedOption={modifiedNonFormData.role}
                   />
-                )}
-                <input
-                  className="FormFileField"
-                  id="carPictureURL"
-                  name="carPictureURL"
-                  type="file"
-                  onChange={event => {
-                    handleImageUpload(event, 'carPictureURL', false)
-                  }}
-                />
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.role && touched.role && errors.role}
+                  </p>
               </div>
+              
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Car Model
-                </label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="carName"
-                  name="carName"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.carName}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.carName && touched.carName && errors.carName}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
+                        {modifiedNonFormData.carPictureURL && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.carPictureURL} onDelete={(src) => handleDeletePhoto(src, "carPictureURL", false) } />
+                        )}
+                        <input className="FormFileField" id="carPictureURL" name="carPictureURL" type="file" onChange={(event) => {
+                            handleImageUpload(event, "carPictureURL", false);
+                        }} />
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  License Plate
-                </label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="carNumber"
-                  name="carNumber"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.carNumber}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.carNumber && touched.carNumber && errors.carNumber}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Car Model</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="carName"
+                            name="carName"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.carName}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.carName && touched.carName && errors.carName}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  In Progress Order ID
-                </label>
-                <DriverInProgressTripTypeaheadComponent
-                  onSelect={value =>
-                    onTypeaheadSelect(value, 'inProgressOrderID')
-                  }
-                  id={originalData && originalData.inProgressOrderID}
-                  name={originalData && originalData.inProgressOrderID}
-                />
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>License Plate</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="carNumber"
+                            name="carNumber"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.carNumber}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.carNumber && touched.carNumber && errors.carNumber}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Banned
-                </label>
-                <IMToggleSwitchComponent
-                  isChecked={modifiedNonFormData.banned}
-                  onSwitchChange={() =>
-                    handleSwitchChange(modifiedNonFormData['banned'], 'banned')
-                  }
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.banned && touched.banned && errors.banned}
-                </p>
-              </div>
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>In Progress Order ID</label>
+              <DriverInProgressTripTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "inProgressOrderID")} id={originalData && originalData.inProgressOrderID} name={originalData && originalData.inProgressOrderID} />
+          </div>
+      
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Created At
-                </label>
-                <IMDatePicker
-                  selected={modifiedNonFormData.createdAt}
-                  onChange={toDate => onDateChange(toDate, 'createdAt')}
-                />
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Banned</label>
+                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.banned} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["banned"], "banned")} />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.banned && touched.banned && errors.banned}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Updated At
-                </label>
-                <IMDatePicker
-                  selected={modifiedNonFormData.updatedAt}
-                  onChange={toDate => onDateChange(toDate, 'updatedAt')}
-                />
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.createdAt}
+                            onChange={(toDate) => onDateChange(toDate, "createdAt")}
+                        />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.updatedAt}
+                            onChange={(toDate) => onDateChange(toDate, "updatedAt")}
+                        />
+                    </div>
+    
+
 
               <div
                 className={`${styles.FormActionContainer} FormActionContainer`}>

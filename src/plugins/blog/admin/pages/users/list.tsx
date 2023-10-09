@@ -153,7 +153,6 @@ function ActionsItemView(props) {
 
 function UsersListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [controlledPageCount, setControlledPageCount] = useState(0)
   const [Users, setUsers] = useState([])
   const [data, setData] = useState([])
 
@@ -183,9 +182,6 @@ function UsersListView(props) {
     {
       columns,
       data: Users,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
     },
     useGlobalFilter,
     usePagination,
@@ -222,11 +218,7 @@ function UsersListView(props) {
   }, [loading])
 
   useEffect(() => {
-    const startRow = pageSize * pageIndex
-    const endRow = startRow + pageSize
-
-    setUsers(data.slice(startRow, endRow))
-    setControlledPageCount(Math.ceil(data.length / pageSize))
+    setUsers(data)
   }, [pageIndex, pageSize, data])
 
   return (
