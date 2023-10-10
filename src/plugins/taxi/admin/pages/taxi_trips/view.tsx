@@ -99,16 +99,16 @@ const DetailedTripsView = props => {
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Pickup Location</label>
-                {originalData.pickup && originalData.pickup.address && (
-                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.pickup.address}</span>
+                {originalData.pickup && (
+                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.pickup.address ?? `Lat: ${originalData.pickup.latitude} Long: ${originalData.pickup.longitude}` }</span>
                 )}
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Dropoff Location</label>
-                {originalData.dropoff && originalData.dropoff.address && (
-                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.dropoff.address}</span>
+                {originalData.dropoff && (
+                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.dropoff.address ?? `Lat: ${originalData.dropoff.latitude} Long: ${originalData.dropoff.longitude}` }</span>
                 )}
             </div>
     
@@ -121,19 +121,19 @@ const DetailedTripsView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
-                <IMForeignKeyComponent id={originalData.passenger} apiRouteName="admin/taxi/users" titleKey="email" />
+                <IMForeignKeyComponent id={originalData.passenger.id} apiRouteName="admin/taxi/users" viewRoute="../users" titleKey="email" />
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Passenger ID</label>
-                <IMForeignKeyComponent id={originalData.passengerID} apiRouteName="admin/taxi/users" titleKey="email" />
+                <IMForeignKeyComponent id={originalData.passengerID} apiRouteName="admin/taxi/users" viewRoute="../users" titleKey="email" />
             </div>
     
 
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Car Type</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.carType}</span>
+                <IMForeignKeyComponent id={originalData.carType} apiRouteName="admin/taxi/taxi_car_categories" viewRoute="../taxi_car_categories" titleKey="name" />
             </div>
     
 
@@ -157,8 +157,8 @@ const DetailedTripsView = props => {
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Current Location</label>
-                {originalData.carDrive && originalData.carDrive.address && (
-                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.carDrive.address}</span>
+                {originalData.carDrive && (
+                    <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.carDrive.address ?? `Lat: ${originalData.carDrive.latitude} Long: ${originalData.carDrive.longitude}` }</span>
                 )}
             </div>
     

@@ -56,7 +56,7 @@ async function createNewUser(
     createdAt: dateStr,
     updatedAt: dateStr,
   }
-  const user = await insertOne('users', escapeObject(insertData))
+  const user = await insertOne('users', insertData)
   const authData = {
     userID: user.id,
     encryptedPassword,
@@ -65,7 +65,7 @@ async function createNewUser(
     createdAt: dateStr,
     updatedAt: dateStr,
   }
-  const auth = await insertOne('auth', escapeObject(authData))
+  const auth = await insertOne('auth', authData)
   return user
 }
 

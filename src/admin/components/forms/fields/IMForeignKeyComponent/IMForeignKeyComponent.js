@@ -7,12 +7,10 @@ const baseAPIURL = `${pluginsAPIURL}`
 function IMForeignKeyComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [name, setName] = useState(null)
-  const { apiRouteName, id, titleKey } = props
+  const { apiRouteName, viewRoute, id, titleKey } = props
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('xxxx')
-      console.log(baseAPIURL + apiRouteName + '/view?id=' + id)
       try {
         const response = await authFetch(
           baseAPIURL + apiRouteName + '/view?id=' + id,
@@ -33,7 +31,7 @@ function IMForeignKeyComponent(props) {
     return null
   }
 
-  const viewPath = '/admin/' + apiRouteName + '/' + id
+  const viewPath = viewRoute + '/view?id=' + id
   return (
     <div className="ForeignKeyComponent">
       <a href={viewPath}>{name}</a>

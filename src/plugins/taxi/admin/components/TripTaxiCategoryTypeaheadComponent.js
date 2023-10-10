@@ -5,11 +5,11 @@ import { authFetch } from '../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../config/config'
 import styles from '../../../../admin/themes/admin.module.css'
 
-const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
+const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
 
-function $className$TypeaheadComponent(props) {
+function TripTaxiCategoryTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [$lowercaseplural$, set$capitalcaseplural$] = useState(null)
+  const [taxi_car_categories, setTaxi_car_categories] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
   const [inputValue, setInputValue] = useState(null)
   const [isTypeaheadVisible, setIsTypeaheadVisible] = useState(false)
@@ -26,11 +26,11 @@ function $className$TypeaheadComponent(props) {
       }
       try {
         const response = await authFetch(
-          baseAPIURL + '$lowercaseplural$/view?id=' + id,
+          baseAPIURL + 'taxi_car_categories/view?id=' + id,
         )
         if (response?.data) {
           const data = response.data
-          setInputValue($originalDataFormatter$)
+          setInputValue(data.name + " " + data.description)
           initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
@@ -50,13 +50,13 @@ function $className$TypeaheadComponent(props) {
       try {
         const response = await authFetch(
           baseAPIURL +
-            '$lowercaseplural$/list?limit=10&search=' +
+            'taxi_car_categories/list?limit=10&search=' +
             typeaheadValue,
         )
         if (response?.data) {
           console.log(response.data)
           if (response?.data) {
-            set$capitalcaseplural$(response.data)
+            setTaxi_car_categories(response.data)
           }
         }
       } catch (err) {
@@ -81,15 +81,15 @@ function $className$TypeaheadComponent(props) {
   }
 
   const onClick = data => {
-    setInputValue($originalDataFormatter$)
+    setInputValue(data.name + " " + data.description)
     onSelect && onSelect(data.id)
     setIsTypeaheadVisible(false)
   }
 
   const listItems =
-    $lowercaseplural$ && $lowercaseplural$.length
-      ? $lowercaseplural$.map(
-          data => <li onClick={() => onClick(data)}>$dataItemRenderer$</li>, // <li>{element.firstName} {element.lastName}</li>
+    taxi_car_categories && taxi_car_categories.length
+      ? taxi_car_categories.map(
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><span>{data.name} ({data.description})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -123,4 +123,4 @@ function $className$TypeaheadComponent(props) {
   )
 }
 
-export default $className$TypeaheadComponent
+export default TripTaxiCategoryTypeaheadComponent

@@ -188,6 +188,7 @@ function populatedDataWithFormFields(
           allSchemas[field.foreignKey],
           field.displayName,
           fieldName,
+          field.type,
         )
         allChunks.push(templateData)
       } else {
@@ -197,6 +198,7 @@ function populatedDataWithFormFields(
           allSchemas,
           field,
           fieldName,
+          field.type,
         )
         mutableOriginalData = builder.originalData
         allChunks.push(builder.formData)
@@ -209,6 +211,7 @@ function populatedDataWithFormFields(
             allSchemas[field.foreignKeys],
             field.displayName,
             fieldName,
+            field.type,
           )
           allChunks.push(templateData)
         } else {
@@ -230,6 +233,7 @@ function populatedDataWithFormFields(
             allSchemas[field.foreignKeys],
             field.displayName,
             fieldName,
+            field.type,
           )
           allChunks.push(templateData)
         } else {

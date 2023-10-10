@@ -5,7 +5,6 @@ import { updateOne } from '../../../../../core/db'
 export async function POST(req) {
   try {
     const body = await req.json()
-    console.log(body)
 
     const url = new URL(req.url)
     const id = url.searchParams.get('id')

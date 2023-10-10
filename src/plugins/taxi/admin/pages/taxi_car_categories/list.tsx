@@ -36,16 +36,30 @@ export const getStaticProps: GetStaticProps = async () => {
 const TaxiCarCategoriesColumns = [
   
       {
+          Header: "ID",
+          accessor: "id",
+      },
+      {
           Header: "Name",
           accessor: "name",
       },
       {
-          Header: "Type",
-          accessor: "type",
-      },
-      {
           Header: "Description",
           accessor: "description",
+      },
+      {
+          Header: "Car Photo",
+          accessor: "photo",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
+      },
+      {
+          Header: "Car Marker Icon",
+          accessor: "marker",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
       },
       {
           Header: "Base Fare",

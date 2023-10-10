@@ -36,6 +36,8 @@ const CodeMirror = dynamic(
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
+import TripTaxiCategoryTypeaheadComponent from '../../components/TripTaxiCategoryTypeaheadComponent.js'
+
 import TripPassengerTypeaheadComponent from '../../components/TripPassengerTypeaheadComponent.js'
 
 import TaxiTripPassengerTypeaheadComponent from '../../components/TaxiTripPassengerTypeaheadComponent.js'
@@ -495,7 +497,7 @@ const UpdateTaxiTripView = props => {
               <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                   <label className={`${styles.FormLabel} FormLabel`}>Status</label>
                   <IMStaticSelectComponent
-                      options={["awaiting_driver","no_driver_found","passenger_cancelled","driver_rejected","driver_accepted"]}
+                      options={["awaiting_driver","no_driver_found","passenger_cancelled","driver_rejected","driver_accepted","trip_started","trip_completed"]}
                       name="status"
                       onChange={handleSelectChange}
                       selectedOption={modifiedNonFormData.status}
@@ -508,7 +510,7 @@ const UpdateTaxiTripView = props => {
 
           <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
               <label className={`${styles.FormLabel} FormLabel`}>Passenger</label>
-              <TaxiTripPassengerTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "passenger")} id={originalData && originalData.passenger} name={originalData && originalData.passenger} />
+              <TaxiTripPassengerTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "passenger")} id={originalData && originalData.passenger.id} name={originalData && originalData.passenger} />
           </div>
       
 
@@ -518,21 +520,11 @@ const UpdateTaxiTripView = props => {
           </div>
       
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Car Type</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="carType"
-                            name="carType"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.carType}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.carType && touched.carType && errors.carType}
-                        </p>
-                    </div>
-    
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>Car Type</label>
+              <TripTaxiCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "carType")} id={originalData && originalData.carType} name={originalData && originalData.carType} />
+          </div>
+      
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Price Range</label>

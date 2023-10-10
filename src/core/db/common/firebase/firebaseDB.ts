@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { firestore } from './firebaseClient'
-import { escapeObject, unescapeObject } from '../../../../utils'
+import { unescapeObject } from '../../../../utils'
 import { replaceUndefinedKeysWithEmptyStrings } from '../../../../utils/escape'
 
 async function getOne(tableName, id) {
@@ -27,9 +27,7 @@ async function list(tableName, query) {
 
 async function insertOne(tableName, unescapedData) {
   try {
-    const data = replaceUndefinedKeysWithEmptyStrings(
-      escapeObject(unescapedData),
-    )
+    const data = replaceUndefinedKeysWithEmptyStrings(unescapedData)
     console.log(`inserting data `)
     console.log(data)
     const ref = data?.id
@@ -56,7 +54,7 @@ async function deleteOne(tableName, id) {
 }
 
 async function updateOne(tableName, id, unescapedData) {
-  const data = replaceUndefinedKeysWithEmptyStrings(escapeObject(unescapedData))
+  const data = replaceUndefinedKeysWithEmptyStrings(unescapedData)
   const ref = firestore.collection(tableName).doc(id)
   const doc = await ref.get()
   if (!doc.exists) {

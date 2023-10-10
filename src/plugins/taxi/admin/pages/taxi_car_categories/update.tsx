@@ -76,6 +76,14 @@ const UpdateTaxiCarCategoryView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
+          if (originalData.photo) {
+              nonFormData['photo'] = originalData.photo
+          }
+          
+          if (originalData.marker) {
+              nonFormData['marker'] = originalData.marker
+          }
+          
 
     console.log(nonFormData)
     setModifiedNonFormData(nonFormData)
@@ -407,6 +415,22 @@ const UpdateTaxiCarCategoryView = props => {
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>ID</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="id"
+                            name="id"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.id}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.id && touched.id && errors.id}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
@@ -418,22 +442,6 @@ const UpdateTaxiCarCategoryView = props => {
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.name && touched.name && errors.name}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Type</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="type"
-                            name="type"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.type}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.type && touched.type && errors.type}
                         </p>
                     </div>
     
@@ -451,6 +459,28 @@ const UpdateTaxiCarCategoryView = props => {
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.description && touched.description && errors.description}
                         </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
+                        {modifiedNonFormData.photo && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.photo} onDelete={(src) => handleDeletePhoto(src, "photo", false) } />
+                        )}
+                        <input className="FormFileField" id="photo" name="photo" type="file" onChange={(event) => {
+                            handleImageUpload(event, "photo", false);
+                        }} />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Car Marker Icon</label>
+                        {modifiedNonFormData.marker && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.marker} onDelete={(src) => handleDeletePhoto(src, "marker", false) } />
+                        )}
+                        <input className="FormFileField" id="marker" name="marker" type="file" onChange={(event) => {
+                            handleImageUpload(event, "marker", false);
+                        }} />
                     </div>
     
 

@@ -29,8 +29,9 @@ function DriverInProgressTripTypeaheadComponent(props) {
           baseAPIURL + 'taxi_trips/view?id=' + id,
         )
         if (response?.data) {
-          setInputValue(data.id + " - " + data.passenger.firstName + " " + data.passenger.lastName) // data.firstName + " " + data.lastName)
-          initializeModifieableNonFormData(response.data)
+          const data = response.data
+          setInputValue(data.id + " - " + data.passenger.firstName + " " + data.passenger.lastName)
+          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

@@ -29,8 +29,9 @@ function TaxiTripPassengerTypeaheadComponent(props) {
           baseAPIURL + 'users/view?id=' + id,
         )
         if (response?.data) {
-          setInputValue(data.firstName + " " + data.lastName) // data.firstName + " " + data.lastName)
-          initializeModifieableNonFormData(response.data)
+          const data = response.data
+          setInputValue(data.firstName + " " + data.lastName)
+          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

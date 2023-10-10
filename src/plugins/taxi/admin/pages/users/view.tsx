@@ -142,8 +142,14 @@ const DetailedUsersView = props => {
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Car Type</label>
+                <IMForeignKeyComponent id={originalData.carType} apiRouteName="admin/taxi/taxi_car_categories" viewRoute="../taxi_car_categories" titleKey="name" />
+            </div>
+    
+
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>In Progress Order ID</label>
-                <IMForeignKeyComponent id={originalData.inProgressOrderID} apiRouteName="admin/taxi/taxi_trips" titleKey="id" />
+                <IMForeignKeyComponent id={originalData.inProgressOrderID} apiRouteName="admin/taxi/taxi_trips" viewRoute="../taxi_trips" titleKey="id" />
             </div>
     
 

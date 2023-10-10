@@ -24,6 +24,8 @@ const schema = {
           'passenger_cancelled',
           'driver_rejected',
           'driver_accepted',
+          'trip_started',
+          'trip_completed',
         ],
       },
       passenger: {
@@ -44,11 +46,21 @@ const schema = {
         foreignKey: 'users',
         cellClassName: 'TripPassenger',
         typeaheadRenderers: {
-          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.first_name} {data.last_name} ({data.email})</span></td></tr></table>`,
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
           originalDataFormatter: `data.firstName + " " + data.lastName`,
         },
       },
-      carType: { type: 'string', required: false, displayName: 'Car Type' },
+      carType: {
+        type: 'string',
+        required: false,
+        displayName: 'Car Type',
+        foreignKey: 'taxi_car_categories',
+        cellClassName: 'TripTaxiCategory',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.name} ({data.description})</span></td></tr></table>`,
+          originalDataFormatter: `data.name + " " + data.description`,
+        },
+      },
       priceRange: {
         type: 'string',
         required: false,
@@ -73,12 +85,22 @@ const schema = {
   },
   taxi_car_categories: {
     fields: {
+      id: { type: 'string', required: false, displayName: 'ID' },
       name: { type: 'string', required: false, displayName: 'Name' },
-      type: { type: 'string', required: false, displayName: 'Type' },
       description: {
         type: 'string',
         required: false,
         displayName: 'Description',
+      },
+      photo: {
+        type: 'photo',
+        required: false,
+        displayName: 'Car Photo',
+      },
+      marker: {
+        type: 'photo',
+        required: false,
+        displayName: 'Car Marker Icon',
       },
       baseFare: { type: 'string', required: false, displayName: 'Base Fare' },
       costPerKm: {
@@ -153,6 +175,17 @@ const schema = {
         type: 'string',
         required: false,
         displayName: 'License Plate',
+      },
+      carType: {
+        type: 'string',
+        required: false,
+        displayName: 'Car Type',
+        foreignKey: 'taxi_car_categories',
+        cellClassName: 'DriverTaxiCategory',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.name} ({data.description})</span></td></tr></table>`,
+          originalDataFormatter: `data.name + " " + data.description`,
+        },
       },
       inProgressOrderID: {
         type: 'string',

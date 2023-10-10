@@ -38,6 +38,8 @@ import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports here */
 import DriverInProgressTripTypeaheadComponent from '../../components/DriverInProgressTripTypeaheadComponent.js'
 
+import DriverTaxiCategoryTypeaheadComponent from '../../components/DriverTaxiCategoryTypeaheadComponent.js'
+
 
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
@@ -552,6 +554,12 @@ const UpdateUserView = props => {
                         </p>
                     </div>
     
+
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>Car Type</label>
+              <DriverTaxiCategoryTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "carType")} id={originalData && originalData.carType} name={originalData && originalData.carType} />
+          </div>
+      
 
           <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
               <label className={`${styles.FormLabel} FormLabel`}>In Progress Order ID</label>

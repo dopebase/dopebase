@@ -5,7 +5,7 @@ const baseAPIURL = pluginsAPIURL
 function IMForeignKeysIdComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
-  const { apiRouteName, ids, titleKey } = props
+  const { apiRouteName, viewRoute, ids, titleKey } = props
 
   async function getData(urls) {
     try {
@@ -42,9 +42,7 @@ function IMForeignKeysIdComponent(props) {
     ids.length &&
     ids.map(id => baseAPIURL + apiRouteName + '/view?id=' + id)
   const viewPath =
-    ids &&
-    ids.length &&
-    ids.map(id => '/admin/' + apiRouteName + '/view?id=' + id)
+    ids && ids.length && ids.map(id => viewRoute + '/view?id=' + id)
 
   return (
     <div className="ForeignKeysComponent">

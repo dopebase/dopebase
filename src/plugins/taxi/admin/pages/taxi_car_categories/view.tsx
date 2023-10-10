@@ -92,20 +92,36 @@ const DetailedTaxiCarCategoriesView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>ID</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.id}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Name</label>
                 <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Type</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.type}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.description}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.description}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
+                {originalData.photo && (
+                    <IMPhoto openable className="photo" src={originalData.photo} />
+                )}
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Car Marker Icon</label>
+                {originalData.marker && (
+                    <IMPhoto openable className="photo" src={originalData.marker} />
+                )}
             </div>
     
 

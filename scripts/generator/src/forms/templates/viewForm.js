@@ -62,8 +62,8 @@ const viewFormTemplateDataByType = {
   location: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
-                {originalData.user && originalData.user.address && (
-                    <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData.user.address}</span>
+                {originalData.user && (
+                    <span className={\`\${styles.LockedFieldValue} LockedFieldValue\`}>{originalData.user.address ?? \`Lat: \${originalData.user.latitude} Long: \${originalData.user.longitude}\` }</span>
                 )}
             </div>
     `,
@@ -124,24 +124,33 @@ const viewFormTemplateDataByType = {
                 </span>
             </div>
     `,
-  typeahead: (foreignKeySchema, displayName, fieldName) => `
+  typeahead: (foreignKeySchema, displayName, fieldName, fieldType) => {
+    const extraID = fieldType === 'object' ? '.id' : ''
+    return `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeyComponent id={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeyComponent id={originalData.${fieldName}${extraID}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" viewRoute="../${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
-    `,
-  multiTypeaheadId: (foreignKeySchema, displayName, fieldName) => `
+    `
+  },
+  multiTypeaheadId: (foreignKeySchema, displayName, fieldName, fieldType) => {
+    const extraID = fieldType === 'object' ? '.id' : ''
+    return `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeysIdComponent ids={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeysIdComponent ids={originalData.${fieldName}${extraID}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" viewRoute="../${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
-    `,
-  multiTypeahead: (foreignKeySchema, displayName, fieldName) => `
+    `
+  },
+  multiTypeahead: (foreignKeySchema, displayName, fieldName, fieldType) => {
+    const extraID = fieldType === 'object' ? '.id' : ''
+    return `
              <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>${displayName}</label>
-                <IMForeignKeysComponent data={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
+                <IMForeignKeysComponent data={originalData.${fieldName}} apiRouteName="admin/${global.pluginName}/${foreignKeySchema.lowercasePluralName}" viewRoute="../${foreignKeySchema.lowercasePluralName}" titleKey="${foreignKeySchema.titleFieldKey}" />
             </div>
-    `,
+    `
+  },
   code: `
             <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
                 <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>

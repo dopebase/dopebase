@@ -2,7 +2,13 @@ var fs = require('fs')
 var { outputPath, templatesPath } = require('../config')
 var { decodeData } = require('./decodeData')
 
-function buildTypeahead(mutableOriginalData, allSchemas, field, fieldName) {
+function buildTypeahead(
+  mutableOriginalData,
+  allSchemas,
+  field,
+  fieldName,
+  fieldType,
+) {
   const foreignKey = field.foreignKey
   const foreignField = allSchemas[foreignKey]
   const typeaheadRenderers = field.typeaheadRenderers
@@ -61,10 +67,11 @@ function buildTypeahead(mutableOriginalData, allSchemas, field, fieldName) {
   }
 
   // Then we add the typeahead field to the form
+  const extraID = fieldType === 'object' ? '.id' : ''
   const formData = `
           <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
               <label className={\`\${styles.FormLabel} FormLabel\`}>${field.displayName}</label>
-              <${className} onSelect={(value) => onTypeaheadSelect(value, "${fieldName}")} id={originalData && originalData.${fieldName}} name={originalData && originalData.${fieldName}} />
+              <${className} onSelect={(value) => onTypeaheadSelect(value, "${fieldName}")} id={originalData && originalData.${fieldName}${extraID}} name={originalData && originalData.${fieldName}} />
           </div>
       `
 

@@ -174,19 +174,19 @@ const DetailedArticlesView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Author</label>
-                <IMForeignKeyComponent id={originalData.author_id} apiRouteName="admin/blog/users" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.author_id} apiRouteName="admin/blog/users" viewRoute="../users" titleKey="title" />
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/article_categories" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/article_categories" viewRoute="../article_categories" titleKey="title" />
             </div>
     
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>ArticleTags</label>
-                <IMForeignKeysIdComponent ids={originalData.tags} apiRouteName="admin/blog/article_tags" titleKey="title" />
+                <IMForeignKeysIdComponent ids={originalData.tags} apiRouteName="admin/blog/article_tags" viewRoute="../article_tags" titleKey="title" />
             </div>
     
 

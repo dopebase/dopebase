@@ -71,6 +71,14 @@ const UsersColumns = [
           accessor: "carNumber",
       },
       {
+          Header: "Car Type",
+          accessor: "carType",
+          Cell: data => (
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/taxi/taxi_car_categories" viewRoute="taxi_car_categories"
+          titleKey="name" />
+          )
+      },
+      {
           Header: "In Progress Order ID",
           accessor: "inProgressOrderID",
           Cell: data => (

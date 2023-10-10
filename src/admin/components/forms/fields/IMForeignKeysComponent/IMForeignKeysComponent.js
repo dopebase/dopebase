@@ -5,7 +5,7 @@ const baseAPIURL = pluginsAPIURL
 function IMForeignKeysComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [myData, setData] = useState(null)
-  const { apiRouteName, data, titleKey } = props
+  const { apiRouteName, viewRoute, data, titleKey } = props
 
   useEffect(() => {
     if (data) {
@@ -29,7 +29,7 @@ function IMForeignKeysComponent(props) {
   const viewPath =
     myData &&
     myData.legnth &&
-    myData.map(elem => '/admin/' + apiRouteName + '/view?id=' + elem.id)
+    myData.map(elem => viewRoute + '/view?id=' + elem.id)
 
   return (
     <div className="ForeignKeysComponent">

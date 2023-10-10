@@ -29,8 +29,9 @@ function TripPassengerTypeaheadComponent(props) {
           baseAPIURL + 'users/view?id=' + id,
         )
         if (response?.data) {
-          setInputValue(data.firstName + " " + data.lastName) // data.firstName + " " + data.lastName)
-          initializeModifieableNonFormData(response.data)
+          const data = response.data
+          setInputValue(data.firstName + " " + data.lastName)
+          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {
@@ -88,7 +89,7 @@ function TripPassengerTypeaheadComponent(props) {
   const listItems =
     users && users.length
       ? users.map(
-          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.first_name} {data.last_name} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
