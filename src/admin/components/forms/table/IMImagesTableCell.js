@@ -1,6 +1,7 @@
 import React from 'react'
 import { IMPhoto } from '../fields'
 import styles from '../../../themes/admin.module.css'
+import { unescapeString } from '../../../../utils'
 
 function IMImagesTableCell(props) {
   const { singleImageURL, imageURLs } = props
@@ -13,7 +14,7 @@ function IMImagesTableCell(props) {
         <IMPhoto
           openable
           className={`${styles.imageCell} imageCell`}
-          src={singleImageURL}
+          src={unescapeString(singleImageURL)}
         />
       </div>
     )
@@ -23,7 +24,7 @@ function IMImagesTableCell(props) {
     <IMPhoto
       className={`${styles.multiImageCell} multiImageCell`}
       key={url}
-      src={url}
+      src={unescapeString(url)}
       openable
     />
   ))
