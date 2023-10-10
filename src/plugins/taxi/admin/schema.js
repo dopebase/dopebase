@@ -35,7 +35,7 @@ const schema = {
         foreignKey: 'users',
         cellClassName: 'TaxiTripPassenger',
         typeaheadRenderers: {
-          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={unescapeString(data.profilePictureURL)} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
           originalDataFormatter: `data.firstName + " " + data.lastName`,
         },
       },
@@ -46,7 +46,7 @@ const schema = {
         foreignKey: 'users',
         cellClassName: 'TripPassenger',
         typeaheadRenderers: {
-          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={unescapeString(data.profilePictureURL)} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
           originalDataFormatter: `data.firstName + " " + data.lastName`,
         },
       },

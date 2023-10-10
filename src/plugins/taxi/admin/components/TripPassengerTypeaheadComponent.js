@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
 import { authFetch } from '../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../config/config'
+import { unescapeString } from '../../../../utils'
 import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
@@ -89,7 +90,7 @@ function TripPassengerTypeaheadComponent(props) {
   const listItems =
     users && users.length
       ? users.map(
-          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={unescapeString(data.profilePictureURL)} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 

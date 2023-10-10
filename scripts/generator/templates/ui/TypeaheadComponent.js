@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
 import { authFetch } from '../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../config/config'
+import { unescapeString } from '../../../../utils'
 import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`

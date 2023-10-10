@@ -11,8 +11,8 @@ async function insertOne(tableName, data) {
   return db.insertOne(tableName, data)
 }
 
-async function list(tableName, query) {
-  return db.list(tableName, query)
+async function list(tableName, queryParams) {
+  return db.list(tableName, queryParams)
 }
 
 async function deleteOne(tableName, id) {

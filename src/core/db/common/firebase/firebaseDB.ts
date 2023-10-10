@@ -18,10 +18,37 @@ async function getOne(tableName, id) {
   return unescapeObject(data)
 }
 
-async function list(tableName, query) {
-  const ref = firestore.collection(tableName)
+async function list(tableName, queryParams) {
+  var ref = firestore.collection(tableName)
+  if (queryParams.limit?.length > 0) {
+    ref = ref.limit(parseInt(queryParams.limit))
+  }
+  if (queryParams.orderBy?.length > 0) {
+    ref = ref.orderBy(queryParams.orderBy, 'desc')
+  } else {
+    ref = ref.orderBy('updatedAt', 'desc')
+  }
   const snapshot = await ref.get()
   const data = snapshot.docs.map(doc => doc.data())
+
+  if (queryParams.search?.length > 0) {
+    var result = []
+    var keyword = queryParams.search
+    for (var i = 0; i < data.length; ++i) {
+      const item = data[i]
+      const keys = Object.keys(item)
+      for (var j = 0; j < keys.length; ++j) {
+        const key = keys[j]
+        const value = item[key]
+        if (value && value.toString().includes(keyword)) {
+          result.push(item)
+          break
+        }
+      }
+    }
+    return result
+  }
+
   return data
 }
 

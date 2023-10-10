@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
 import { authFetch } from '../../../../modules/auth/utils/authFetch'
 import { pluginsAPIURL } from '../../../../config/config'
+import { unescapeString } from '../../../../utils'
 import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
@@ -29,8 +30,9 @@ function ParentArticleCategoryTypeaheadComponent(props) {
           baseAPIURL + 'article_categories/view?id=' + id,
         )
         if (response?.data) {
-          setInputValue(data.name) // data.firstName + " " + data.lastName)
-          initializeModifieableNonFormData(response.data)
+          const data = response.data
+          setInputValue(data.name)
+          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

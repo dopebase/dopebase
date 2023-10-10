@@ -13,12 +13,52 @@ async function getOne(tableName, id) {
   return unescapeObject(result[0])
 }
 
-async function list(tableName, query) {
-  console.log(`SELECT * FROM ${tableName} ${query}`)
+async function list(tableName, queryParams) {
+  var queryLimit = ''
+  var queryOrderBy = 'order by updated_at desc'
+  // if (queryParams.search) {
+  //   const keys = Object.keys(queryParams.search)
+  //   const values = Object.values(queryParams.search)
+  //   for (var i = 0; i < keys.length; ++i) {
+  //     if (i === 0) {
+  //       querySearch += 'where '
+  //     }
+  //     const key = keys[i]
+  //     const value = values[i]
+  //     querySearch += `${key} like '%${Validator.escape(value)}%'`
+  //     if (i < keys.length - 1) {
+  //       querySearch += ' or '
+  //     }
+  //   }
+  // }
+  if (queryParams.limit?.length > 0) {
+    queryLimit = `limit ${queryParams.limit}`
+  }
+  if (queryParams.orderBy?.length > 0) {
+    queryOrderBy = `order by ${queryParams.orderBy}`
+  }
+  console.log(`SELECT * FROM ${tableName} ${queryOrderBy} ${queryLimit}`)
   const result = await prisma.$queryRawUnsafe(
-    `SELECT * FROM ${tableName} ${query}`,
+    `SELECT * FROM ${tableName} ${queryOrderBy} ${queryLimit}`,
   )
   const unescapedRes = result.map(res => unescapeObject(res))
+  if (queryParams.search?.length > 0) {
+    var result = []
+    var keyword = queryParams.search
+    for (var i = 0; i < unescapedRes.length; ++i) {
+      const item = unescapedRes[i]
+      const keys = Object.keys(item)
+      for (var j = 0; j < keys.length; ++j) {
+        const key = keys[j]
+        const value = item[key]
+        if (value && value.toString().includes(keyword)) {
+          result.push(item)
+          break
+        }
+      }
+    }
+    return result
+  }
   return unescapedRes
 }
 
