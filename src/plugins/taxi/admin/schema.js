@@ -128,6 +128,8 @@ const schema = {
         required: false,
         displayName: 'Average speed per min (km / minute)',
       },
+      createdAt: { type: 'date', required: true, displayName: 'Created At' },
+      updatedAt: { type: 'date', required: true, displayName: 'Updated At' },
     },
     pluralDisplayName: 'Prices & Categories',
     capitalPluralName: 'TaxiCarCategories',

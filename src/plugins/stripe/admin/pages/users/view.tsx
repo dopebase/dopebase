@@ -31,9 +31,9 @@ import styles from '../../../../../admin/themes/admin.module.css'
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
+const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
 
-const DetailedTaxiCarCategoriesView = props => {
+const DetailedUsersView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedTaxiCarCategoriesView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'taxi_car_categories/view?id=' + id,
+          baseAPIURL + 'users/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -92,72 +92,58 @@ const DetailedTaxiCarCategoriesView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>ID</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.id}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Email</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.email}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.firstName}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Description</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.description}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.lastName}</span>
             </div>
     
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Phone</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.phone}</span>
+            </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Role</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.role}</span>
+              </div>
+          
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
-                {originalData.photo && (
-                    <IMPhoto openable className="photo" src={originalData.photo} />
+                {originalData.carPictureURL && (
+                    <IMPhoto openable className="photo" src={originalData.carPictureURL} />
                 )}
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Car Marker Icon</label>
-                {originalData.marker && (
-                    <IMPhoto openable className="photo" src={originalData.marker} />
-                )}
+                <label className={`${styles.FormLabel} FormLabel`}>Car Model</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.carName}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Base Fare</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.baseFare}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>License Plate</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.carNumber}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Cost per km</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.costPerKm}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Cost per min</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.costPerMin}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Minimum Fare</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.minimumFare}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Max number of passengers</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.numberOfPassengers}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Average speed per min (km / minute)</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.averageSpeedPerMin}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Banned</label>
+                <IMToggleSwitchComponent isChecked={originalData.banned} disabled />
             </div>
     
 
@@ -178,4 +164,4 @@ const DetailedTaxiCarCategoriesView = props => {
   )
 }
 
-export default DetailedTaxiCarCategoriesView
+export default DetailedUsersView

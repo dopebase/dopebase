@@ -32,7 +32,6 @@ function ParentArticleCategoryTypeaheadComponent(props) {
         if (response?.data) {
           const data = response.data
           setInputValue(data.name)
-          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

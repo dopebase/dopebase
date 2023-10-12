@@ -32,7 +32,6 @@ function TripPassengerTypeaheadComponent(props) {
         if (response?.data) {
           const data = response.data
           setInputValue(data.firstName + " " + data.lastName)
-          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

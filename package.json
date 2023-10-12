@@ -42,6 +42,7 @@
     "rich-markdown-editor": "^11.21.3",
     "server-only": "^0.0.1",
     "socket.io": "^4.7.2",
+    "stripe": "^13.10.0",
     "styled-components": "^6.0.8",
     "validator": "^13.11.0",
     "victory": "^36.6.11"

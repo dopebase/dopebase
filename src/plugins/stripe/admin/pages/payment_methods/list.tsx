@@ -27,76 +27,44 @@ import { authPost } from '../../../../../modules/auth/utils/authFetch'
 import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
-const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
+const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
 
 export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const TaxiCarCategoriesColumns = [
+const PaymentMethodsColumns = [
   
       {
           Header: "ID",
           accessor: "id",
       },
       {
-          Header: "Name",
-          accessor: "name",
+          Header: "Stripe Customer ID",
+          accessor: "stripeCustomerID",
       },
       {
-          Header: "Description",
-          accessor: "description",
+          Header: "Brand",
+          accessor: "brand",
       },
       {
-          Header: "Car Photo",
-          accessor: "photo",
+          Header: "Last 4",
+          accessor: "last4",
+      },
+      {
+          Header: "Expiry Month",
+          accessor: "expiryMonth",
+      },
+      {
+          Header: "Expiry Year 4",
+          accessor: "expiryYear",
+      },
+      {
+          Header: "User",
+          accessor: "userID",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
-      },
-      {
-          Header: "Car Marker Icon",
-          accessor: "marker",
-          Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
-      },
-      {
-          Header: "Base Fare",
-          accessor: "baseFare",
-      },
-      {
-          Header: "Cost per km",
-          accessor: "costPerKm",
-      },
-      {
-          Header: "Cost per min",
-          accessor: "costPerMin",
-      },
-      {
-          Header: "Minimum Fare",
-          accessor: "minimumFare",
-      },
-      {
-          Header: "Max number of passengers",
-          accessor: "numberOfPassengers",
-      },
-      {
-          Header: "Average speed per min (km / minute)",
-          accessor: "averageSpeedPerMin",
-      },
-      {
-          Header: "Created At",
-          accessor: "createdAt",
-          Cell: data => (
-              <IMDateTableCell timestamp={data.value} />
-          )
-      },
-      {
-          Header: "Updated At",
-          accessor: "updatedAt",
-          Cell: data => (
-              <IMDateTableCell timestamp={data.value} />
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/stripe/users" viewRoute="users"
+          titleKey="email" />
           )
       },,
   {
@@ -122,7 +90,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'taxi_car_categories/delete'
+      const path = baseAPIURL + 'payment_methods/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -155,14 +123,14 @@ function ActionsItemView(props) {
   )
 }
 
-function TaxiCarCategoriesListView(props) {
+function PaymentMethodsListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [TaxiCarCategories, setTaxiCarCategories] = useState([])
+  const [PaymentMethods, setPaymentMethods] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => TaxiCarCategoriesColumns, [])
+  const columns = useMemo(() => PaymentMethodsColumns, [])
 
   const {
     getTableProps,
@@ -185,7 +153,7 @@ function TaxiCarCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: TaxiCarCategories,
+      data: PaymentMethods,
     },
     useGlobalFilter,
     usePagination,
@@ -204,15 +172,15 @@ function TaxiCarCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'taxi_car_categories/list' +
+        'payment_methods/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const taxi_car_categories = data
-        setData(taxi_car_categories)
+        const payment_methods = data
+        setData(payment_methods)
 
         setIsLoading(false)
       })
@@ -222,7 +190,7 @@ function TaxiCarCategoriesListView(props) {
   }, [loading])
 
   useEffect(() => {
-    setTaxiCarCategories(data)
+    setPaymentMethods(data)
   }, [pageIndex, pageSize, data])
 
   return (
@@ -237,7 +205,7 @@ function TaxiCarCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Prices & Categories</h1>
+                <h1>Payment Methods</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -279,11 +247,11 @@ function TaxiCarCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={TaxiCarCategoriesColumns.length - 1}>
+                          <td colSpan={PaymentMethodsColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={TaxiCarCategoriesColumns.length - 1}>
+                          <td colSpan={PaymentMethodsColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -367,4 +335,4 @@ function TaxiCarCategoriesListView(props) {
   )
 }
 
-export default TaxiCarCategoriesListView
+export default PaymentMethodsListView

@@ -32,7 +32,6 @@ function $className$TypeaheadComponent(props) {
         if (response?.data) {
           const data = response.data
           setInputValue($originalDataFormatter$)
-          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

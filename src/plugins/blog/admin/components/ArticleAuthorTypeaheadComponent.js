@@ -32,7 +32,6 @@ function ArticleAuthorTypeaheadComponent(props) {
         if (response?.data) {
           const data = response.data
           setInputValue(data.first_name + " " + data.last_name)
-          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {

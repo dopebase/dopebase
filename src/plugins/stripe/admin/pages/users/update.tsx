@@ -43,9 +43,9 @@ import {
   authFetch,
   authPost,
 } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
+const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
 
-const UpdateTaxiCarCategoryView = props => {
+const UpdateUserView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
@@ -57,7 +57,7 @@ const UpdateTaxiCarCategoryView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'taxi_car_categories/view?id=' + id,
+          baseAPIURL + 'users/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -76,12 +76,16 @@ const UpdateTaxiCarCategoryView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-          if (originalData.photo) {
-              nonFormData['photo'] = originalData.photo
+          if (originalData.role) {
+              nonFormData['role'] = originalData.role
           }
           
-          if (originalData.marker) {
-              nonFormData['marker'] = originalData.marker
+          if (originalData.carPictureURL) {
+              nonFormData['carPictureURL'] = originalData.carPictureURL
+          }
+          
+          if (originalData.banned) {
+              nonFormData['banned'] = originalData.banned
           }
           
           if (originalData.createdAt) {
@@ -99,7 +103,7 @@ const UpdateTaxiCarCategoryView = props => {
 
   const saveChanges = async (modifiedData, setSubmitting) => {
     const response = await authPost(
-      baseAPIURL + 'taxi_car_categories/update?id=' + id,
+      baseAPIURL + 'users/update?id=' + id,
       JSON.stringify({
         ...modifiedData,
         ...modifiedNonFormData,
@@ -403,12 +407,8 @@ const UpdateTaxiCarCategoryView = props => {
             const errors = {}
             {
               /* Insert all form errors here */
-        if (!values.createdAt) {
-            errors.createdAt = 'Field Required!'
-        }
-
-        if (!values.updatedAt) {
-            errors.updatedAt = 'Field Required!'
+        if (!values.email) {
+            errors.email = 'Field Required!'
         }
 
             }
@@ -431,167 +431,131 @@ const UpdateTaxiCarCategoryView = props => {
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>ID</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Email</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="id"
-                            name="id"
+                            type="email"
+                            name="email"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.id}
+                            value={values.email}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.id && touched.id && errors.id}
+                            {errors.email && touched.email && errors.email}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="name"
-                            name="name"
+                            type="firstName"
+                            name="firstName"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.name}
+                            value={values.firstName}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.name && touched.name && errors.name}
+                            {errors.firstName && touched.firstName && errors.firstName}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Description</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="description"
-                            name="description"
+                            type="lastName"
+                            name="lastName"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.description}
+                            value={values.lastName}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.description && touched.description && errors.description}
+                            {errors.lastName && touched.lastName && errors.lastName}
                         </p>
                     </div>
     
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Phone</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="phone"
+                            name="phone"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.phone}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.phone && touched.phone && errors.phone}
+                        </p>
+                    </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Role</label>
+                  <IMStaticSelectComponent
+                      options={["passenger","driver","admin","other"]}
+                      name="role"
+                      onChange={handleSelectChange}
+                      selectedOption={modifiedNonFormData.role}
+                  />
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.role && touched.role && errors.role}
+                  </p>
+              </div>
+              
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
-                        {modifiedNonFormData.photo && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.photo} onDelete={(src) => handleDeletePhoto(src, "photo", false) } />
+                        {modifiedNonFormData.carPictureURL && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.carPictureURL} onDelete={(src) => handleDeletePhoto(src, "carPictureURL", false) } />
                         )}
-                        <input className="FormFileField" id="photo" name="photo" type="file" onChange={(event) => {
-                            handleImageUpload(event, "photo", false);
+                        <input className="FormFileField" id="carPictureURL" name="carPictureURL" type="file" onChange={(event) => {
+                            handleImageUpload(event, "carPictureURL", false);
                         }} />
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Car Marker Icon</label>
-                        {modifiedNonFormData.marker && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.marker} onDelete={(src) => handleDeletePhoto(src, "marker", false) } />
-                        )}
-                        <input className="FormFileField" id="marker" name="marker" type="file" onChange={(event) => {
-                            handleImageUpload(event, "marker", false);
-                        }} />
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Base Fare</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Car Model</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="baseFare"
-                            name="baseFare"
+                            type="carName"
+                            name="carName"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.baseFare}
+                            value={values.carName}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.baseFare && touched.baseFare && errors.baseFare}
+                            {errors.carName && touched.carName && errors.carName}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Cost per km</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>License Plate</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="costPerKm"
-                            name="costPerKm"
+                            type="carNumber"
+                            name="carNumber"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.costPerKm}
+                            value={values.carNumber}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.costPerKm && touched.costPerKm && errors.costPerKm}
+                            {errors.carNumber && touched.carNumber && errors.carNumber}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Cost per min</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="costPerMin"
-                            name="costPerMin"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.costPerMin}
-                        />
+                        <label className={`${styles.FormLabel} FormLabel`}>Banned</label>
+                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.banned} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["banned"], "banned")} />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.costPerMin && touched.costPerMin && errors.costPerMin}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Minimum Fare</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="minimumFare"
-                            name="minimumFare"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.minimumFare}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.minimumFare && touched.minimumFare && errors.minimumFare}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Max number of passengers</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="numberOfPassengers"
-                            name="numberOfPassengers"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.numberOfPassengers}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.numberOfPassengers && touched.numberOfPassengers && errors.numberOfPassengers}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Average speed per min (km / minute)</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="averageSpeedPerMin"
-                            name="averageSpeedPerMin"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.averageSpeedPerMin}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.averageSpeedPerMin && touched.averageSpeedPerMin && errors.averageSpeedPerMin}
+                            {errors.banned && touched.banned && errors.banned}
                         </p>
                     </div>
     
@@ -621,7 +585,7 @@ const UpdateTaxiCarCategoryView = props => {
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save taxi_car_category
+                  Save user
                 </button>
               </div>
             </form>
@@ -632,4 +596,4 @@ const UpdateTaxiCarCategoryView = props => {
   )
 }
 
-export default UpdateTaxiCarCategoryView
+export default UpdateUserView

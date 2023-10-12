@@ -6,11 +6,11 @@ import { pluginsAPIURL } from '../../../../config/config'
 import { unescapeString } from '../../../../utils'
 import styles from '../../../../admin/themes/admin.module.css'
 
-const baseAPIURL = `${pluginsAPIURL}admin/taxi/`
+const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
 
-function DriverTaxiCategoryTypeaheadComponent(props) {
+function PaymentMethodUserTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [taxi_car_categories, setTaxi_car_categories] = useState(null)
+  const [users, setUsers] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
   const [inputValue, setInputValue] = useState(null)
   const [isTypeaheadVisible, setIsTypeaheadVisible] = useState(false)
@@ -27,11 +27,11 @@ function DriverTaxiCategoryTypeaheadComponent(props) {
       }
       try {
         const response = await authFetch(
-          baseAPIURL + 'taxi_car_categories/view?id=' + id,
+          baseAPIURL + 'users/view?id=' + id,
         )
         if (response?.data) {
           const data = response.data
-          setInputValue(data.name + " " + data.description)
+          setInputValue(data.firstName + " " + data.lastName)
           setIsLoading(false)
         }
       } catch (err) {
@@ -50,13 +50,13 @@ function DriverTaxiCategoryTypeaheadComponent(props) {
       try {
         const response = await authFetch(
           baseAPIURL +
-            'taxi_car_categories/list?limit=10&search=' +
+            'users/list?limit=10&search=' +
             typeaheadValue,
         )
         if (response?.data) {
           console.log(response.data)
           if (response?.data) {
-            setTaxi_car_categories(response.data)
+            setUsers(response.data)
           }
         }
       } catch (err) {
@@ -81,15 +81,15 @@ function DriverTaxiCategoryTypeaheadComponent(props) {
   }
 
   const onClick = data => {
-    setInputValue(data.name + " " + data.description)
+    setInputValue(data.firstName + " " + data.lastName)
     onSelect && onSelect(data.id)
     setIsTypeaheadVisible(false)
   }
 
   const listItems =
-    taxi_car_categories && taxi_car_categories.length
-      ? taxi_car_categories.map(
-          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><span>{data.name} ({data.description})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
+    users && users.length
+      ? users.map(
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -123,4 +123,4 @@ function DriverTaxiCategoryTypeaheadComponent(props) {
   )
 }
 
-export default DriverTaxiCategoryTypeaheadComponent
+export default PaymentMethodUserTypeaheadComponent

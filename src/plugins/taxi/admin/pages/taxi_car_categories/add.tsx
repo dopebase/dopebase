@@ -359,6 +359,14 @@ const AddNewTaxiCarCategoryView = () => {
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.createdAt) {
+            errors.createdAt = 'Field Required!'
+        }
+
+        if (!values.updatedAt) {
+            errors.updatedAt = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -541,6 +549,24 @@ const AddNewTaxiCarCategoryView = () => {
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.averageSpeedPerMin && touched.averageSpeedPerMin && errors.averageSpeedPerMin}
                         </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.createdAt}
+                            onChange={(toDate) => onDateChange(toDate, "createdAt")}
+                        />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.updatedAt}
+                            onChange={(toDate) => onDateChange(toDate, "updatedAt")}
+                        />
                     </div>
     
 

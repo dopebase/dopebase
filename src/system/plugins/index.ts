@@ -25,6 +25,7 @@ export const getAllPluginsAndUpdateIfNeeded = async () => {
   const supportedPlugins = [
     'blog',
     'taxi',
+    'stripe',
     // 'booking',
     // 'chat',
     // 'ecommerce',
@@ -77,6 +78,7 @@ export const getAllPlugins = async () => {
   const supportedPlugins = [
     'blog',
     'taxi',
+    'stripe',
     // 'booking',
     // 'chat',
     // 'ecommerce',

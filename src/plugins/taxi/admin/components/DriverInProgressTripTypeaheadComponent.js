@@ -32,7 +32,6 @@ function DriverInProgressTripTypeaheadComponent(props) {
         if (response?.data) {
           const data = response.data
           setInputValue(data.id + " - " + data.passenger.firstName + " " + data.passenger.lastName)
-          initializeModifieableNonFormData(data)
           setIsLoading(false)
         }
       } catch (err) {
