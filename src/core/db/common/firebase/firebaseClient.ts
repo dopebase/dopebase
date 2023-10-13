@@ -2,6 +2,9 @@ const admin = require('firebase-admin')
 import { headers } from 'next/headers'
 
 export function customInitApp() {
+  if (!process.env.FIREBASE_PROJECT_ID) {
+    return
+  }
   if (admin.apps.length < 1) {
     const firebaseAdminConfig = {
       credential: admin.credential.cert({
@@ -15,7 +18,15 @@ export function customInitApp() {
     admin.initializeApp(firebaseAdminConfig)
   }
 }
-customInitApp()
-const firestore = admin.firestore()
-// firestore.settings({ ignoreUndefinedProperties: true })
-export { firestore }
+const getFirestore = () => {
+  const firestore = admin.firestore()
+  if (!process.env.FIREBASE_PROJECT_ID) {
+    return
+  }
+  if (admin.apps.length < 1) {
+    firestore.settings({ ignoreUndefinedProperties: true })
+  }
+  customInitApp()
+  return firestore
+}
+export { getFirestore as firestore }

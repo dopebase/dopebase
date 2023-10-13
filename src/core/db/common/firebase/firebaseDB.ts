@@ -4,7 +4,7 @@ import { unescapeObject } from '../../../../utils'
 import { replaceUndefinedKeysWithEmptyStrings } from '../../../../utils/escape'
 
 async function getOne(tableName, id) {
-  const ref = firestore.collection(tableName).doc(id)
+  const ref = firestore().collection(tableName).doc(id)
   const doc = await ref.get()
   if (!doc.exists) {
     console.log(
@@ -19,7 +19,7 @@ async function getOne(tableName, id) {
 }
 
 async function list(tableName, queryParams) {
-  var ref = firestore.collection(tableName)
+  var ref = firestore().collection(tableName)
   if (queryParams.limit?.length > 0) {
     ref = ref.limit(parseInt(queryParams.limit))
   }
@@ -58,8 +58,8 @@ async function insertOne(tableName, unescapedData) {
     console.log(`inserting data `)
     console.log(data)
     const ref = data?.id
-      ? firestore.collection(tableName).doc(data.id)
-      : firestore.collection(tableName).doc()
+      ? firestore().collection(tableName).doc(data.id)
+      : firestore().collection(tableName).doc()
     const res = await ref.set({ ...data, id: ref.id })
     return await getOne(tableName, ref.id)
   } catch (e) {
@@ -69,7 +69,7 @@ async function insertOne(tableName, unescapedData) {
 }
 
 async function deleteOne(tableName, id) {
-  const ref = firestore.collection(tableName).doc(id)
+  const ref = firestore().collection(tableName).doc(id)
   const doc = await ref.get()
   if (!doc.exists) {
     console.log(`Collection ${tableName} does not have an entry with id ${id}`)
@@ -82,7 +82,7 @@ async function deleteOne(tableName, id) {
 
 async function updateOne(tableName, id, unescapedData) {
   const data = replaceUndefinedKeysWithEmptyStrings(unescapedData)
-  const ref = firestore.collection(tableName).doc(id)
+  const ref = firestore().collection(tableName).doc(id)
   const doc = await ref.get()
   if (!doc.exists) {
     console.log(`Collection ${tableName} does not have an entry with id ${id}`)
@@ -94,7 +94,7 @@ async function updateOne(tableName, id, unescapedData) {
 }
 
 async function findOne(tableName, whereClauseDict) {
-  const ref = firestore.collection(tableName)
+  const ref = firestore().collection(tableName)
   const key = Object.keys(whereClauseDict)[0]
   const value = whereClauseDict[key]
   const snapshot = await ref.where(key, '==', value).get()
