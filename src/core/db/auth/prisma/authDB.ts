@@ -1,7 +1,7 @@
 import { unescapeString } from '../../../../utils'
 import { prisma } from '../../common/prisma/prismaClient'
 import { getUserByEmail, createNewUser, getUserByToken } from '../../users'
-import { updateOne } from '../../../../core/db/common'
+import { findOne, getOne, updateOne } from '../../../../core/db/common'
 
 const bcrypt = require('bcryptjs')
 
@@ -120,4 +120,35 @@ async function resetPassword(token: string, password: string) {
   return null
 }
 
-export { loginWithEmailAndPassword, register, resetPassword }
+async function updatePassword(userID: string, password: string) {
+  const user = await getOne('users', userID)
+  if (user === null) {
+    return null
+  }
+
+  const hashingPromise = new Promise<string>(resolve => {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        resolve(hash)
+      })
+    })
+  })
+
+  const encryptedPassword = await hashingPromise
+  const authData = await findOne('auth', { userID: user.id })
+  if (authData === null) {
+    return null
+  }
+
+  console.log(`auth data to be updated: ${JSON.stringify(authData)}`)
+
+  const auth = await updateOne('auth', authData.id, {
+    encryptedPassword: encryptedPassword,
+  })
+
+  console.log(`updated password to ${JSON.stringify(encryptedPassword)}`)
+
+  return auth
+}
+
+export { loginWithEmailAndPassword, register, resetPassword, updatePassword }

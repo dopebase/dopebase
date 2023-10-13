@@ -10,21 +10,25 @@ const registerAdminPanelHooks = () => {
   hookSystem.addHookCallback('beforeRenderAdminPanel', items => {
     return items.concat([
       {
-        title: 'Taxi',
-        path: 'plugins/taxi',
-        icon: 'fa fa-car',
+        title: 'Blog',
+        path: 'plugins/blog',
+        icon: 'pencil',
         subItems: [
           {
-            title: 'Prices & Rides',
-            path: 'taxi_car_categories/list',
+            title: 'Posts',
+            path: 'articles/list',
           },
           {
-            title: 'Rides',
-            path: 'taxi_trips/list',
+            title: 'Categories',
+            path: 'article_categories/list',
           },
           {
             title: 'Users',
             path: 'users/list',
+          },
+          {
+            title: 'Tags',
+            path: 'article_tags/list',
           },
         ],
       },

@@ -56,6 +56,20 @@ const UsersColumns = [
           accessor: "role",
       },
       {
+          Header: "Profile Picture",
+          accessor: "profilePictureURL",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
+      },
+      {
+          Header: "License Picture",
+          accessor: "licensePictureURL",
+          Cell: data => (
+              <IMImagesTableCell singleImageURL={data.value} />
+          )
+      },
+      {
           Header: "Car Photo",
           accessor: "carPictureURL",
           Cell: data => (

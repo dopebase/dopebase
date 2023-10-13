@@ -464,6 +464,28 @@ const AddNewUserView = () => {
           
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Profile Picture</label>
+                        {modifiedNonFormData.profilePictureURL && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.profilePictureURL} onDelete={(src) => handleDeletePhoto(src, "profilePictureURL", false) } />
+                        )}
+                        <input className="FormFileField" id="profilePictureURL" name="profilePictureURL" type="file" onChange={(event) => {
+                            handleImageUpload(event, "profilePictureURL", false);
+                        }} />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>License Picture</label>
+                        {modifiedNonFormData.licensePictureURL && (
+                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.licensePictureURL} onDelete={(src) => handleDeletePhoto(src, "licensePictureURL", false) } />
+                        )}
+                        <input className="FormFileField" id="licensePictureURL" name="licensePictureURL" type="file" onChange={(event) => {
+                            handleImageUpload(event, "licensePictureURL", false);
+                        }} />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
                         {modifiedNonFormData.carPictureURL && (
                             <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.carPictureURL} onDelete={(src) => handleDeletePhoto(src, "carPictureURL", false) } />

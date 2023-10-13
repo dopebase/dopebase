@@ -36,11 +36,11 @@ export default function useCurrentUser(): [
         axios.defaults.headers.common['Authorization'] = token
         const userID = jwt_decode<{ id: string }>(token).id
 
-        const apiURL = `${websiteURL}/api/users?id=${userID}`
+        const apiURL = `${websiteURL}/api/users/view?id=${userID}`
         const response = await axios.get<{ user?: User; error: string }>(apiURL)
-        if (response.data?.user) {
-          setUser(response.data.user)
-          dispatch(setCurrentUser(response.data.user))
+        if (response.data) {
+          setUser(response.data)
+          dispatch(setCurrentUser(response.data))
         } else {
           setUser(null)
           dispatch(setCurrentUser(null))

@@ -12,7 +12,7 @@ const registerAdminPanelHooks = () => {
       {
         title: 'Stripe Payments',
         path: 'plugins/stripe',
-        icon: 'fa fa-dollar-o',
+        icon: 'dollar',
         subItems: [
           {
             title: 'Payment Methods',

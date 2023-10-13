@@ -18,7 +18,7 @@ export const AdminAppContainer: React.FC = memo(
     if (loading) {
       return <div>loading</div>
     }
-
+    console.log('user', user)
     if (user?.role === 'admin') {
       return (
         <div className={styles.admin}>

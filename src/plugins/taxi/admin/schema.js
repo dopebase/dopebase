@@ -163,6 +163,16 @@ const schema = {
         displayName: 'Role',
         enum: ['passenger', 'driver', 'admin', 'other'],
       },
+      profilePictureURL: {
+        type: 'photo',
+        required: false,
+        displayName: 'Profile Picture',
+      },
+      licensePictureURL: {
+        type: 'photo',
+        required: false,
+        displayName: 'License Picture',
+      },
       carPictureURL: {
         type: 'photo',
         required: false,

@@ -1,8 +1,6 @@
 // import db from './prisma/prismaDB'
 import db from './firebase/firebaseDB'
 
-const bcrypt = require('bcryptjs')
-
 async function getOne(tableName, id) {
   return db.getOne(tableName, id)
 }

@@ -122,6 +122,22 @@ const DetailedUsersView = props => {
           
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Profile Picture</label>
+                {originalData.profilePictureURL && (
+                    <IMPhoto openable className="photo" src={originalData.profilePictureURL} />
+                )}
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>License Picture</label>
+                {originalData.licensePictureURL && (
+                    <IMPhoto openable className="photo" src={originalData.licensePictureURL} />
+                )}
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
                 {originalData.carPictureURL && (
                     <IMPhoto openable className="photo" src={originalData.carPictureURL} />

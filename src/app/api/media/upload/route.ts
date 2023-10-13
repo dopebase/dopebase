@@ -37,6 +37,7 @@ export const config = {
 }
 
 export async function POST(req: NextRequest) {
+  console.log('Uploading files...')
   await multerAny(req)
 
   try {

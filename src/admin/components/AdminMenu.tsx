@@ -16,7 +16,7 @@ const adminMenuItemsTop = [
   {
     title: 'System',
     path: 'system',
-    icon: 'dollar',
+    icon: 'gear',
     subItems: [
       {
         title: 'Settings',
@@ -31,7 +31,7 @@ const adminMenuItemsTop = [
 const adminMenuItemsBottom = [
   {
     title: 'My Account',
-    path: 'settings/profile',
+    path: 'system/settings/profile',
     subItems: [],
     icon: 'user-circle',
   },
