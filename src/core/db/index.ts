@@ -1,1 +1,8 @@
-export { getOne, list, insertOne, deleteOne, updateOne } from './common'
+export {
+  getOne,
+  list,
+  insertOne,
+  deleteOne,
+  updateOne,
+  findOne,
+} from './common'

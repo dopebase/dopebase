@@ -275,6 +275,10 @@ ul.ArrayTableCell li span {
   margin-bottom: 1rem;
 }
 
+.TableContainer tr td {
+  overflow: hidden;
+}
+
 .TableContainer td span {
   color: #212529;
 }

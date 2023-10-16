@@ -19,14 +19,15 @@ export function customInitApp() {
   }
 }
 const getFirestore = () => {
-  const firestore = admin.firestore()
   if (!process.env.FIREBASE_PROJECT_ID) {
     return
   }
-  if (admin.apps.length < 1) {
-    firestore.settings({ ignoreUndefinedProperties: true })
-  }
   customInitApp()
+
+  const firestore = admin.firestore()
+  if (admin.apps.length < 1) {
+    // firestore.settings({ ignoreUndefinedProperties: true })
+  }
   return firestore
 }
 export { getFirestore as firestore }

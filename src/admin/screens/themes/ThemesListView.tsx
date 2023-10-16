@@ -10,7 +10,7 @@ import { websiteURL } from '../../../config/config'
 import styles from '../../themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
-const pluginsColumns = [
+const themesColumns = [
   {
     Header: 'Identifier',
     accessor: 'id',
@@ -28,11 +28,6 @@ const pluginsColumns = [
     accessor: 'version',
   },
   {
-    Header: 'Created At',
-    accessor: 'createdAt',
-    Cell: data => <IMDateTableCell timestamp={data.value} />,
-  },
-  {
     Header: 'Actions',
     accessor: 'actions',
     Cell: data => <ActionsItemView data={data} />,
@@ -40,62 +35,49 @@ const pluginsColumns = [
 ]
 
 function ActionsItemView(props) {
-  const { data } = props
+  const { data, isSelected } = props
   const item = data.row.original
   const router = useRouter()
 
   const handleInstall = async item => {
-    const response = await authPost(
-      `${websiteURL}api/system/plugins/install?id=${item.id}`,
-    )
-    console.log(response)
-    window.location.reload(false)
-  }
-
-  const handleUninstall = async item => {
-    if (window.confirm('Are you sure you want to uninstall this plugin?')) {
+    if (
+      window.confirm(
+        'Are you sure you want to activate this theme? Changes will apply to your website immediately',
+      )
+    ) {
       const response = await authPost(
-        `${websiteURL}api/system/plugins/uninstall?id=${item.id}`,
+        `${websiteURL}api/system/themes/use?theme=${item.id}`,
       )
       window.location.reload(false)
     }
   }
 
-  console.log(data)
-
   return (
     <div className={styles.inlineActionsContainer}>
-      {item.installed === true && (
+      {!item.selected && (
         <button
-          onClick={() => handleUninstall(data.row.original)}
-          type="button"
-          id="tooltip264453216"
-          className="btn-icon btn btn-info btn-sm">
-          <i className="fa fa-setuo"></i>Uninstall
-        </button>
-      )}
-      {item.installed === false && (
-        <button
-          onClick={() => handleInstall(data.row.original)}
+          onClick={() => handleInstall(item)}
           type="button"
           id="tooltip366246651"
           className="btn-icon btn btn-success btn-sm">
-          <i className="fa fa-edit">Install</i>
+          <i className="fa fa-edit">Activate</i>
         </button>
       )}
     </div>
   )
 }
 
-export const PluginsListView = props => {
+export const ThemesListView = props => {
   const [isLoading, setIsLoading] = useState(true)
-  const [plugins, setPlugins] = useState([])
+  const [themes, setThemes] = useState([])
   const [data, setData] = useState([])
+  const [selectedTheme, setSelectedTheme] = useState(null)
+  const [selectedIndex, setSelectedIndex] = useState(null)
   const [error, setError] = useState(null)
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => pluginsColumns, [])
+  const columns = useMemo(() => themesColumns, [])
 
   const {
     getTableProps,
@@ -118,7 +100,7 @@ export const PluginsListView = props => {
   } = useTable(
     {
       columns,
-      data: plugins,
+      data: themes,
     },
     useGlobalFilter,
     usePagination,
@@ -126,11 +108,24 @@ export const PluginsListView = props => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await authFetch(`${websiteURL}api/system/plugins`)
-      const plugins = response?.data.plugins
-      if (plugins) {
-        console.log(plugins)
-        setData(plugins)
+      const response = await authFetch(`${websiteURL}api/system/themes`)
+      const themes = response?.data.themes
+      if (themes) {
+        const selectedTheme = response?.data.selectedTheme
+        setSelectedTheme(selectedTheme)
+        // Compute selected index
+        const selectedIndex = themes.findIndex(
+          theme => theme.id === selectedTheme?.id,
+        )
+        setSelectedIndex(selectedIndex)
+        // Add selected field to themes
+        const richThemes = themes.map(theme => {
+          return {
+            ...theme,
+            selected: theme.id === selectedTheme,
+          }
+        })
+        setData(richThemes)
       } else {
         setError('Access denied')
       }
@@ -142,7 +137,7 @@ export const PluginsListView = props => {
   }, [user, loading])
 
   useEffect(() => {
-    setPlugins(data)
+    setThemes(data)
   }, [pageIndex, pageSize, data])
 
   if (error) {
@@ -156,7 +151,7 @@ export const PluginsListView = props => {
           <div className="col col-md-12">
             <div className="Card">
               <div className="CardHeader">
-                <h4>Plugins</h4>
+                <h4>Themes</h4>
               </div>
               <div className={styles.CardBody}>
                 <div className={styles.TableContainer}>
