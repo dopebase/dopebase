@@ -32,25 +32,25 @@ const NavigationMenu = () => {
           </g>
         </svg>
       </a>
-      <div className="dopebase-main-nav-menu">
-        <a className="main-menu-item">Product</a>
-        <a className="main-menu-item">Technologies</a>
+      <div className={styles.dopebaseMainNavMenu}>
+        <a className={styles.mainMenuItem}>Product</a>
+        <a className={styles.mainMenuItem}>Technologies</a>
         <a
-          className="main-menu-item"
+          className={styles.mainMenuItem}
           target="_blank"
           href="https://dopebase.com/tutorials">
           Tutorials
         </a>
-        <a className="main-menu-item">Developers</a>
+        <a className={styles.mainMenuItem}>Developers</a>
         <a
-          className="main-menu-item"
+          className={styles.mainMenuItem}
           target="_blank"
           href="https://dopebase.com/docs">
           Docs
         </a>
 
         <a
-          className="main-menu-item"
+          className={styles.mainMenuItem}
           target="_blank"
           href="https://github.com/dopebase/dopebase">
           Github

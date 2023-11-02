@@ -123,6 +123,7 @@ a:hover {
   color: var(--primary-text-color)
 }
 
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -139,6 +140,18 @@ a:hover {
   .ProseMirror, .FormEditorContainer div {
     background: transparent !important;
   }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
 }
 
 /**

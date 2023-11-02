@@ -1,6 +1,7 @@
 import React from 'react'
 import { websiteURL } from '../../../config/config'
 import { unescapeString } from '../../../utils'
+import styles from '../theme.module.css'
 
 export type ArticlePreview = {
   title: string
@@ -24,12 +25,14 @@ export type ArticleListPreviewModuleProps = {
 const Article: React.FC<{ article: ArticlePreview }> = ({ article }) => {
   const { title, categoryTitle, photo, slug } = article
   return (
-    <a href={`${websiteURL}${slug}`} className="article-preview-container">
-      <article className="article">
-        <span className="categoryTitle">{unescapeString(categoryTitle)}</span>
+    <a href={`${websiteURL}${slug}`} className={styles.articlePreviewContainer}>
+      <article className={styles.article}>
+        <span className={styles.categoryTitle}>
+          {unescapeString(categoryTitle)}
+        </span>
         <h2>{unescapeString(title)}</h2>
-        <img className="photo-cover" src={unescapeString(photo)} />
-        <span className="createdAt">{article.publishedDate}</span>
+        <img className={styles.photoCover} src={unescapeString(photo)} />
+        <span className={styles.createdAt}>{article.publishedDate}</span>
       </article>
     </a>
   )

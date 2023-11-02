@@ -8,6 +8,7 @@ import { formatTimestamp, unescapeString } from '../../../../utils'
 import Footer from '../../components/Footer'
 import readTimeEstimate from '../../../../utils/readTimeEstimate'
 import { websiteURL } from '../../../../config/config'
+import styles from '../../theme.module.css'
 
 export type Tag = {
   slug: string
@@ -105,8 +106,8 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
   }
 
   return (
-    <div className="dopebase">
-      <div className="container">
+    <div className={`${styles.dopebase} dopebase`}>
+      <div className={`${styles.container} container`}>
         <div className="article-page-container ">
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
@@ -120,8 +121,8 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
             url={unescapeString(canonicalURL)}
           />
           <NavigationMenu />
-          <div className="article-container">
-            {tableOfContents?.length > 0 && (
+          <div className={styles.articleContainer}>
+            {/* {tableOfContents?.length > 0 && (
               <div className="table-of-contents-container">
                 <p>In this article</p>
                 <div
@@ -130,12 +131,12 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                     __html: unescapeString(tableOfContents),
                   }}></div>
               </div>
-            )}
-            <div className="article-body-container">
-              <div className="article-header">
-                <h1 className="article-title">{unescapeString(title)}</h1>
-                <div className="article-meta">
-                  <div className="article-info">
+            )} */}
+            <div className={styles.articleBodyContainer}>
+              <div className={styles.articleHeader}>
+                <h1 className={styles.articleTitle}>{unescapeString(title)}</h1>
+                <div className={styles.articleMeta}>
+                  <div className={styles.articleInfo}>
                     <time className="article-post-date" dateTime={createdAt}>
                       {formatTimestamp(createdAt)}
                     </time>{' '}
@@ -152,11 +153,12 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                   </div>
                 </div>
               </div>
-              <div className="article-content">
+              <div className={styles.articleContent}>
                 {/* <ReactMarkdown
                   source={unescapeString(content)}
                   renderers={{ code: CodeBlock, heading: HeadingRenderer }}
                 /> */}
+                <ReactMarkdown>{unescapeString(content)}</ReactMarkdown>
               </div>
               <div className="article-footer">
                 <div className="article-tags">

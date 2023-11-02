@@ -1,11 +1,14 @@
 import React from 'react'
+import styles from '../theme.module.css'
 
 const Footer = props => {
   return (
-    <section className="section section-lg instamobile-section section-footer">
-      <div className="container">
+    <section
+      className={`${styles.section} ${styles.sectionLg} ${styles.sectionFooter}`}>
+      <div className={styles.container}>
         <div className="row justify-content-center">
-          <div className="col-md-4 text-left footer-column">
+          <div
+            className={`col-md-4 text-left ${styles.footerColumn} footer-column`}>
             <h5>About</h5>
             <p>
               In a world driven by dynamic digital landscapes, Dopebase emerges
@@ -42,7 +45,7 @@ const Footer = props => {
             </ul>
           </div>
 
-          <div className="col-md-2 text-left footer-column">
+          <div className={`col-md-2 text-left ${styles.footerColumn}`}>
             <h5>Legal</h5>
             <ul>
               <li>
@@ -57,7 +60,7 @@ const Footer = props => {
               </li>
             </ul>
           </div>
-          <div className="col-md-4 text-right footer-column">
+          <div className={`col-md-4 text-right ${styles.footerColumn}`}>
             <h5>Resources</h5>
             <ul>
               <li>
@@ -94,7 +97,7 @@ const Footer = props => {
               </li>
             </ul>
           </div>
-          <div className="footer-social-container">
+          <div className={styles.footerSocialContainer}>
             <ul>
               <li>
                 <a href="https://github.com/dopebase" target="_blank">
