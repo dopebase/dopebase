@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
 import { AdminAppContainer } from '../../../../admin/screens/AdminAppContainer'
 import C from '../../../../plugins/blog/admin/pages/article_categories/add'
+
 export default function Page({ params }: { params: { routes: string } }) {
   const [user, token, loading] = useCurrentUser()
   const router = useRouter()

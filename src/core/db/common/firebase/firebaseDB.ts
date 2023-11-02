@@ -26,7 +26,7 @@ async function list(tableName, queryParams) {
   if (queryParams.orderBy?.length > 0) {
     ref = ref.orderBy(queryParams.orderBy, 'desc')
   } else {
-    ref = ref.orderBy('updatedAt', 'desc')
+    // ref = ref.orderBy('updatedAt', 'desc')
   }
   const snapshot = await ref.get()
   const data = snapshot.docs.map(doc => doc.data())

@@ -4,6 +4,7 @@ class HookSystem {
   constructor() {
     this.hooks = {}
     this.registerHook('beforeRenderAdminPanel')
+    this.registerHook('urlParsing')
     this.registerPluginHooks()
   }
 
@@ -44,6 +45,7 @@ class HookSystem {
       this.hooks[hookName].forEach(callback => {
         resValue = callback(resValue, ...args)
       })
+      console.log('return', resValue)
       return resValue
     } else {
       throw new Error(`Hook ${hookName} does not exist.`)

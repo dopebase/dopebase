@@ -1,7 +1,9 @@
 import hookSystem from '../../../system/triggers/HookSystem'
+import { getComponentForRoutes } from '../common/urlParsing'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
+  registerURLParserHooks()
 }
 
 const registerAdminPanelHooks = () => {
@@ -33,5 +35,14 @@ const registerAdminPanelHooks = () => {
         ],
       },
     ])
+  })
+}
+
+const registerURLParserHooks = () => {
+  /* Insert any hooks here */
+
+  console.log('registering url parser hooks')
+  hookSystem.addHookCallback('urlParsing', (initialValue, routes) => {
+    return getComponentForRoutes(routes)
   })
 }

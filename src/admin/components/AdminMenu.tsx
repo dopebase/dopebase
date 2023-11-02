@@ -58,7 +58,6 @@ const AdminMenu: React.FC = memo(() => {
         'beforeRenderAdminPanel',
         items,
       )
-      console.log('menuItems', menuItems)
       setMenuItems(menuItemsAfterApplyingHooks.concat(adminMenuItemsBottom))
     }
   }, [user?.id])
