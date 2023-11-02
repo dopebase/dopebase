@@ -1,3 +1,19 @@
+
+.dopebase h1,
+.dopebase h2,
+.dopebase h3,
+.dopebase h4,
+.dopebase h5,
+.dopebase h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.dopebase h3 {
+    font-size: 1.75rem;
+}
+
 .container {
     max-width: 100%;
     margin-right: auto;
@@ -377,7 +393,7 @@
     color: rgb(221, 221, 221);
     font-size: 18px;
     font-weight: 400;
-    line-height: 27px;
+    line-height: 32px;
     text-rendering: optimizeLegibility;
     text-size-adjust: 100%;
     margin-bottom: 18px;
@@ -386,7 +402,7 @@
   .dopebase .articleContent h2 {
     margin-top: 1.1428em;
     color: white;
-    font-size: 31px;
+    font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 0.5714em;
   }
@@ -395,7 +411,7 @@
     color: rgb(221, 221, 221);
     font-size: 18px;
     font-weight: 400;
-    line-height: 27px;
+    line-height: 32px;
     text-rendering: optimizeLegibility;
     text-size-adjust: 100%;
     padding-left: 8px;

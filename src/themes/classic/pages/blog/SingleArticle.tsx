@@ -108,7 +108,7 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
   return (
     <div className={`${styles.dopebase} dopebase`}>
       <div className={`${styles.container} container`}>
-        <div className="article-page-container ">
+        <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
             seoTitle={
@@ -137,18 +137,20 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                 <h1 className={styles.articleTitle}>{unescapeString(title)}</h1>
                 <div className={styles.articleMeta}>
                   <div className={styles.articleInfo}>
-                    <time className="article-post-date" dateTime={createdAt}>
+                    <time
+                      className={styles.articlePostDate}
+                      dateTime={createdAt}>
                       {formatTimestamp(createdAt)}
                     </time>{' '}
                     ⋅ {readTimeEstimate(unescapeString(content))} read ⋅{' '}
                     <a
-                      className="article-category-link"
+                      className={styles.articleCategoryLink}
                       href={`${websiteURL}${category.slug}`}>
                       {category.name}
                     </a>
                   </div>
 
-                  <div className="article-adworkaround-classname">
+                  <div className={styles.articleAdworkaroundClassname}>
                     {/* {twitterLink} */}
                   </div>
                 </div>
@@ -158,14 +160,27 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                   source={unescapeString(content)}
                   renderers={{ code: CodeBlock, heading: HeadingRenderer }}
                 /> */}
-                <ReactMarkdown>{unescapeString(content)}</ReactMarkdown>
+                <ReactMarkdown
+                  components={
+                    {
+                      // // Map `h1` (`# heading`) to use `h2`s.
+                      // h1: 'h2',
+                      // // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
+                      // em(props) {
+                      //   const {node, ...rest} = props
+                      //   return <i style={{color: 'red'}} {...rest} />
+                      // }
+                    }
+                  }>
+                  {unescapeString(content)}
+                </ReactMarkdown>
               </div>
-              <div className="article-footer">
-                <div className="article-tags">
+              <div className={styles.articleFooter}>
+                <div className={styles.articleTags}>
                   {filteredTags.map(tag => (
                     <a
                       key={tag.slug}
-                      className="article-tag"
+                      className={styles.articleTag}
                       href={`${websiteURL}${tag.slug}`}>
                       {tag.name}
                     </a>

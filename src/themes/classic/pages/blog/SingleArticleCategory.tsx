@@ -7,6 +7,7 @@ import ArticleListPreviewModule, {
 } from '../../components/ArticleListPreviewModule'
 import PaginationView from '../../components/pagination/PaginationView'
 import { unescapeString } from '../../../../utils'
+import styles from '../../theme.module.css'
 
 export type ArticleCategoryProps = {
   id: number
@@ -88,7 +89,7 @@ const SingleArticleCategory: React.FC<{
   return (
     <div className="dopebase">
       <div className="container">
-        <div className="article-page-container ">
+        <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
             seoTitle={unescapeString(seoTitle)}

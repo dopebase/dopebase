@@ -7,6 +7,7 @@ import ArticleListPreviewModule, {
   ArticlePreview,
 } from '../../components/ArticleListPreviewModule'
 import PaginationView from '../../components/pagination/PaginationView'
+import styles from '../../theme.module.css'
 
 export type ArticleTagProps = {
   id: number
@@ -71,7 +72,7 @@ const SingleArticleTag: React.FC<{
   return (
     <div className="dopebase">
       <div className="container">
-        <div className="article-page-container">
+        <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
             seoTitle={unescapeString(seoTitle)}
