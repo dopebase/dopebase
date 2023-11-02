@@ -1,28 +1,23 @@
 import hookSystem from '../triggers/HookSystem'
 
 export const componentForRoutes = async routes => {
-  // Given the routes, this method returns the component that needs to be rendered
+  // Given the routes, return the component that needs to be rendered
 
   if ((routes?.length ?? 0) === 0) {
     return <div>home</div>
   }
 
   if (routes[0] === 'api') {
-    return <div>api</div>
+    return <div>Unspecified api</div>
   }
 
-  // Check if the first route is a plugin
-  // const component = hookSystem.executeHook('urlParsing', null, routes)
+  const component = await hookSystem.executeHook('urlParsing', null, routes)
 
-  const component = await import(
-    '../../themes/classic/pages/blog/SingleArticle'
-  )
+  // const component =
+  //   require('../../themes/classic/pages/blog/SingleArticle').default
 
   if (component) {
-    // return await component.default
-    console.log('yyyyy')
-    console.log(component.default)
-    return component.default
+    return component
   }
   return <div>No component found for routes {JSON.stringify(routes)}</div>
 }

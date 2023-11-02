@@ -103,6 +103,7 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
     var slug = text.toLowerCase().replace(/\W/g, '-')
     return React.createElement('h' + props.level, { id: slug }, props.children)
   }
+
   return (
     <div className="dopebase">
       <div className="container">

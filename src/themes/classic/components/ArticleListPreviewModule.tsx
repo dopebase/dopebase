@@ -1,6 +1,6 @@
 import React from 'react'
-import { rootURL } from '../../config'
-import { unescapeString } from '../../utils'
+import { websiteURL } from '../../../config/config'
+import { unescapeString } from '../../../utils'
 
 export type ArticlePreview = {
   title: string
@@ -24,7 +24,7 @@ export type ArticleListPreviewModuleProps = {
 const Article: React.FC<{ article: ArticlePreview }> = ({ article }) => {
   const { title, categoryTitle, photo, slug } = article
   return (
-    <a href={`${rootURL}${slug}`} className="article-preview-container">
+    <a href={`${websiteURL}${slug}`} className="article-preview-container">
       <article className="article">
         <span className="categoryTitle">{unescapeString(categoryTitle)}</span>
         <h2>{unescapeString(title)}</h2>
@@ -47,7 +47,7 @@ const ArticleListPreviewModule: React.FC<ArticleListPreviewModuleProps> = ({
       <div className="module-header">
         {title?.length > 0 && (
           <h1 className="module-title">
-            <a href={`${rootURL}${slug}`}>{title}</a>
+            <a href={`${websiteURL}${slug}`}>{title}</a>
           </h1>
         )}
         {summary?.length > 0 && <p className="module-summary">{summary}</p>}
@@ -62,7 +62,7 @@ const ArticleListPreviewModule: React.FC<ArticleListPreviewModuleProps> = ({
         ))}
       </ul>
       {limit && articlePreviews?.length > limit && (
-        <a className="view-all" href={`${rootURL}${slug}`}>
+        <a className="view-all" href={`${websiteURL}${slug}`}>
           View all {title} articles...
         </a>
       )}

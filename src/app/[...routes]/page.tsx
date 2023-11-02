@@ -10,11 +10,10 @@ export default async function Page({ params }: { params: { routes: string } }) {
   // const [component, setComponent] = useState(null)
 
   console.log('routes', routes)
+  return await componentForRoutes(routes)
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
   // console.log('search', search)
-
-  return await componentForRoutes(routes)
 
   // useEffect(() => {
   //   async function importPlugin() {
@@ -41,7 +40,7 @@ export default async function Page({ params }: { params: { routes: string } }) {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       {/* <Component /> */}
-      <div>test</div>
+      <div>{await componentForRoutes(routes)}</div>
     </React.Suspense>
   )
 }

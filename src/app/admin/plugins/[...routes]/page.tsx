@@ -12,7 +12,6 @@ export default function Page({ params }: { params: { routes: string } }) {
 
   const [component, setComponent] = useState(null)
 
-  console.log('routes', routes)
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
   // console.log('search', search)

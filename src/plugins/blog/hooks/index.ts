@@ -1,5 +1,5 @@
 import hookSystem from '../../../system/triggers/HookSystem'
-import { getComponentForRoutes } from '../common/urlParsing'
+import { getComponentForRoutes } from '../common/getComponentForRoutes'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
