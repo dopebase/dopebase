@@ -122,16 +122,16 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
           />
           <NavigationMenu />
           <div className={styles.articleContainer}>
-            {/* {tableOfContents?.length > 0 && (
-              <div className="table-of-contents-container">
+            {tableOfContents?.length > 0 && (
+              <div className={styles.tableOfContentsContainer}>
                 <p>In this article</p>
                 <div
-                  className="dynamic-table-of-contents"
+                  className={styles.dynamicTableOfContents}
                   dangerouslySetInnerHTML={{
                     __html: unescapeString(tableOfContents),
                   }}></div>
               </div>
-            )} */}
+            )}
             <div className={styles.articleBodyContainer}>
               <div className={styles.articleHeader}>
                 <h1 className={styles.articleTitle}>{unescapeString(title)}</h1>
@@ -200,16 +200,18 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                 </ReactMarkdown>
               </div>
               <div className={styles.articleFooter}>
-                <div className={styles.articleTags}>
-                  {filteredTags.map(tag => (
-                    <a
-                      key={tag.slug}
-                      className={styles.articleTag}
-                      href={`${websiteURL}${tag.slug}`}>
-                      {tag.name}
-                    </a>
-                  ))}
-                </div>
+                {(filteredTags?.length ?? 0) > 0 && (
+                  <div className={styles.articleTags}>
+                    {filteredTags.map(tag => (
+                      <a
+                        key={tag.slug}
+                        className={styles.articleTag}
+                        href={`${websiteURL}${tag.slug}`}>
+                        {tag.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ const Footer = props => {
             </ul>
           </div>
 
-          <div className={`col-md-2 text-left ${styles.footerColumn}`}>
+          <div className={`col-md-2 text-center ${styles.footerColumn}`}>
             <h5>Legal</h5>
             <ul>
               <li>
@@ -127,8 +127,9 @@ const Footer = props => {
             </ul>
           </div>
         </div>
-        <div className="row justify-content-center container-copyright">
-          <div className="content-copyright">
+        <div
+          className={`row justify-content-center ${styles.containerCopyright} container-copyright`}>
+          <div className={styles.contentCopyright}>
             <p>Dopebase © {new Date().getFullYear()}. All rights reserved.</p>
           </div>
         </div>
