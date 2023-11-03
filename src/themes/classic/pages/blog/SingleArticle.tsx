@@ -176,8 +176,6 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                       return HeadingRenderer({ ...props, level: '4' })
                     },
                     code(props) {
-                      console.log('eeeeee')
-                      console.log(props)
                       if (props.className) {
                         return (
                           <CodeBlock

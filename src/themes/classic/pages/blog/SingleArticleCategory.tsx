@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import NavigationMenu from '../../components/NavigationMenu'
 import MetaHeader from '../../components/MetaHeader'
 import Footer from '../../components//Footer'
@@ -67,28 +67,9 @@ const SingleArticleCategory: React.FC<{
     }
   }
 
-  const twitterLink = useMemo(() => {
-    const text = `Great article on ${
-      seoTitle || name
-    } 🔥🔥🔥 Check it out on Devbrite 👇`
-    return (
-      <a target="_blank" onClick={_e => onTwClick(text)}>
-        <i className="fa fa-twitter dopebasesworkaroundname-icon" />
-      </a>
-    )
-  }, [seoTitle, name, canonicalURL])
-
-  const facebookShareLink = useMemo(() => {
-    return (
-      <a target="_blank" onClick={_e => onFbClick()}>
-        <i className="fa fa-facebook dopebasesworkaroundname-icon" />
-      </a>
-    )
-  }, [seoTitle, canonicalURL])
-
   return (
-    <div className="dopebase">
-      <div className="container">
+    <div className={`${styles.dopebase} dopebase`}>
+      <div className={`${styles.container} container`}>
         <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
@@ -119,7 +100,7 @@ const SingleArticleCategory: React.FC<{
           />
           {aiLongDescription && (
             <div
-              className="archive-long-description"
+              className={styles.archiveLongDescription}
               dangerouslySetInnerHTML={{
                 __html: aiLongDescription.split('\n').join('<br />'),
               }}></div>
