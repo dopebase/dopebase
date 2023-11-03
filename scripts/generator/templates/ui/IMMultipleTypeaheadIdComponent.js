@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
 import styles from '../../../../admin/themes/admin.module.css'
+import { pluginsAPIURL } from '../../../../config/config'
 
-const baseAPIURL = 'http://localhost:3000/api/admin/'
+const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
 
 function IM$className$MultipleTypeaheadIdComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -36,7 +37,7 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
       setIsLoading(false)
       return
     }
-    let urls = ids.map(id => baseAPIURL + '$lowercasesingular$' + '/' + id)
+    let urls = ids.map(id => baseAPIURL + '$lowercaseplural$/view?id=' + id)
     getData(urls)
   }, [ids && ids.length])
 
@@ -48,7 +49,7 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
       headers: { Authorization: token },
     }
     fetch(
-      baseAPIURL + '$lowercaseplural$/?limit=10&search=' + typeaheadValue,
+      baseAPIURL + '$lowercaseplural$/list?limit=10&search=' + typeaheadValue,
       config,
     )
       .then(response => response.json())
@@ -57,8 +58,8 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
       })
       .then(data => {
         console.log(data)
-        if (data && data.$lowercaseplural$) {
-          set$capitalcaseplural$(data.$lowercaseplural$)
+        if (data) {
+          set$capitalcaseplural$(data)
         }
       })
   }, [typeaheadValue, loading])
@@ -82,7 +83,8 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
     setIsTypeaheadVisible(false)
   }
 
-  const viewPath = ids && ids.map(id => '/admin/' + '$lowercasesingular$/' + id)
+  const viewPath =
+    ids && ids.map(id => '/admin/' + '$lowercaseplural$/view?id=' + id)
 
   const listItems =
     $lowercaseplural$ && $lowercaseplural$.length
@@ -116,8 +118,12 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
   }
 
   return (
-    <div className="TypeaheadComponent" style={{ verticalAlign: 'top' }}>
-      <div className="FormSelectionField">{dataItems}</div>
+    <div
+      className={`${styles.TypeaheadComponent} TypeaheadComponent`}
+      style={{ verticalAlign: 'top' }}>
+      <div className={`${styles.FormSelectionField} FormSelectionField`}>
+        {dataItems}
+      </div>
       <input
         className={`${styles.FormTextField} FormTextField`}
         autocomplete="off"
@@ -129,8 +135,11 @@ function IM$className$MultipleTypeaheadIdComponent(props) {
         onChange={handleChange}
       />
       {isTypeaheadVisible && (
-        <div className="TypeaheadResultsContainer">
-          <ul className="TypeaheadResultsList" id={name}>
+        <div
+          className={`${styles.TypeaheadResultsContainer} TypeaheadResultsContainer `}>
+          <ul
+            className={`${styles.TypeaheadResultsList} TypeaheadResultsList`}
+            id={name}>
             {listItems}
           </ul>
         </div>
