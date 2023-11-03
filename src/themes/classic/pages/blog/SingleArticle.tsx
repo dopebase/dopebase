@@ -3,7 +3,7 @@ import NavigationMenu from '../../components/NavigationMenu'
 import ReactMarkdown from 'react-markdown'
 
 import MetaHeader from '../../components/MetaHeader'
-// import CodeBlock from '../../components/CodeBlock'
+import CodeBlock from '../../components/CodeBlock'
 import { formatTimestamp, unescapeString } from '../../../../utils'
 import Footer from '../../components/Footer'
 import readTimeEstimate from '../../../../utils/readTimeEstimate'
@@ -161,17 +161,41 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                   renderers={{ code: CodeBlock, heading: HeadingRenderer }}
                 /> */}
                 <ReactMarkdown
-                  components={
-                    {
-                      // // Map `h1` (`# heading`) to use `h2`s.
-                      // h1: 'h2',
-                      // // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
-                      // em(props) {
-                      //   const {node, ...rest} = props
-                      //   return <i style={{color: 'red'}} {...rest} />
-                      // }
-                    }
-                  }>
+                  components={{
+                    // // Map `h1` (`# heading`) to use `h2`s.
+                    h1(props) {
+                      return HeadingRenderer({ ...props, level: '1' })
+                    },
+                    h2(props) {
+                      return HeadingRenderer({ ...props, level: '2' })
+                    },
+                    h3(props) {
+                      return HeadingRenderer({ ...props, level: '3' })
+                    },
+                    h4(props) {
+                      return HeadingRenderer({ ...props, level: '4' })
+                    },
+                    code(props) {
+                      console.log('eeeeee')
+                      console.log(props)
+                      if (props.className) {
+                        return (
+                          <CodeBlock
+                            language={
+                              props.className?.split('-')[1] ?? 'javascript'
+                            }
+                            value={props.node.children[0].value}
+                          />
+                        )
+                      }
+                      return <code>{props.children}</code>
+                    },
+                    // // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
+                    // em(props) {
+                    //   const {node, ...rest} = props
+                    //   return <i style={{color: 'red'}} {...rest} />
+                    // }
+                  }}>
                   {unescapeString(content)}
                 </ReactMarkdown>
               </div>

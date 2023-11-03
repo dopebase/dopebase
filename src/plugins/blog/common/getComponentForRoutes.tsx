@@ -17,7 +17,8 @@ export const getComponentForRoutes = async routes => {
       return (
         <div>
           Your theme ({installedTheme}) does not support this route powered by
-          the blog plugin. Make sure {src} is implemented in your theme.
+          the blog plugin. Make sure {src} is implemented in your theme and has
+          no errors.
         </div>
       )
     }

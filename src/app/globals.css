@@ -119,6 +119,12 @@ p {
   color: var(--primary-text-color)
 }
 
+code {
+  font-size: 87.5%;
+  color: var(--primary-foreground-color);
+  word-wrap: break-word;
+}
+
 a:hover {
   color: var(--primary-text-color)
 }
