@@ -1,0 +1,139 @@
+.pricingSection {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .sectionTitle {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: var(--primary-text-color)
+  }
+
+  .pricingCheckmark {
+    display: inline-block;
+  }
+  
+  .sectionDescription {
+    font-size: 24px !important;
+    font-weight: normal !important;
+    color: var(--secondary-text-color);
+    margin-bottom: 20px;
+    margin: 1rem 0 3em 0 !important;
+  }
+  
+  .pricingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+    padding: 20px 0px;
+    background-color: var(--primary-background-color);
+    border-radius: 5px;
+  }
+
+    /*for smaller screens, show them horizontally*/
+ 
+@media (max-width: 800px) {
+    .pricingContainer {
+        flex-direction: column;
+    }
+}
+
+  
+  .pricingPlan {
+    flex: 1;
+    max-width: 330px;
+    padding: 20px;
+    border: 1px solid var(--hairline-color);
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--primary-background-color);
+  }
+  
+  .titleContainer {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .planTitle {
+    font-size: 24px;
+    color: var(--primary-text-color)
+  }
+  
+  .planDescription {
+    font-size: 16px;
+    color: var(--secondary-text-color);
+    margin-top: 5px;
+  }
+  
+  .priceContainer {
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .price {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-text-color)
+  }
+  
+  .priceDescription {
+    font-size: 16px;
+    color: var(--secondary-text-color);
+  }
+  
+  .featuresContainer {
+    margin-top: 20px;
+  }
+  
+  .featuresContainer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .featuresContainer li {
+    font-size: 14px;
+    color: var(--primary-text-color);
+    margin: 12px 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  
+  .featuresContainer li div {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+
+  .buttonContainer {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .button {
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid var(--hairline-color);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  /* Additional classes for different plan types */
+  .basicPlan {
+  }
+  
+  .proPlan .button {
+    background-color: var(--primary-foreground-color);
+    color: var(--primary-text-color);
+    border: none;
+
+  }
+  
+  .enterprisePlan {
+  }

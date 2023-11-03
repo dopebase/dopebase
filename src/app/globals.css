@@ -60,8 +60,7 @@
     --secondary-text-color-rgb: 156, 163, 175;
     --secondary-text-color: rgba(var(--secondary-text-rgb), 1);
   
-    --hairline-color: #555;
-
+    --hairline-color: rgb(31, 41, 55);
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
 

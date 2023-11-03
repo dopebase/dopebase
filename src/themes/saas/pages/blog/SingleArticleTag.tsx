@@ -1,15 +1,15 @@
 import React from 'react'
 import NavigationMenu from '../../components/NavigationMenu'
 import MetaHeader from '../../components/MetaHeader'
+import { unescapeString } from '../../../../utils'
 import Footer from '../../components/Footer'
 import ArticleListPreviewModule, {
   ArticlePreview,
 } from '../../components/ArticleListPreviewModule'
 import PaginationView from '../../components/pagination/PaginationView'
-import { unescapeString } from '../../../../utils'
 import styles from '../../theme.module.css'
 
-export type ArticleCategoryProps = {
+export type ArticleTagProps = {
   id: number
   name: string
   description: string
@@ -26,9 +26,9 @@ export type ArticleCategoryProps = {
   currentPage: number
 }
 
-const SingleArticleCategory: React.FC<{
-  articleCategory: ArticleCategoryProps
-}> = ({ articleCategory }) => {
+const SingleArticleTag: React.FC<{
+  articleTag: ArticleTagProps
+}> = ({ articleTag }) => {
   const {
     id,
     name,
@@ -39,37 +39,15 @@ const SingleArticleCategory: React.FC<{
     aiLongDescription,
     logoURL,
     canonicalURL,
-    totalPages,
-    currentPage,
     description,
     articles,
-  } = articleCategory
-
-  const onTwClick = text => {
-    const win = window.open(
-      `https://twitter.com/share?ref_src=dopebase_article_category_twttr&text=${text}&url=${unescapeString(
-        canonicalURL,
-      )}`,
-      '_blank',
-    )
-    if (win != null) {
-      win.focus()
-    }
-  }
-
-  const onFbClick = () => {
-    const win = window.open(
-      'https://www.facebook.com/sharer/sharer.php?src=dopebase_article_category_fb_share',
-      '_blank',
-    )
-    if (win != null) {
-      win.focus()
-    }
-  }
+    totalPages,
+    currentPage,
+  } = articleTag
 
   return (
-    <div className={`${styles.dopebase} dopebase`}>
-      <div className={`${styles.container} container`}>
+    <div className={styles.dopebase}>
+      <div className={styles.container}>
         <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
@@ -79,17 +57,9 @@ const SingleArticleCategory: React.FC<{
             url={unescapeString(canonicalURL)}
           />
           <NavigationMenu />
-          {/* <div className="article-category-container">
-            <EmailSubscriptionHeader
-              title={name}
-              description={description}
-              emailUpsellString={`Join over 100,000 developers and entrepreneurs to stay in touch with the latest source codes and tutorials.`}
-              tag={slug}
-            />
-          </div> */}
           <ArticleListPreviewModule
             slug={slug}
-            title={seoTitle?.length > 0 ? seoTitle : name}
+            title={seoTitle}
             summary={aiSummary}
             articlePreviews={articles}
           />
@@ -106,10 +76,10 @@ const SingleArticleCategory: React.FC<{
               }}></div>
           )}
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }
 
-export default SingleArticleCategory
+export default SingleArticleTag
