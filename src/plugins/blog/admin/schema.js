@@ -155,6 +155,11 @@ const schema = {
         required: false,
         displayName: 'Canonical URL',
       },
+      slug: {
+        type: 'string',
+        required: false,
+        displayName: 'Slug',
+      },
       seo_image_url: {
         type: 'photo',
         required: false,

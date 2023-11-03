@@ -133,6 +133,12 @@ const DetailedArticleCategoriesView = props => {
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.slug}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>SEO Cover Image</label>
                 {originalData.seo_image_url && (
                     <IMPhoto openable className="photo" src={originalData.seo_image_url} />

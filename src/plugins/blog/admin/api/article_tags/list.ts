@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server'
 import { list } from '../../../../../core/db'
 
 export async function GET(req) {
-  console.log('xxxxxxx')
   const res = NextResponse
   const url = new URL(req.url)
   const limit = url.searchParams.get('limit')

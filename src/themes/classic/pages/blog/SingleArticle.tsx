@@ -13,6 +13,7 @@ import styles from '../../theme.module.css'
 export type Tag = {
   slug: string
   name: string
+  canonical_url: string
 }
 
 export type Category = {
@@ -204,7 +205,7 @@ const SingleArticle: React.FC<{ article: ArticleProps }> = ({ article }) => {
                       <a
                         key={tag.slug}
                         className={styles.articleTag}
-                        href={`${websiteURL}${tag.slug}`}>
+                        href={`${tag.canonical_url}`}>
                         {tag.name}
                       </a>
                     ))}

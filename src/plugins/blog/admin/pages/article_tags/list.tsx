@@ -66,6 +66,10 @@ const ArticleCategoriesColumns = [
           accessor: "canonical_url",
       },
       {
+          Header: "Slug",
+          accessor: "slug",
+      },
+      {
           Header: "SEO Cover Image",
           accessor: "seo_image_url",
           Cell: data => (

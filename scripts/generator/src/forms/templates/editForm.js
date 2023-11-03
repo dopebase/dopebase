@@ -215,7 +215,7 @@ const editFormTemplateDataByType = {
     <div className={\`\${styles.FormFieldContainer} FormFieldContainer\`}>
         <label className={\`\${styles.FormLabel} FormLabel\`}>User</label>
 
-        <div className={\`\${styles.FormEditorContainer} FormEditorContainer FormTextField\`}>
+        <div className={\`\${styles.FormEditorContainer} FormEditorContainer\`}>
           <Editor
             defaultValue={modifiedNonFormData.user}
             onChange={value => {

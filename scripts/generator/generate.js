@@ -1,8 +1,8 @@
 'use strict'
 
 /***
- * to use this project, run "node generate.js path/to/schema plugin_name"
- * node generate.js ../src/plugins/blog/admin/schema.ts blog
+ * to use this project, run "node generate.js path/to/schema plugin_name" in the generator folder
+ * node generate.js ../../src/plugins/taxi/admin/schema.js taxi
  ***/
 var decodeData = require('./src/utils/decodeData')
 var { generateFormFile } = require('./src/forms/generateFormFile')

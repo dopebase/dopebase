@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import MetaHeader from '../components/MetaHeader'
 import HeaderSection from '../landing/sections/HeaderSection'
 import BicameralSection from '../landing/sections/BicameralSection'
+import styles from '../theme.module.css'
 
 const seoConfig = {
   seoDescription:
@@ -17,8 +18,8 @@ const seoConfig = {
 
 const HomePage = ({}) => {
   return (
-    <div className="dopebase dopebase-theme">
-      <div className="container">
+    <div className={`${styles.dopebase} dopebase dopebase-theme`}>
+      <div className={`${styles.container} container`}>
         <MetaHeader
           seoDescription={seoConfig.seoDescription}
           seoTitle={seoConfig.seoTitle}
@@ -75,7 +76,7 @@ const HomePage = ({}) => {
           interactiveChild={null}
         />
         <BicameralSection
-          title={`Themes & Modules`}
+          title={`Themes & Plugins`}
           description={`Similar to WordPress, Dopebase comes with a set of UI themes and modules that you can use to build your website or mobile app with or without code. You can also build your own custom themes and modules.`}
           items={``}
           interactiveChild={null}
@@ -87,13 +88,7 @@ const HomePage = ({}) => {
           interactiveChild={null}
         />
         <BicameralSection
-          title={`Themes & Modules`}
-          description={`Similar to WordPress, Dopebase comes with a set of UI themes and modules that you can use to build your website or mobile app with or without code. You can also build your own custom themes and modules.`}
-          items={``}
-          interactiveChild={null}
-        />
-        <BicameralSection
-          title={`Scale to Millions of Users on Day One`}
+          title={`Scale to Millions of Users from Day 1`}
           description={`Battled tested by millions of users, Dopebase is built to scale. It's the perfect backend for your blog, mobile app or any website.`}
           content={``}
           interactiveChild={null}

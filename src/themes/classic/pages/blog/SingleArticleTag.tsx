@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import NavigationMenu from '../../components/NavigationMenu'
 import MetaHeader from '../../components/MetaHeader'
 import { unescapeString } from '../../../../utils'
@@ -45,33 +45,9 @@ const SingleArticleTag: React.FC<{
     currentPage,
   } = articleTag
 
-  const onTwClick = text => {
-    const win = window.open(
-      `https://twitter.com/share?ref_src=dopebase_article_category_twttr&text=${text}&url=${unescapeString(
-        canonicalURL,
-      )}`,
-      '_blank',
-    )
-    if (win != null) {
-      win.focus()
-    }
-  }
-
-  const twitterLink = useMemo(() => {
-    const text = `Great article on ${
-      seoTitle || name
-    } 🔥🔥🔥 Check it out on Devbrite 👇`
-    return (
-      <a target="_blank" onClick={_e => onTwClick(text)}>
-        <i className="fa fa-twitter dopebasesworkaroundname-icon" />
-      </a>
-    )
-  }, [seoTitle, name, canonicalURL])
-
-  console.log(aiLongDescription)
   return (
-    <div className="dopebase">
-      <div className="container">
+    <div className={styles.dopebase}>
+      <div className={styles.container}>
         <div className={styles.articlePageContainer}>
           <MetaHeader
             seoDescription={unescapeString(seoDescription)}
@@ -94,7 +70,7 @@ const SingleArticleTag: React.FC<{
           />
           {aiLongDescription && (
             <div
-              className="archive-long-description"
+              className={styles.archiveLongDescription}
               dangerouslySetInnerHTML={{
                 __html: aiLongDescription.split('\n').join('<br />'),
               }}></div>

@@ -44,7 +44,11 @@ const ArticleListPreviewModule: React.FC<ArticleListPreviewModuleProps> = ({
   articlePreviews,
   limit,
 }) => {
-  const topArticles = limit ? articlePreviews.slice(0, limit) : articlePreviews
+  const topArticles = articlePreviews
+    ? limit
+      ? articlePreviews.slice(0, limit)
+      : articlePreviews
+    : []
   return (
     <div className="article-preview-module">
       <div className="module-header">

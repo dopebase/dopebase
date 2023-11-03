@@ -75,5 +75,5 @@ export const getComponentForRoutes = async routes => {
     }
   }
 
-  return <div>Article with slug {slug} does not exist</div>
+  return null
 }

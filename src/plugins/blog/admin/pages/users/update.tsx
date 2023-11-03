@@ -533,7 +533,7 @@ const UpdateUserView = props => {
     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
         <label className={`${styles.FormLabel} FormLabel`}>Long Bio</label>
 
-        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
           <Editor
             defaultValue={modifiedNonFormData.bio_description}
             onChange={value => {

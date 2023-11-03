@@ -405,7 +405,7 @@ const AddNewArticleTagView = () => {
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Description</label>
 
-                        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+                        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
                           <Editor
                             defaultValue={modifiedNonFormData.description}
                             onChange={value => {
@@ -472,6 +472,22 @@ const AddNewArticleTagView = () => {
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.canonical_url && touched.canonical_url && errors.canonical_url}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Slug</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="slug"
+                            name="slug"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.slug}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.slug && touched.slug && errors.slug}
                         </p>
                     </div>
     

@@ -8,7 +8,11 @@ export const getArticleBySlug = async slug => {
   const category = article?.category_id
     ? await getOne('article_categories', article.category_id)
     : null
-  const tags = []
+  var tags = []
+  for (var i = 0; i < article.tags.length; i++) {
+    const tag = await getOne('article_tags', article.tags[i])
+    tags.push(tag)
+  }
   return { ...article, category, tags }
 }
 
@@ -17,19 +21,9 @@ export const getCategoryBySlug = async slug => {
   if (!category) {
     return null
   }
-  const tags = []
   const articles = await list('articles', {
     where: { category_id: category.id },
   })
-  return { ...category, articles, tags }
+  return { ...category, articles }
 }
-
-export const getTagBySlug = async slug => {
-  const tag = await findOne('article_tags', { slug })
-  if (!tag) {
-    return null
-  }
-  const tags = []
-  const articles = []
-  return { ...tag }
-}
+export { getTagBySlug } from './firebase/getTagBySlug'

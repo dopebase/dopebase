@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
-import { pluginsAPIURL } from '../../../../config/config'
 import styles from '../../../../admin/themes/admin.module.css'
+import { pluginsAPIURL } from '../../../../config/config'
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
@@ -83,22 +83,13 @@ function IMArticleTagsMultipleTypeaheadIdComponent(props) {
     setIsTypeaheadVisible(false)
   }
 
-  const viewPath = ids && ids.map(id => '/admin/' + 'article_tag/view?id=' + id)
+  const viewPath =
+    ids && ids.map(id => '/admin/' + 'article_tags/view?id=' + id)
 
   const listItems =
     article_tags && article_tags.length
       ? article_tags.map(
-          data => (
-            <li onClick={() => onClick(data)}>
-              <table key={data.id}>
-                <tr>
-                  <td>
-                    <span>{data.name}</span>
-                  </td>
-                </tr>
-              </table>
-            </li>
-          ), // <li>{element.firstName} {element.lastName}</li>
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><span>{data.name}</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -127,8 +118,12 @@ function IMArticleTagsMultipleTypeaheadIdComponent(props) {
   }
 
   return (
-    <div className="TypeaheadComponent" style={{ verticalAlign: 'top' }}>
-      <div className="FormSelectionField">{dataItems}</div>
+    <div
+      className={`${styles.TypeaheadComponent} TypeaheadComponent`}
+      style={{ verticalAlign: 'top' }}>
+      <div className={`${styles.FormSelectionField} FormSelectionField`}>
+        {dataItems}
+      </div>
       <input
         className={`${styles.FormTextField} FormTextField`}
         autocomplete="off"
@@ -140,8 +135,11 @@ function IMArticleTagsMultipleTypeaheadIdComponent(props) {
         onChange={handleChange}
       />
       {isTypeaheadVisible && (
-        <div className="TypeaheadResultsContainer">
-          <ul className="TypeaheadResultsList" id={name}>
+        <div
+          className={`${styles.TypeaheadResultsContainer} TypeaheadResultsContainer `}>
+          <ul
+            className={`${styles.TypeaheadResultsList} TypeaheadResultsList`}
+            id={name}>
             {listItems}
           </ul>
         </div>

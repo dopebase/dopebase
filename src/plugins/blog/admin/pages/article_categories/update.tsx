@@ -443,7 +443,7 @@ const UpdateCategoryView = props => {
     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
         <label className={`${styles.FormLabel} FormLabel`}>Description</label>
 
-        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
           <Editor
             defaultValue={modifiedNonFormData.description}
             onChange={value => {

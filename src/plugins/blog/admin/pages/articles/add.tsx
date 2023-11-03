@@ -411,7 +411,7 @@ const AddNewArticleView = () => {
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Content</label>
 
-                        <div className={`${styles.FormEditorContainer} FormEditorContainer FormTextField`}>
+                        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
                           <Editor
                             defaultValue={modifiedNonFormData.content}
                             onChange={value => {

@@ -1,11 +1,12 @@
 import React from 'react'
 import Switch from 'react-switch'
+import styles from './ToggleSwitchComponent.module.css'
 
 function IMToggleSwitchComponent(props) {
   const { isChecked, onSwitchChange, disabled } = props
 
   return (
-    <div className="toggleSwitch">
+    <div className={styles.toggleSwitch}>
       <Switch
         checked={isChecked ?? false}
         onChange={onSwitchChange}

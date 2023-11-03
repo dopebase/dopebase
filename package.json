@@ -41,7 +41,7 @@
     "reactcss": "^1.2.3",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "rich-markdown-editor": "^11.21.3",
+    "rich-markdown-editor": "^11.17.2",
     "server-only": "^0.0.1",
     "socket.io": "^4.7.2",
     "stripe": "^13.10.0",
