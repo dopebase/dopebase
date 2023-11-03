@@ -20,6 +20,14 @@ async function getOne(tableName, id) {
 
 async function list(tableName, queryParams) {
   var ref = firestore().collection(tableName)
+  if (queryParams.where) {
+    const whereDict = queryParams.where
+    const key = Object.keys(whereDict)[0]
+    if (key) {
+      const value = whereDict[key]
+      ref = ref.where(key, '==', value)
+    }
+  }
   if (queryParams.limit?.length > 0) {
     ref = ref.limit(parseInt(queryParams.limit))
   }
@@ -28,6 +36,7 @@ async function list(tableName, queryParams) {
   } else {
     // ref = ref.orderBy('updatedAt', 'desc')
   }
+
   const snapshot = await ref.get()
   const data = snapshot.docs.map(doc => doc.data())
 
