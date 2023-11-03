@@ -30,7 +30,7 @@ const HomePage = ({}) => {
         />
         <NavigationMenu />
         <HeaderSection
-          title={`The React SaaS Starter Kit \n to launch ideas in a weekend`}
+          title={`The NextJS SaaS Starter Kit \n to launch ideas in a weekend`}
           description={`SaaSBase is a fully functional source code that helps you build your next SaaS idea in a weekend.`}
         />
         <BicameralSection

@@ -3,9 +3,9 @@
   --primary-font: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-  --primary-foreground-color: #412dc4;
-  --primary-background-color: #ffffff;
-  --primary-link-color: #412dc4;
+  --primary-foreground-color-rgb: 109, 40, 217;
+  --primary-foreground-color: rgba(var(--primary-foreground-color-rgb), 1); /* #412dc4;*/
+  --primary-link-color: var(--primary-foreground-color);
   --primary-text-color-rgb: 51, 51, 51;
   --primary-text-color: rgba(var(--primary-text-color-rgb), 1);
 
@@ -51,9 +51,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-foreground-color: #412dc4;
+    --primary-foreground-color-rgb: 109, 40, 217;
+    --primary-foreground-color: rgba(var(--primary-foreground-color-rgb), 1); /* #412dc4;*/
     --primary-background-color: rgb(17, 24, 39);
-    --primary-link-color: #412dc4;
+    --primary-link-color: var(--primary-foreground-color);
     --primary-text-color-rgb: 255, 255, 255;
     --primary-text-color: rgba(var(--primary-text-color-rgb), 1);
 
@@ -61,8 +62,8 @@
     --secondary-text-color: rgba(var(--secondary-text-rgb), 1);
   
     --hairline-color: rgb(31, 41, 55);
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 17, 24, 39;
+    --background-end-rgb: 17, 24, 39;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(

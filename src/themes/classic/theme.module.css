@@ -91,13 +91,13 @@
 }
 
 .ctaPrimary {
-    background-color: #412dc4;
+    background-color: var(--primary-foreground-color);
     color: white;
     margin-right: 32px;
 }
 
 .ctaPrimary:hover {
-    background-color: #412dc4;
+    background-color: var(--primary-foreground-color);
     color: white;
 }
 
@@ -190,7 +190,7 @@
     display: inline-block;
     margin-right: 0.5rem;
     width: 1.3em;
-    color: #412dc4;
+    color: var(--primary-foreground-color);
 }
 
 .textContainer ul li {
@@ -335,7 +335,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 2rem;
     font-size: 18px;
-    color: #412dc4;
+    color: var(--primary-foreground-color);
     display: flex;
     justify-content: space-between;
   }
@@ -343,10 +343,10 @@
   .dopebase .articleTag {
     margin-right: 16px;
     padding: 8px 16px;
-    border: 1px solid #412dc4;
+    border: 1px solid var(--primary-foreground-color);
     border-radius: 8px;
     font-weight: 600;
-    color: #412dc4;
+    color: var(--primary-foreground-color);
   }
   .dopebase .articleTag:hover {
     color: var(--primary-text-color);
@@ -418,7 +418,7 @@
   }
   
   .dopebase .articleContent a {
-    color: #412dc4;
+    color: var(--primary-foreground-color);
   }
   
   .dopebase .articleContent a:hover {
@@ -452,7 +452,7 @@
   }
   
   .dopebase .tableOfContentsContainer ul li a:hover {
-    color: #412dc4;
+    color: var(--primary-foreground-color);
   }
   
   .dopebase .tableOfContentsContainer ul.secondary-list {
@@ -681,7 +681,7 @@
   }
   
   .sectionFooter a:hover {
-    color: #412dc4;
+    color: var(--primary-foreground-color);
     text-decoration: none;
   }
   

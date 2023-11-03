@@ -295,7 +295,7 @@ ul.ArrayTableCell li span {
 }
 
 .TableContainer th {
-  color: #412dc4;
+  color: var(--primary-foreground-color);
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -605,7 +605,7 @@ ul.ArrayTableCell li span {
 }
   
 .navUserBox:hover {
-    background-color: #412dc4;
+    background-color: var(--primary-foreground-color);
     color: white;
 }
   
@@ -640,7 +640,7 @@ ul.ArrayTableCell li span {
 }
 
 .profileExpandedMenu li:hover {
-  background-color: #412dc4;
+  background-color: var(--primary-foreground-color);
   color: white;
   cursor: pointer;
 }
@@ -653,7 +653,7 @@ ul.ArrayTableCell li span {
 .signupButton {
   margin-right: 16px;
   padding: 8px 16px;
-  background-color: #412dc4;
+  background-color: var(--primary-foreground-color);
   border-radius: 8px;
   font-weight: 600;
 }

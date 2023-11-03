@@ -29,7 +29,7 @@
     margin: 20px 0px;
     padding: 20px 0px;
     background-color: var(--primary-background-color);
-    border-radius: 5px;
+    border-radius: 12px;
   }
 
     /*for smaller screens, show them horizontally*/
@@ -38,16 +38,18 @@
     .pricingContainer {
         flex-direction: column;
     }
+    .pricingPlan {
+        width: 100%;
+    }
 }
 
-  
   .pricingPlan {
     flex: 1;
     max-width: 330px;
     padding: 20px;
     border: 1px solid var(--hairline-color);
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 12px;
     background-color: var(--primary-background-color);
   }
   
@@ -66,6 +68,33 @@
     color: var(--secondary-text-color);
     margin-top: 5px;
   }
+
+  .mostPopularTitleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .mostPopular {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary-foreground-color);
+    color: white;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-left: 24px;
+    margin-top: -8px;
+    align-items: center;
+    height: 24px;
+  }
+
+  .mostPopularIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+  }
+
   
   .priceContainer {
     text-align: left;
@@ -126,6 +155,10 @@
   
   /* Additional classes for different plan types */
   .basicPlan {
+  }
+
+  .proPlan {
+    border: 2px solid var(--primary-foreground-color);
   }
   
   .proPlan .button {

@@ -37,13 +37,13 @@
 }
 
 .ctaPrimary {
-    background-color: #412dc4;
+    background-color: var(--primary-foreground-color);
     color: white;
     margin-right: 32px;
 }
 
 .ctaPrimary:hover {
-    background-color: #412dc4;
+    background-color: var(--primary-foreground-color);
     color: white;
 }
 
@@ -136,7 +136,7 @@
     display: inline-block;
     margin-right: 0.5rem;
     width: 1.3em;
-    color: #412dc4;
+    color: var(--primary-foreground-color);
 }
 
 .textContainer ul li {
