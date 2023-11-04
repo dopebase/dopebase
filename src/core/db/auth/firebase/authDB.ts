@@ -7,7 +7,9 @@ import {
   insertOne,
   updateOne,
 } from '../../../../core/db/common'
+import { websiteURL } from '../../../../config/config'
 
+const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcryptjs')
 
 async function loginWithEmailAndPassword(email: string, password: string) {
@@ -108,21 +110,14 @@ async function resetPassword(token: string, password: string) {
 
   const hash = await hashingPromise
 
-  const authRes = await prisma.auth.findFirst({
-    where: { userId: user.id },
-  })
-
+  const authRes = await findOne('auth', { userID: user.id })
   if (authRes?.id) {
     await updateOne('auth', authRes.id, {
-      encrypted_password: hash,
-      reset_token: '',
+      encryptedPassword: hash,
+      resetToken: '',
     })
   }
-  const email = user.email
-  if (email) {
-    return await getUserByEmail(email)
-  }
-  return null
+  return user?.email
 }
 
 async function updatePassword(userID: string, password: string) {
@@ -156,4 +151,36 @@ async function updatePassword(userID: string, password: string) {
   return auth
 }
 
-export { loginWithEmailAndPassword, register, resetPassword, updatePassword }
+async function requestPasswordReset(email: string) {
+  const user = await getUserByEmail(email)
+  if (!user) {
+    return {
+      error: {
+        token:
+          'Password reset token has expired. Please request a new password reset e-mail.',
+      },
+    }
+  }
+
+  const token = uuidv4()
+  const auth = await findOne('auth', { userID: user.id })
+  if (!auth) {
+    return {
+      error: {
+        token:
+          'Password reset token has expired. Please request a new password reset e-mail.',
+      },
+    }
+  }
+  const res = await updateOne('auth', auth.id, { resetToken: token })
+  const resetURL = `${websiteURL}resetPassword?token=${token}`
+  return { resetURL }
+}
+
+export {
+  loginWithEmailAndPassword,
+  register,
+  resetPassword,
+  updatePassword,
+  requestPasswordReset,
+}

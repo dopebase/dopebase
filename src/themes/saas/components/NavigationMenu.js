@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../theme.module.css'
+import UserProfileMenu from '../../../admin/components/navigation/UserProfileMenu'
 
 const NavigationMenu = () => {
   return (
@@ -55,6 +56,7 @@ const NavigationMenu = () => {
           href="https://github.com/dopebase/dopebase">
           Github
         </a>
+        <UserProfileMenu />
       </div>
     </nav>
   )

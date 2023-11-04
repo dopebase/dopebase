@@ -46,6 +46,26 @@ const ExpandedMenu: FunctionComponent<ExpandedMenuProps> = ({
   )
 }
 
+const Icon = () => {
+  return (
+    <div className={styles.signUpIcon}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        aria-hidden="true"
+        class="h-4">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+      </svg>
+    </div>
+  )
+}
+
 const UserProfileMenu: React.FC = memo(() => {
   const [user, , loading] = useCurrentUser()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -64,17 +84,18 @@ const UserProfileMenu: React.FC = memo(() => {
           <a className={styles.navUserBox} onClick={onClick}>
             {user.firstName} {user.lastName}
             <i className="fa fa-user-circle" />
+            <ExpandedMenu isExpanded={isExpanded} hide={hide} />
           </a>
-          <ExpandedMenu isExpanded={isExpanded} hide={hide} />
         </>
       )}
       {!loading && !user && (
         <div className={styles.authLinksContainer}>
-          <a className={styles.signupButton} href={`${websiteURL}register`}>
-            Create Account
-          </a>
           <a className={styles.loginButton} href={`${websiteURL}login`}>
             Login
+          </a>
+          <a className={styles.signupButton} href={`${websiteURL}register`}>
+            Create Account
+            <Icon />
           </a>
         </div>
       )}

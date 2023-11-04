@@ -613,11 +613,17 @@
       display: none !important;
     }
   }
+
+  .dopebaseMainNavMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   .mainMenuItem {
     color: var(--primary-text-color);
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 400;
     margin: 0px 16px;
   }
   .mainMenuItem:hover {

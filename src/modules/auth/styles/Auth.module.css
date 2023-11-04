@@ -58,7 +58,7 @@
   display: table !important;
   padding: 12px 10px;
   width: 100%;
-  background-color: #6546d7;
+  background-color: var(--primary-foreground-color);
   color: white;
   font-weight: bold;
   border: 0;
@@ -83,6 +83,20 @@
 }
 
 .SignupInsteadContainer {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   margin: 20px auto;
+  font-size: 14px;
+  color: #333;
+}
+
+.SignupInsteadContainer p {
+  color: #333;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.SignupInsteadContainer a:hover {
+  color: rgba(var(--primary-foreground-color-rgb), 0.8)
 }

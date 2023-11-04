@@ -5,6 +5,7 @@ export {
   register,
   resetPassword,
   updatePassword,
+  requestPasswordReset,
 } from './firebase/authDB'
 
 // Prisma database
@@ -13,4 +14,5 @@ export {
 //   register,
 //   resetPassword,
 // updatePassword,
+// requestPasswordReset,
 // } from './prisma/authDB'

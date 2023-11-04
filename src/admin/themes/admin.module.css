@@ -592,9 +592,9 @@ ul.ArrayTableCell li span {
 }
 
 .navUserBox {
+  position: relative;
   background-color: rgba(200, 200, 202, 0.2);
   border-radius: 8px;
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px 24px;
@@ -651,17 +651,35 @@ ul.ArrayTableCell li span {
 }
 
 .signupButton {
+  display: flex;
+  align-items: center;
   margin-right: 16px;
   padding: 8px 16px;
   background-color: var(--primary-foreground-color);
+  color: white;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 16px;;
 }
 
 .signupButton:hover {
-  color: white;
+  background-color: rgba(var(--primary-foreground-color-rgb), 0.7);
 }
 
 .loginButton {
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--primary-text-color)
+}
+
+.loginButton:hover {
+  color: var(--primary-foreground-color)
+}
+
+.signUpIcon {
+  display: inline-block;
+  margin-left: 8px;
+  width: 16px;
+  height: 16px;
 }

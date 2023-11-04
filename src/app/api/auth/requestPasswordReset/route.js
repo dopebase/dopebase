@@ -1,35 +1,29 @@
-import { NextResponse } from "next/server";
-import { rootURL } from "../../config";
-import { prisma } from "../../lib/prisma";
-// import emailTrigger from "../../modules/emails/emailTrigger";
-import { getUserByEmail } from "../../../../core/db/users";
-const { v4: uuidv4 } = require("uuid");
+import { NextResponse } from 'next/server'
+// import emailTrigger from "../../modules/emails/emailTrigger"
+import { requestPasswordReset } from '../../../../core/db/auth'
+const { v4: uuidv4 } = require('uuid')
 
-export async function reset(req, res) {
-  console.log("requestResetPassword");
-  const res = NextResponse;
+export async function POST(req) {
+  console.log('requestResetPassword')
+  const res = NextResponse
   // Form validation
-  if (!req.body) {
-    return res.json({}, { status: 500 });
+  const body = await req.json()
+
+  if (!body) {
+    return res.json({}, { status: 500 })
   }
 
-  const { email } = req.body;
-  console.log(email);
-
-  const user = await getUserByEmail(email);
-
-  if (user) {
-    console.log("Password reset request for user ", user);
-    const email = user.email;
-    const token = uuidv4();
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { resetToken: token },
-    });
-    const resetURL = `${rootURL}reset?token=${token}`;
-
-    // emailTrigger.resetPasswordRequested(email, resetURL, user.id);
+  const { email } = body
+  if (!email) {
+    return res.json({ success: false }, { status: 500 })
   }
 
-  return res.json({ success: true }, { status: 200 });
+  console.log('Password reset request for email ', email)
+  const data = await requestPasswordReset(email)
+  if (!data?.resetURL) {
+    return res.json({ success: false }, { status: 500 })
+  }
+  // emailTrigger.resetPasswordRequested(email, resetURL, user.id);
+
+  return res.json({ success: true }, { status: 200 })
 }
