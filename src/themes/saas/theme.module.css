@@ -57,23 +57,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5rem;
+    margin-top: 3rem;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: 600;
-    font-size: 4rem;
+    font-weight: 800 !important;
+    font-size: 4rem !important;
     text-align: center;
     white-space: pre;
 }
 
 .description {
-    font-size: 1.5rem;
-    font-weight: 400;
     text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 4rem;
+}
+
+.description p {
+  font-size: 1.3rem !important;
+  font-weight: 400 !important;
+  color: var(--secondary-text-color) !important;
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.4;
 }
 
 .ctaContainer {
@@ -139,6 +145,11 @@
     font-size: 24px;
     font-weight: 400;
     display: flex;
+}
+
+.sectionContainer {
+  border-bottom: 1px solid var(--hairline-color);
+  padding-bottom: 3rem;
 }
 
 .bicameralSection {

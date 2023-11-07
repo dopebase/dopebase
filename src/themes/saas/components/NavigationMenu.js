@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../theme.module.css'
 import UserProfileMenu from '../../../admin/components/navigation/UserProfileMenu'
+import { websiteURL } from '../../../config/config'
 
 const NavigationMenu = () => {
   return (
@@ -34,27 +35,32 @@ const NavigationMenu = () => {
         </svg>
       </a>
       <div className={styles.dopebaseMainNavMenu}>
-        <a className={styles.mainMenuItem}>Product</a>
-        <a className={styles.mainMenuItem}>Technologies</a>
         <a
           className={styles.mainMenuItem}
           target="_blank"
-          href="https://dopebase.com/tutorials">
-          Tutorials
+          href={`${websiteURL}blog`}>
+          Blog
         </a>
-        <a className={styles.mainMenuItem}>Developers</a>
+        <a className={styles.mainMenuItem} href={`#pricing`}>
+          Pricing
+        </a>
         <a
           className={styles.mainMenuItem}
           target="_blank"
           href="https://dopebase.com/docs">
           Docs
         </a>
-
         <a
           className={styles.mainMenuItem}
           target="_blank"
           href="https://github.com/dopebase/dopebase">
           Github
+        </a>
+        <a
+          className={styles.mainMenuItem}
+          target="_blank"
+          href={`${websiteURL}contact`}>
+          Contact
         </a>
         <UserProfileMenu />
       </div>

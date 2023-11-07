@@ -35,7 +35,8 @@ const BicameralSection = ({
     return <div className={styles.interactiveContainer}></div>
   }
   return (
-    <div className={styles.bicameralSection}>
+    <section
+      className={`${styles.sectionContainer} ${styles.bicameralSection}`}>
       {title && <h2 className={styles.bicameralTitle}>{title}</h2>}
       {description && (
         <p className={styles.bicameralDescription}>{description}</p>
@@ -53,7 +54,7 @@ const BicameralSection = ({
           </>
         )}
       </div>
-    </div>
+    </section>
   )
 }
 

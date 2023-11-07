@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './PricingSection.module.css'
+import themeStyles from '../../theme.module.css'
 
 const PricingCheckmark = () => {
   return (
@@ -47,7 +48,9 @@ const PricingSection = ({}) => {
     'Get started with our free plan and upgrade once you are ready to commit.'
 
   return (
-    <div className={styles.pricingSection}>
+    <section
+      className={`${themeStyles.sectionContainer} ${styles.pricingSection}`}>
+      <a id="pricing" href="#pricing"></a>
       <h2 className={styles.sectionTitle}>{title}</h2>
       <h3 className={styles.sectionDescription}>{subtitle}</h3>
 
@@ -163,7 +166,7 @@ const PricingSection = ({}) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

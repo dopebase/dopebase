@@ -82,7 +82,6 @@ export const logoutUser = (dispatch, router) => dispatch2 => {
 
 // Reset Password
 export const resetPassword = (userData, router, dispatch2) => dispatch => {
-  console.log(userData)
   const endpoint = `${websiteURL}api/auth/resetPassword`
   axios
     .post(endpoint, userData)

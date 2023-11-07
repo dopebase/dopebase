@@ -5,6 +5,8 @@ import MetaHeader from '../components/MetaHeader'
 import HeaderSection from '../landing/sections/HeaderSection'
 import BicameralSection from '../landing/sections/BicameralSection'
 import PricingSection from '../landing/sections/PricingSection'
+import TestimonialSection from '../landing/sections/TestimonialSection'
+import GenericSocialProofSection from '../landing/sections/GenericSocialProofSection'
 import styles from '../theme.module.css'
 
 const seoConfig = {
@@ -26,12 +28,12 @@ const HomePage = ({}) => {
           seoTitle={seoConfig.seoTitle}
           seoKeyword={seoConfig.seoKeyword}
           photo={seoConfig?.coverPhotoURL}
-          websiteName={`SaaSbase`}
+          websiteName={`DopeSaaS`}
         />
         <NavigationMenu />
         <HeaderSection
-          title={`The NextJS SaaS Starter Kit \n to launch ideas in a weekend`}
-          description={`SaaSBase is a fully functional source code that helps you build your next SaaS idea in a weekend.`}
+          title={`NextJS SaaS starter kit \n to launch ideas in a weekend`}
+          description={`Join 10,000+ developers and entrepreneurs that use DopeSaaS to launch their SaaS ideas in a matter of days instead of years, at a fraction of the cost. DopeSaaS is a fully functional source code written in React and NextJS that will save you months of development and tens of thousands of dollars.`}
         />
         <BicameralSection
           title={`AI-Powered Content Innovation`}
@@ -83,6 +85,8 @@ const HomePage = ({}) => {
           interactiveChild={null}
         />
         <PricingSection />
+        <GenericSocialProofSection />
+        <TestimonialSection />
         <BicameralSection
           title={`Headless & Backendless Architecture`}
           description={`Dopebase is a set of modules and SDKs that can be used together or independently. It can be used as a headless CMS, a backend for your mobile app, or a full-stack website builder.`}
