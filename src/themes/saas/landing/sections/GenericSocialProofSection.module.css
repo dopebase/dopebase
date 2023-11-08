@@ -2,13 +2,12 @@
 
 .socialProofContainer {
     background-color: var(--secondary-background-color); /* Sample color based on the image */
-    padding: 4rem 1rem;
     color: var(--primary-text-color);
     text-align: center;
   }
   
   .title {
-    font-size: 42px;
+    font-size: 3rem;
     margin-bottom: 10px;
     color: var(--primary-text-color)
   }

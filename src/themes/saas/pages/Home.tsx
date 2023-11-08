@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import MetaHeader from '../components/MetaHeader'
 import HeaderSection from '../landing/sections/HeaderSection'
 import BicameralSection from '../landing/sections/BicameralSection'
+import FeaturesListSection from '../landing/sections/FeaturesListSection'
 import PricingSection from '../landing/sections/PricingSection'
 import TestimonialSection from '../landing/sections/TestimonialSection'
 import GenericSocialProofSection from '../landing/sections/GenericSocialProofSection'
@@ -83,6 +84,32 @@ const HomePage = ({}) => {
           description={`Similar to WordPress, Dopebase comes with a set of UI themes and modules that you can use to build your website or mobile app with or without code. You can also build your own custom themes and modules.`}
           items={``}
           interactiveChild={null}
+        />
+        <FeaturesListSection
+          title="Production Ready Code"
+          subtitle="Get access to a fully functional codebase that has been developed by engineers with experience in companies such as Facebook and Twitter. Scale to million of users from day 1."
+          features={[
+            {
+              title: 'Modern Tech-Stack',
+              description:
+                'DopeSaaS is built with React and NextJS 14. It also supports multiple databases such as Firebase, Supabase, PostgreSQL, etc.',
+            },
+            {
+              title: 'Production Ready',
+              description:
+                'No need to waste time and money on wireframing, prototyping, designing, developing, testing, bug fixing, optimizing, scaling.',
+            },
+            {
+              title: 'Clean Code',
+              description:
+                "The code is simple, clean, and well-commented. Most importantly, it's fully customizable and easy to extend. It's been developed by engineers with experience in companies such as Facebook and Twitter.",
+            },
+            {
+              title: 'Plugins & Themes',
+              description:
+                'Built on top of the modern AI driven Dopebase platform, DopeSaaS comes with a set of plugins and themes that you can use to build your website or mobile app with or without code.',
+            },
+          ]}
         />
         <PricingSection />
         <GenericSocialProofSection />

@@ -149,7 +149,8 @@
 
 .sectionContainer {
   border-bottom: 1px solid var(--hairline-color);
-  padding-bottom: 3rem;
+  padding-bottom: 5rem;
+  margin: 5rem 0;
 }
 
 .bicameralSection {

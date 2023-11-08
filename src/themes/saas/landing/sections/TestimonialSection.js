@@ -36,7 +36,7 @@ const TestimonialSection = () => {
       <div className={styles.testimonials}>
         {testimonials.map(testimonial => (
           <div key={testimonial.id} className={styles.testimonialCard}>
-            <p className={styles.testimonialContent}>{testimonial.content}</p>
+            <p className={styles.testimonialContent}>"{testimonial.content}"</p>
             <div className={styles.authorInfo}>
               <img
                 src={testimonial.photo}
