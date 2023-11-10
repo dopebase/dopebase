@@ -1,0 +1,168 @@
+'use strict'
+
+const schema = {
+  subscriptions: {
+    fields: {
+      user_id: {
+        type: 'string',
+        required: true,
+        displayName: 'User ID',
+        foreignKey: 'users',
+      },
+      plan_id: {
+        type: 'string',
+        required: true,
+        displayName: 'Plan ID',
+        foreignKey: 'subscription_plans',
+      },
+      start_date: { type: 'date', required: true, displayName: 'Start Date' },
+      end_date: { type: 'date', required: false, displayName: 'End Date' },
+      status: {
+        type: 'enum',
+        required: true,
+        displayName: 'Status',
+        enum: ['active', 'paused', 'cancelled'],
+      },
+      payment_method: {
+        type: 'string',
+        required: true,
+        displayName: 'Payment Method',
+        foreignKey: 'payment_methods',
+      },
+      last_payment_date: {
+        type: 'date',
+        required: false,
+        displayName: 'Last Payment Date',
+      },
+      next_billing_date: {
+        type: 'date',
+        required: false,
+        displayName: 'Next Billing Date',
+      },
+      created_at: { type: 'date', required: true, displayName: 'Created At' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+    },
+    pluralDisplayName: 'Subscriptions',
+    capitalPluralName: 'Subscriptions',
+    tableName: 'subscriptions',
+    lowercaseSingularName: 'subscription',
+    singularCapitalName: 'Subscription',
+    lowercasePluralName: 'subscriptions',
+    titleFieldKey: 'user_id',
+  },
+  subscription_plans: {
+    fields: {
+      name: { type: 'string', required: true, displayName: 'Name' },
+      description: {
+        type: 'markdown',
+        required: false,
+        displayName: 'Description',
+      },
+      price: { type: 'number', required: true, displayName: 'Price' },
+      billing_cycle: {
+        type: 'enum',
+        required: true,
+        displayName: 'Billing Cycle',
+        enum: ['monthly', 'yearly'],
+      },
+      created_at: { type: 'date', required: true, displayName: 'Created At' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+    },
+    pluralDisplayName: 'Subscription Plans',
+    capitalPluralName: 'SubscriptionPlans',
+    tableName: 'subscription_plans',
+    lowercaseSingularName: 'subscription_plan',
+    singularCapitalName: 'SubscriptionPlan',
+    lowercasePluralName: 'subscription_plans',
+    titleFieldKey: 'name',
+  },
+  payment_methods: {
+    fields: {
+      user_id: {
+        type: 'string',
+        required: true,
+        displayName: 'User ID',
+        foreignKey: 'users',
+      },
+      provider: {
+        type: 'enum',
+        required: true,
+        displayName: 'Provider',
+        enum: ['Stripe', 'PayPal', 'Other'],
+      },
+      details: { type: 'string', required: true, displayName: 'Details' },
+      is_default: {
+        type: 'boolean',
+        required: true,
+        displayName: 'Is Default',
+      },
+      created_at: { type: 'date', required: true, displayName: 'Created At' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+    },
+    pluralDisplayName: 'Payment Methods',
+    capitalPluralName: 'PaymentMethods',
+    tableName: 'payment_methods',
+    lowercaseSingularName: 'payment_method',
+    singularCapitalName: 'PaymentMethod',
+    lowercasePluralName: 'payment_methods',
+    titleFieldKey: 'user_id',
+  },
+  transactions: {
+    fields: {
+      subscription_id: {
+        type: 'string',
+        required: true,
+        displayName: 'Subscription ID',
+        foreignKey: 'subscriptions',
+      },
+      amount: { type: 'number', required: true, displayName: 'Amount' },
+      transaction_date: {
+        type: 'date',
+        required: true,
+        displayName: 'Transaction Date',
+      },
+      status: {
+        type: 'enum',
+        required: true,
+        displayName: 'Status',
+        enum: ['success', 'failed', 'pending'],
+      },
+      provider_transaction_id: {
+        type: 'string',
+        required: false,
+        displayName: 'Provider Transaction ID',
+      },
+      created_at: { type: 'date', required: true, displayName: 'Created At' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+    },
+    pluralDisplayName: 'Transactions',
+    capitalPluralName: 'Transactions',
+    tableName: 'transactions',
+    lowercaseSingularName: 'transaction',
+    singularCapitalName: 'Transaction',
+    lowercasePluralName: 'transactions',
+    titleFieldKey: 'subscription_id',
+  },
+  users: {
+    fields: {
+      email: { type: 'string', required: true, displayName: 'Email' },
+      first_name: {
+        type: 'string',
+        required: false,
+        displayName: 'First Name',
+      },
+      last_name: { type: 'string', required: false, displayName: 'Last Name' },
+      created_at: { type: 'date', required: true, displayName: 'Created At' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+    },
+    pluralDisplayName: 'Users',
+    capitalPluralName: 'Users',
+    tableName: 'users',
+    lowercaseSingularName: 'user',
+    singularCapitalName: 'User',
+    lowercasePluralName: 'users',
+    titleFieldKey: 'email',
+  },
+}
+
+module.exports = schema
