@@ -129,7 +129,7 @@ const schema = {
     lowercaseSingularName: 'category',
     singularCapitalName: 'Category',
     lowercasePluralName: 'article_categories',
-    titleFieldKey: 'title',
+    titleFieldKey: 'name',
   },
   article_tags: {
     fields: {
@@ -198,7 +198,7 @@ const schema = {
       topic: { type: 'string', required: false, displayName: 'Topic' },
       category: { type: 'string', required: false, displayName: 'Category' },
       created_at: { type: 'date', required: true, displayName: 'Created Date' },
-      updated_at: { type: 'date', required: true, displayName: 'Created Date' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated Date' },
     },
 
     pluralDisplayName: 'Ideas',
@@ -208,6 +208,22 @@ const schema = {
     singularCapitalName: 'ArticleIdea',
     lowercasePluralName: 'article_ideas',
     titleFieldKey: 'title',
+  },
+  settings: {
+    fields: {
+      name: { type: 'string', required: true, displayName: 'Settings Name' },
+      value: { type: 'string', required: false, displayName: 'Settings Value' },
+      created_at: { type: 'date', required: true, displayName: 'Created Date' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated Date' },
+    },
+
+    pluralDisplayName: 'Settings',
+    capitalPluralName: 'Settings',
+    tableName: 'settings',
+    lowercaseSingularName: 'settings',
+    singularCapitalName: 'Settings',
+    lowercasePluralName: 'settings',
+    titleFieldKey: 'name',
   },
   users: {
     pluralDisplayName: 'Users',

@@ -180,7 +180,7 @@ const DetailedArticlesView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/article_categories" viewRoute="../article_categories" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.category_id} apiRouteName="admin/blog/article_categories" viewRoute="../article_categories" titleKey="name" />
             </div>
     
 

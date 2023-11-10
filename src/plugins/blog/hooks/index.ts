@@ -1,5 +1,5 @@
 import hookSystem from '../../../system/triggers/HookSystem'
-import { getComponentForRoutes } from '../common/getComponentForRoutes'
+import { getComponentForRoutes } from '../lib/getComponentForRoutes'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
@@ -25,12 +25,16 @@ const registerAdminPanelHooks = () => {
             path: 'article_categories/list',
           },
           {
-            title: 'Users',
-            path: 'users/list',
-          },
-          {
             title: 'Tags',
             path: 'article_tags/list',
+          },
+          {
+            title: 'AI Generator',
+            path: 'article_ideas/list',
+          },
+          {
+            title: 'Settings',
+            path: 'settings/list',
           },
         ],
       },

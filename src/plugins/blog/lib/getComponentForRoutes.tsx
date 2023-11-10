@@ -1,11 +1,34 @@
+import { getSettingsValue } from '../../../system/settings'
 import { getCurrentTheme } from '../../../system/themes'
 import { getArticleBySlug, getCategoryBySlug, getTagBySlug } from '../db'
+import { getHomeModules } from './getHomeModules'
 
 export const getComponentForRoutes = async routes => {
   console.log(`Finding component for routes ${JSON.stringify(routes)}`)
 
-  const slug = routes.join('/')
   const installedTheme = await getCurrentTheme()
+  const slug = routes.join('/')
+
+  const blogURL = await getSettingsValue('blog_url')
+  if (slug === blogURL) {
+    // blog home page
+    const modules = await getHomeModules()
+    const src = `${installedTheme}/pages/blog/Home`
+    try {
+      const component = (await import(`../../../themes/` + src)).default
+      return component({ modules: modules })
+    } catch (error) {
+      console.log(error)
+      return (
+        <div>
+          Your theme ({installedTheme}) does not support this route powered by
+          the blog plugin. Make sure {src} is implemented in your theme and has
+          no errors.
+        </div>
+      )
+    }
+  }
+
   const article = await getArticleBySlug(slug)
   if (article) {
     const src = `${installedTheme}/pages/blog/SingleArticle`

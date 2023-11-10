@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const DetailedArticleIdeasView = props => {
+const DetailedSettingsView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedArticleIdeasView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'article_ideas/view?id=' + id,
+          baseAPIURL + 'settings/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -92,62 +92,14 @@ const DetailedArticleIdeasView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Title</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.title}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Settings Name</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Sections</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.sections}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Tags</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.tags}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Status</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.status}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Extra Prompt</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.extra_prompt}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Social Media</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.tweet}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>SEO Description</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.seo_description}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Summary</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.summary}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Topic</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.topic}</span>
-            </div>
-    
-
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.category}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Settings Value</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.value}</span>
             </div>
     
 
@@ -168,4 +120,4 @@ const DetailedArticleIdeasView = props => {
   )
 }
 
-export default DetailedArticleIdeasView
+export default DetailedSettingsView

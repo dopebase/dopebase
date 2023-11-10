@@ -33,62 +33,28 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const ArticleCategoriesColumns = [
+const SettingsColumns = [
   
       {
-          Header: "Name",
+          Header: "Settings Name",
           accessor: "name",
       },
-            {
-            Header: "Description",
-            accessor: "description",
-            Cell: data => (
-                <div className='markdownReadOnly'>{data?.value && data.value.substring(0, 100)}...</div>
-            )
-            },
       {
-          Header: "Slug",
-          accessor: "slug",
+          Header: "Settings Value",
+          accessor: "value",
       },
       {
-          Header: "Logo",
-          accessor: "logo_url",
+          Header: "Created Date",
+          accessor: "created_at",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
+              <IMDateTableCell timestamp={data.value} />
           )
       },
       {
-          Header: "SEO Title",
-          accessor: "seo_title",
-      },
-      {
-          Header: "SEO Description",
-          accessor: "seo_description",
-      },
-      {
-          Header: "Canonical URL",
-          accessor: "canonical_url",
-      },
-      {
-          Header: "SEO Cover Image",
-          accessor: "seo_image_url",
+          Header: "Updated Date",
+          accessor: "updated_at",
           Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
-      },
-      {
-          Header: "Published",
-          accessor: "published",
-          Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
-      },
-      {
-          Header: "Parent Category",
-          accessor: "parent_id",
-          Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
-          titleKey="name" />
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {
@@ -114,7 +80,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_categories/delete'
+      const path = baseAPIURL + 'settings/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -147,14 +113,14 @@ function ActionsItemView(props) {
   )
 }
 
-function ArticleCategoriesListView(props) {
+function SettingsListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [ArticleCategories, setArticleCategories] = useState([])
+  const [Settings, setSettings] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => ArticleCategoriesColumns, [])
+  const columns = useMemo(() => SettingsColumns, [])
 
   const {
     getTableProps,
@@ -177,7 +143,7 @@ function ArticleCategoriesListView(props) {
   } = useTable(
     {
       columns,
-      data: ArticleCategories,
+      data: Settings,
     },
     useGlobalFilter,
     usePagination,
@@ -196,15 +162,15 @@ function ArticleCategoriesListView(props) {
 
     fetch(
       baseAPIURL +
-        'article_categories/list' +
+        'settings/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const article_categories = data
-        setData(article_categories)
+        const settings = data
+        setData(settings)
 
         setIsLoading(false)
       })
@@ -214,7 +180,7 @@ function ArticleCategoriesListView(props) {
   }, [loading])
 
   useEffect(() => {
-    setArticleCategories(data)
+    setSettings(data)
   }, [pageIndex, pageSize, data])
 
   return (
@@ -229,7 +195,7 @@ function ArticleCategoriesListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Article Categories</h1>
+                <h1>Settings</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -271,11 +237,11 @@ function ArticleCategoriesListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={SettingsColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={ArticleCategoriesColumns.length - 1}>
+                          <td colSpan={SettingsColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -359,4 +325,4 @@ function ArticleCategoriesListView(props) {
   )
 }
 
-export default ArticleCategoriesListView
+export default SettingsListView

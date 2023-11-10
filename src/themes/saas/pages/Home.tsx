@@ -5,9 +5,11 @@ import MetaHeader from '../components/MetaHeader'
 import HeaderSection from '../landing/sections/HeaderSection'
 import BicameralSection from '../landing/sections/BicameralSection'
 import FeaturesListSection from '../landing/sections/FeaturesListSection'
+import AllFeaturesSection from '../landing/sections/AllFeaturesSection'
 import PricingSection from '../landing/sections/PricingSection'
 import TestimonialSection from '../landing/sections/TestimonialSection'
 import GenericSocialProofSection from '../landing/sections/GenericSocialProofSection'
+
 import styles from '../theme.module.css'
 
 const seoConfig = {
@@ -85,6 +87,7 @@ const HomePage = ({}) => {
           items={``}
           interactiveChild={null}
         />
+        <AllFeaturesSection />
         <FeaturesListSection
           title="Production Ready Code"
           subtitle="Get access to a fully functional codebase that has been developed by engineers with experience in companies such as Facebook and Twitter. Scale to million of users from day 1."

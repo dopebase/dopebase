@@ -596,7 +596,7 @@ const UpdateArticleIdeaView = props => {
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated Date</label>
                         <IMDatePicker
                             selected={modifiedNonFormData.updated_at}
                             onChange={(toDate) => onDateChange(toDate, "updated_at")}

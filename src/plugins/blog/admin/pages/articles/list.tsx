@@ -113,7 +113,7 @@ const ArticlesColumns = [
           accessor: "category_id",
           Cell: data => (
               <IMForeignKeyTableCell id={data.value} apiRouteName="admin/blog/article_categories" viewRoute="article_categories"
-          titleKey="title" />
+          titleKey="name" />
           )
       },
       {

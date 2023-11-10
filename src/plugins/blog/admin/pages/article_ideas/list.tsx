@@ -83,7 +83,7 @@ const ArticleIdeasColumns = [
           )
       },
       {
-          Header: "Created Date",
+          Header: "Updated Date",
           accessor: "updated_at",
           Cell: data => (
               <IMDateTableCell timestamp={data.value} />

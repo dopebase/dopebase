@@ -1,0 +1,82 @@
+/* AllFeaturesSection.module.css */
+.container {
+  background-color: var(--secondary-background-color); /* Replace with the actual color from the design */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .header {
+    flex-direction: column;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary-text-color); /* Adjust to match your design */
+  margin-bottom: 2rem;
+}
+
+.featureListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust as per the design */
+  justify-content: center;
+}
+
+.card {
+  background-color: var(--primary-background-color); /* Replace with the actual color from the design */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 280px; /* Adjust the width as needed */
+}
+
+.cardTitle {
+  color: var(--primary-foreground-color); /* Replace with the actual color from the design */
+  margin-bottom: 16px;
+  font-size: 1.3rem !important;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featuresList li:before {
+  content: "\f00c";
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 1.3em;
+  color: var(--primary-foreground-color);
+}
+
+@media (max-width: 992px) {
+  .featuresList {
+    flex-direction: column;
+  }
+}
+
+
+.featureItem {
+  padding: 8px 0;
+  color:var(--secondary-text-color);
+}
+
+/* Add additional styling for other elements as needed */

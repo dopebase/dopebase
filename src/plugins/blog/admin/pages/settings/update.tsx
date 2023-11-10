@@ -1,8 +1,25 @@
 // @ts-nocheck
 'use client'
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
+import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
+import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
+import {
+  TypeaheadComponent,
+  IMColorPicker,
+  IMMultimediaComponent,
+  IMObjectInputComponent,
+  IMArrayInputComponent,
+  IMColorsContainer,
+  IMColorBoxComponent,
+  IMStaticMultiSelectComponent,
+  IMStaticSelectComponent,
+  IMPhoto,
+  IMModal,
+  IMToggleSwitchComponent,
+} from '../../../../../admin/components/forms/fields'
 import Editor from 'rich-markdown-editor'
 import dynamic from 'next/dynamic'
 const CodeMirror = dynamic(
@@ -16,56 +33,77 @@ const CodeMirror = dynamic(
   },
   { ssr: false },
 )
-import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
-import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
-import {
-  TypeaheadComponent,
-  IMObjectInputComponent,
-  IMMultimediaComponent,
-  IMArrayInputComponent,
-  IMColorPicker,
-  IMColorsContainer,
-  IMColorBoxComponent,
-  IMStaticMultiSelectComponent,
-  IMStaticSelectComponent,
-  IMPhoto,
-  IMModal,
-  IMToggleSwitchComponent,
-} from '../../../../../admin/components/forms/fields'
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
 
-import { pluginsAPIURL } from '../../../../../config/config'
-import { authPost } from '../../../../../modules/auth/utils/authFetch'
-
 const beautify_html = require('js-beautify').html
-const baseAPIURL = `${pluginsAPIURL}`
+import { pluginsAPIURL } from '../../../../../config/config'
+import {
+  authFetch,
+  authPost,
+} from '../../../../../modules/auth/utils/authFetch'
+const baseAPIURL = `${pluginsAPIURL}admin/blog/`
 
-const AddNewArticleIdeaView = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [modifiedNonFormData, setModifiedNonFormData] = useState({})
+const UpdateSettingsView = props => {
+  const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
+  const [modifiedNonFormData, setModifiedNonFormData] = useState({})
+
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
 
   useEffect(() => {
-    setModifiedNonFormData({
-      created_at: Math.floor(new Date().getTime() / 1000).toString(),
-    })
-  }, [])
+    const fetchData = async () => {
+      try {
+        const response = await authFetch(
+          baseAPIURL + 'settings/view?id=' + id,
+        )
+        if (response?.data) {
+          setOriginalData(response.data)
+          initializeModifieableNonFormData(response.data)
+          setIsLoading(false)
+        }
+      } catch (err) {
+        console.log(err)
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [id])
 
-  const createArticleIdea = async (data, setSubmitting) => {
-    setIsLoading(true)
-    const url = `${baseAPIURL}admin/blog/article_ideas/add`
+  const initializeModifieableNonFormData = originalData => {
+    var nonFormData = {}
+
+    /* Insert non modifiable initialization data here */
+          if (originalData.created_at) {
+              nonFormData['created_at'] = originalData.created_at
+          }
+          
+          if (originalData.updated_at) {
+              nonFormData['updated_at'] = originalData.updated_at
+          }
+          
+
+    console.log(nonFormData)
+    setModifiedNonFormData(nonFormData)
+  }
+
+  const saveChanges = async (modifiedData, setSubmitting) => {
     const response = await authPost(
-      url,
-      JSON.stringify({ ...data, ...modifiedNonFormData }),
+      baseAPIURL + 'settings/update?id=' + id,
+      JSON.stringify({
+        ...modifiedData,
+        ...modifiedNonFormData,
+      }),
     )
-    const resData = response.data
-    if (resData?.error) {
-      alert(resData?.error)
+    const { data } = response
+    if (data.success == true) {
+      window.location.reload()
+    } else {
+      alert(data.error)
     }
     setSubmitting(false)
-    setIsLoading(false)
   }
 
   const onTypeaheadSelect = (value, fieldName) => {
@@ -110,7 +148,7 @@ const AddNewArticleIdeaView = () => {
 
   const handleColorDelete = fieldName => {
     var newData = { ...modifiedNonFormData }
-    delete newData[fieldName]
+    newData[fieldName] = null
     setModifiedNonFormData(newData)
   }
 
@@ -178,9 +216,6 @@ const AddNewArticleIdeaView = () => {
 
   const onLocationChange = (addressObject, fieldName) => {
     var newData = { ...modifiedNonFormData }
-    if (!addressObject || !addressObject.location || !addressObject.gmaps) {
-      return
-    }
     const location = {
       longitude: addressObject.location.lng,
       latitude: addressObject.location.lat,
@@ -277,6 +312,7 @@ const AddNewArticleIdeaView = () => {
     for (var i = 0; i < files.length; ++i) {
       formData.append('multimedias', files[i])
     }
+
     fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
@@ -349,18 +385,18 @@ const AddNewArticleIdeaView = () => {
   }
 
   return (
-    <div className={`${styles.FormCard} FormCard`}>
+    <div className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
       <div className={`${styles.CardBody} CardBody`}>
-        <h1>Create New ArticleIdea</h1>
+        <h1>{originalData && originalData.name}</h1>
         <Formik
-          initialValues={{}}
+          initialValues={originalData}
           validate={values => {
             values = { ...values, ...modifiedNonFormData }
             const errors = {}
             {
               /* Insert all form errors here */
-        if (!values.title) {
-            errors.title = 'Field Required!'
+        if (!values.name) {
+            errors.name = 'Field Required!'
         }
 
         if (!values.created_at) {
@@ -376,7 +412,7 @@ const AddNewArticleIdeaView = () => {
             return errors
           }}
           onSubmit={(values, { setSubmitting }) => {
-            createArticleIdea(values, setSubmitting)
+            saveChanges(values, setSubmitting)
           }}>
           {({
             values,
@@ -389,163 +425,35 @@ const AddNewArticleIdeaView = () => {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
-              {/* Insert all add form fields here */}
+              {/* Insert all edit form fields here */}
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Title</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Settings Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="title"
-                            name="title"
+                            type="name"
+                            name="name"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.title}
+                            value={values.name}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.title && touched.title && errors.title}
+                            {errors.name && touched.name && errors.name}
                         </p>
                     </div>
     
 
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Sections</label>
+                        <label className={`${styles.FormLabel} FormLabel`}>Settings Value</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="sections"
-                            name="sections"
+                            type="value"
+                            name="value"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.sections}
+                            value={values.value}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.sections && touched.sections && errors.sections}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Tags</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="tags"
-                            name="tags"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.tags}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.tags && touched.tags && errors.tags}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Status</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="status"
-                            name="status"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.status}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.status && touched.status && errors.status}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Extra Prompt</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="extra_prompt"
-                            name="extra_prompt"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.extra_prompt}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.extra_prompt && touched.extra_prompt && errors.extra_prompt}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Social Media</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="tweet"
-                            name="tweet"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.tweet}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.tweet && touched.tweet && errors.tweet}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>SEO Description</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="seo_description"
-                            name="seo_description"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.seo_description}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.seo_description && touched.seo_description && errors.seo_description}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Summary</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="summary"
-                            name="summary"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.summary}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.summary && touched.summary && errors.summary}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Topic</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="topic"
-                            name="topic"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.topic}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.topic && touched.topic && errors.topic}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="category"
-                            name="category"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.category}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.category && touched.category && errors.category}
+                            {errors.value && touched.value && errors.value}
                         </p>
                     </div>
     
@@ -575,7 +483,7 @@ const AddNewArticleIdeaView = () => {
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Create article_idea
+                  Save settings
                 </button>
               </div>
             </form>
@@ -586,4 +494,4 @@ const AddNewArticleIdeaView = () => {
   )
 }
 
-export default AddNewArticleIdeaView
+export default UpdateSettingsView

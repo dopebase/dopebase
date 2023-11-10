@@ -156,7 +156,7 @@ const DetailedArticleCategoriesView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Parent Category</label>
-                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/article_categories" viewRoute="../article_categories" titleKey="title" />
+                <IMForeignKeyComponent id={originalData.parent_id} apiRouteName="admin/blog/article_categories" viewRoute="../article_categories" titleKey="name" />
             </div>
     
 
