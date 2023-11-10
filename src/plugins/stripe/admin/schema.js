@@ -4,11 +4,24 @@ const schema = {
   payment_methods: {
     fields: {
       id: { type: 'string', required: false, displayName: 'ID' },
+      provider: {
+        type: 'enum',
+        required: true,
+        displayName: 'Provider',
+        enum: ['Stripe', 'PayPal', 'Other'],
+      },
+      details: { type: 'string', required: true, displayName: 'Details' },
+      is_default: {
+        type: 'boolean',
+        required: true,
+        displayName: 'Is Default',
+      },
       stripeCustomerID: {
         type: 'string',
         required: false,
         displayName: 'Stripe Customer ID',
       },
+
       brand: { type: 'string', required: false, displayName: 'Brand' },
       last4: { type: 'string', required: false, displayName: 'Last 4' },
       expiryMonth: {

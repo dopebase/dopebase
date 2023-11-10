@@ -33,53 +33,68 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const PaymentMethodsColumns = [
+const SubscriptionsColumns = [
   
       {
-          Header: "ID",
-          accessor: "id",
-      },
-      {
-          Header: "Provider",
-          accessor: "provider",
-      },
-      {
-          Header: "Details",
-          accessor: "details",
-      },
-      {
-          Header: "Is Default",
-          accessor: "is_default",
-          Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
-      },
-      {
-          Header: "Stripe Customer ID",
-          accessor: "stripeCustomerID",
-      },
-      {
-          Header: "Brand",
-          accessor: "brand",
-      },
-      {
-          Header: "Last 4",
-          accessor: "last4",
-      },
-      {
-          Header: "Expiry Month",
-          accessor: "expiryMonth",
-      },
-      {
-          Header: "Expiry Year 4",
-          accessor: "expiryYear",
-      },
-      {
-          Header: "User",
-          accessor: "userID",
+          Header: "User ID",
+          accessor: "user_id",
           Cell: data => (
               <IMForeignKeyTableCell id={data.value} apiRouteName="admin/subscriptions/users" viewRoute="users"
           titleKey="email" />
+          )
+      },
+      {
+          Header: "Plan ID",
+          accessor: "plan_id",
+          Cell: data => (
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/subscriptions/subscription_plans" viewRoute="subscription_plans"
+          titleKey="name" />
+          )
+      },
+      {
+          Header: "Start Date",
+          accessor: "start_date",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "End Date",
+          accessor: "end_date",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Status",
+          accessor: "status",
+      },
+      {
+          Header: "Last Payment Date",
+          accessor: "last_payment_date",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Next Billing Date",
+          accessor: "next_billing_date",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Created At",
+          accessor: "created_at",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Updated At",
+          accessor: "updated_at",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {
@@ -105,7 +120,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'payment_methods/delete'
+      const path = baseAPIURL + 'subscriptions/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -138,14 +153,14 @@ function ActionsItemView(props) {
   )
 }
 
-function PaymentMethodsListView(props) {
+function SubscriptionsListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [PaymentMethods, setPaymentMethods] = useState([])
+  const [Subscriptions, setSubscriptions] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => PaymentMethodsColumns, [])
+  const columns = useMemo(() => SubscriptionsColumns, [])
 
   const {
     getTableProps,
@@ -168,7 +183,7 @@ function PaymentMethodsListView(props) {
   } = useTable(
     {
       columns,
-      data: PaymentMethods,
+      data: Subscriptions,
     },
     useGlobalFilter,
     usePagination,
@@ -187,15 +202,15 @@ function PaymentMethodsListView(props) {
 
     fetch(
       baseAPIURL +
-        'payment_methods/list' +
+        'subscriptions/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const payment_methods = data
-        setData(payment_methods)
+        const subscriptions = data
+        setData(subscriptions)
 
         setIsLoading(false)
       })
@@ -205,7 +220,7 @@ function PaymentMethodsListView(props) {
   }, [loading])
 
   useEffect(() => {
-    setPaymentMethods(data)
+    setSubscriptions(data)
   }, [pageIndex, pageSize, data])
 
   return (
@@ -220,7 +235,7 @@ function PaymentMethodsListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Payment Methods</h1>
+                <h1>Subscriptions</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -262,11 +277,11 @@ function PaymentMethodsListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={PaymentMethodsColumns.length - 1}>
+                          <td colSpan={SubscriptionsColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={PaymentMethodsColumns.length - 1}>
+                          <td colSpan={SubscriptionsColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -350,4 +365,4 @@ function PaymentMethodsListView(props) {
   )
 }
 
-export default PaymentMethodsListView
+export default SubscriptionsListView

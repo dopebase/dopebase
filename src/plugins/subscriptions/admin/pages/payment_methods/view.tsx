@@ -31,7 +31,7 @@ import styles from '../../../../../admin/themes/admin.module.css'
 const beautify_html = require('js-beautify').html
 import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
+const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
 const DetailedPaymentMethodsView = props => {
   const [isLoading, setIsLoading] = useState(true)
@@ -97,6 +97,24 @@ const DetailedPaymentMethodsView = props => {
             </div>
     
 
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Provider</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.provider}</span>
+              </div>
+          
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Details</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.details}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Is Default</label>
+                <IMToggleSwitchComponent isChecked={originalData.is_default} disabled />
+            </div>
+    
+
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Stripe Customer ID</label>
                 <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.stripeCustomerID}</span>
@@ -129,7 +147,7 @@ const DetailedPaymentMethodsView = props => {
 
              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>User</label>
-                <IMForeignKeyComponent id={originalData.userID} apiRouteName="admin/stripe/users" viewRoute="../users" titleKey="email" />
+                <IMForeignKeyComponent id={originalData.userID} apiRouteName="admin/subscriptions/users" viewRoute="../users" titleKey="email" />
             </div>
     
 

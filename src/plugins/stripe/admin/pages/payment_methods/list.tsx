@@ -40,6 +40,21 @@ const PaymentMethodsColumns = [
           accessor: "id",
       },
       {
+          Header: "Provider",
+          accessor: "provider",
+      },
+      {
+          Header: "Details",
+          accessor: "details",
+      },
+      {
+          Header: "Is Default",
+          accessor: "is_default",
+          Cell: data => (
+              <IMToggleSwitchComponent isChecked={data.value} disabled />
+          )
+      },
+      {
           Header: "Stripe Customer ID",
           accessor: "stripeCustomerID",
       },

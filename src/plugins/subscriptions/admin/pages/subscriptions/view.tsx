@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-const DetailedUsersView = props => {
+const DetailedSubscriptionsView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedUsersView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'users/view?id=' + id,
+          baseAPIURL + 'subscriptions/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -91,21 +91,45 @@ const DetailedUsersView = props => {
         </h1>
 
         {/* Insert all view form fields here */}
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Email</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.email}</span>
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>User ID</label>
+                <IMForeignKeyComponent id={originalData.user_id} apiRouteName="admin/subscriptions/users" viewRoute="../users" titleKey="email" />
+            </div>
+    
+
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Plan ID</label>
+                <IMForeignKeyComponent id={originalData.plan_id} apiRouteName="admin/subscriptions/subscription_plans" viewRoute="../subscription_plans" titleKey="name" />
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.first_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Start Date</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.start_date && formatTimestamp(originalData.start_date)}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.last_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>End Date</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.end_date && formatTimestamp(originalData.end_date)}</span>
+            </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Status</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.status}</span>
+              </div>
+          
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Last Payment Date</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.last_payment_date && formatTimestamp(originalData.last_payment_date)}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Next Billing Date</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.next_billing_date && formatTimestamp(originalData.next_billing_date)}</span>
             </div>
     
 
@@ -126,4 +150,4 @@ const DetailedUsersView = props => {
   )
 }
 
-export default DetailedUsersView
+export default DetailedSubscriptionsView

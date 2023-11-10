@@ -25,10 +25,10 @@ import dynamic from 'next/dynamic'
 const CodeMirror = dynamic(
   () => {
     import('codemirror')
-    import('codemirror/mode/javascript/javascript')
-    import('codemirror/mode/css/css')
-    import('codemirror/mode/htmlmixed/htmlmixed')
-    import('codemirror/mode/markdown/markdown')
+    // import('codemirror/mode/javascript/javascript')
+    // import('codemirror/mode/css/css')
+    // import('codemirror/mode/htmlmixed/htmlmixed')
+    // import('codemirror/mode/markdown/markdown')
     return import('react-codemirror2').then(mod => mod.Controlled)
   },
   { ssr: false },
@@ -43,9 +43,9 @@ import {
   authFetch,
   authPost,
 } from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
+const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-const Update$capitalsingular$View = props => {
+const UpdateSubscriptionPlanView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
@@ -57,7 +57,7 @@ const Update$capitalsingular$View = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + '$lowercaseplural$/view?id=' + id,
+          baseAPIURL + 'subscription_plans/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -76,6 +76,26 @@ const Update$capitalsingular$View = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
+          if (originalData.basic_description) {
+              nonFormData['basic_description'] = originalData.basic_description
+          }
+          
+          if (originalData.detailed_description) {
+              nonFormData['detailed_description'] = beautify_html(originalData.detailed_description, { indent_size: 2 })
+          }
+          
+          if (originalData.billing_cycle) {
+              nonFormData['billing_cycle'] = originalData.billing_cycle
+          }
+          
+          if (originalData.created_at) {
+              nonFormData['created_at'] = originalData.created_at
+          }
+          
+          if (originalData.updated_at) {
+              nonFormData['updated_at'] = originalData.updated_at
+          }
+          
 
     console.log(nonFormData)
     setModifiedNonFormData(nonFormData)
@@ -83,7 +103,7 @@ const Update$capitalsingular$View = props => {
 
   const saveChanges = async (modifiedData, setSubmitting) => {
     const response = await authPost(
-      baseAPIURL + '$lowercaseplural$/update?id=' + id,
+      baseAPIURL + 'subscription_plans/update?id=' + id,
       JSON.stringify({
         ...modifiedData,
         ...modifiedNonFormData,
@@ -387,6 +407,26 @@ const Update$capitalsingular$View = props => {
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.name) {
+            errors.name = 'Field Required!'
+        }
+
+        if (!values.price) {
+            errors.price = 'Field Required!'
+        }
+
+        if (!values.billing_cycle) {
+            errors.billing_cycle = 'Field Required!'
+        }
+
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
+
+        if (!values.updated_at) {
+            errors.updated_at = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -406,6 +446,109 @@ const Update$capitalsingular$View = props => {
           }) => (
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="name"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.name && touched.name && errors.name}
+                        </p>
+                    </div>
+    
+
+    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+        <label className={`${styles.FormLabel} FormLabel`}>Basic Description</label>
+
+        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
+          <Editor
+            defaultValue={modifiedNonFormData.basic_description}
+            onChange={value => {
+              onCodeChange(value(), 'basic_description')
+            }}
+          />
+        </div>
+        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+            {errors.basic_description && touched.basic_description && errors.basic_description}
+        </p>
+    </div>
+
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Detailed Description</label>
+                        <CodeMirror
+                            className="editor FormTextField"
+                            type="detailed_description"
+                            value={modifiedNonFormData.detailed_description}
+                            name="detailed_description"
+                            options={{
+                                theme: 'darcula',
+                                lineNumbers: true,
+                                mode: 'htmlmixed',
+                            }}
+                            onBeforeChange={(editor, data, value) => {
+                                onCodeChange(value, 'detailed_description')
+                            }}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.detailed_description && touched.detailed_description && errors.detailed_description}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Price</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="price"
+                            name="price"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.price}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.price && touched.price && errors.price}
+                        </p>
+                    </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Billing Cycle</label>
+                  <IMStaticSelectComponent
+                      options={["monthly","yearly"]}
+                      name="billing_cycle"
+                      onChange={handleSelectChange}
+                      selectedOption={modifiedNonFormData.billing_cycle}
+                  />
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.billing_cycle && touched.billing_cycle && errors.billing_cycle}
+                  </p>
+              </div>
+              
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
+                        />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.updated_at}
+                            onChange={(toDate) => onDateChange(toDate, "updated_at")}
+                        />
+                    </div>
+    
+
 
               <div
                 className={`${styles.FormActionContainer} FormActionContainer`}>
@@ -413,7 +556,7 @@ const Update$capitalsingular$View = props => {
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save $lowercasesingular$
+                  Save subscription_plan
                 </button>
               </div>
             </form>
@@ -424,4 +567,4 @@ const Update$capitalsingular$View = props => {
   )
 }
 
-export default Update$capitalsingular$View
+export default UpdateSubscriptionPlanView

@@ -55,7 +55,7 @@ const AddNewUserView = () => {
 
   const createUser = async (data, setSubmitting) => {
     setIsLoading(true)
-    const url = `${baseAPIURL}admin/stripe/users/add`
+    const url = `${baseAPIURL}admin/subscriptions/users/add`
     const response = await authPost(
       url,
       JSON.stringify({ ...data, ...modifiedNonFormData }),
@@ -363,6 +363,14 @@ const AddNewUserView = () => {
             errors.email = 'Field Required!'
         }
 
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
+
+        if (!values.updated_at) {
+            errors.updated_at = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -402,14 +410,14 @@ const AddNewUserView = () => {
                         <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="firstName"
-                            name="firstName"
+                            type="first_name"
+                            name="first_name"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.firstName}
+                            value={values.first_name}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.firstName && touched.firstName && errors.firstName}
+                            {errors.first_name && touched.first_name && errors.first_name}
                         </p>
                     </div>
     
@@ -418,95 +426,14 @@ const AddNewUserView = () => {
                         <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
                         <input
                             className={`${styles.FormTextField} FormTextField`}
-                            type="lastName"
-                            name="lastName"
+                            type="last_name"
+                            name="last_name"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.lastName}
+                            value={values.last_name}
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.lastName && touched.lastName && errors.lastName}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Phone</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="phone"
-                            name="phone"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.phone}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.phone && touched.phone && errors.phone}
-                        </p>
-                    </div>
-    
-
-              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                  <label className={`${styles.FormLabel} FormLabel`}>Role</label>
-                  <IMStaticSelectComponent
-                      options={["passenger","driver","admin","other"]}
-                      name="role"
-                      onChange={handleSelectChange}
-                  />
-                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                      {errors.role && touched.role && errors.role}
-                  </p>
-              </div>
-          
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Car Photo</label>
-                        {modifiedNonFormData.carPictureURL && (
-                            <IMPhoto openable dismissable className="photo" src={modifiedNonFormData.carPictureURL} onDelete={(src) => handleDeletePhoto(src, "carPictureURL", false) } />
-                        )}
-                        <input className="FormFileField" id="carPictureURL" name="carPictureURL" type="file" onChange={(event) => {
-                            handleImageUpload(event, "carPictureURL", false);
-                        }} />
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Car Model</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="carName"
-                            name="carName"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.carName}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.carName && touched.carName && errors.carName}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>License Plate</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="carNumber"
-                            name="carNumber"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.carNumber}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.carNumber && touched.carNumber && errors.carNumber}
-                        </p>
-                    </div>
-    
-
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Banned</label>
-                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.banned} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["banned"], "banned")} />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.banned && touched.banned && errors.banned}
+                            {errors.last_name && touched.last_name && errors.last_name}
                         </p>
                     </div>
     
@@ -514,8 +441,8 @@ const AddNewUserView = () => {
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
                         <IMDatePicker
-                            selected={modifiedNonFormData.createdAt}
-                            onChange={(toDate) => onDateChange(toDate, "createdAt")}
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
                         />
                     </div>
     
@@ -523,8 +450,8 @@ const AddNewUserView = () => {
                     <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                         <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
                         <IMDatePicker
-                            selected={modifiedNonFormData.updatedAt}
-                            onChange={(toDate) => onDateChange(toDate, "updatedAt")}
+                            selected={modifiedNonFormData.updated_at}
+                            onChange={(toDate) => onDateChange(toDate, "updated_at")}
                         />
                     </div>
     

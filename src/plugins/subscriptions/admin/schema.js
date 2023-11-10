@@ -8,12 +8,22 @@ const schema = {
         required: true,
         displayName: 'User ID',
         foreignKey: 'users',
+        cellClassName: 'SubscriptionUser',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.first_name} {data.last_name} ({data.email})</span></td></tr></table>`,
+          originalDataFormatter: `data.first_name + " " + data.last_name`,
+        },
       },
       plan_id: {
         type: 'string',
         required: true,
         displayName: 'Plan ID',
         foreignKey: 'subscription_plans',
+        cellClassName: 'SubscriptionPlan',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>{data.name}</span></td></tr></table>`,
+          originalDataFormatter: `data.name`,
+        },
       },
       start_date: { type: 'date', required: true, displayName: 'Start Date' },
       end_date: { type: 'date', required: false, displayName: 'End Date' },
@@ -22,12 +32,6 @@ const schema = {
         required: true,
         displayName: 'Status',
         enum: ['active', 'paused', 'cancelled'],
-      },
-      payment_method: {
-        type: 'string',
-        required: true,
-        displayName: 'Payment Method',
-        foreignKey: 'payment_methods',
       },
       last_payment_date: {
         type: 'date',
@@ -53,12 +57,17 @@ const schema = {
   subscription_plans: {
     fields: {
       name: { type: 'string', required: true, displayName: 'Name' },
-      description: {
+      basic_description: {
         type: 'markdown',
         required: false,
-        displayName: 'Description',
+        displayName: 'Basic Description',
       },
-      price: { type: 'number', required: true, displayName: 'Price' },
+      detailed_description: {
+        type: 'code',
+        required: false,
+        displayName: 'Detailed Description',
+      },
+      price: { type: 'string', required: true, displayName: 'Price' },
       billing_cycle: {
         type: 'enum',
         required: true,
@@ -78,12 +87,7 @@ const schema = {
   },
   payment_methods: {
     fields: {
-      user_id: {
-        type: 'string',
-        required: true,
-        displayName: 'User ID',
-        foreignKey: 'users',
-      },
+      id: { type: 'string', required: false, displayName: 'ID' },
       provider: {
         type: 'enum',
         required: true,
@@ -96,8 +100,37 @@ const schema = {
         required: true,
         displayName: 'Is Default',
       },
-      created_at: { type: 'date', required: true, displayName: 'Created At' },
-      updated_at: { type: 'date', required: true, displayName: 'Updated At' },
+      stripeCustomerID: {
+        type: 'string',
+        required: false,
+        displayName: 'Stripe Customer ID',
+      },
+
+      brand: { type: 'string', required: false, displayName: 'Brand' },
+      last4: { type: 'string', required: false, displayName: 'Last 4' },
+      expiryMonth: {
+        type: 'string',
+        required: false,
+        displayName: 'Expiry Month',
+      },
+      expiryYear: {
+        type: 'string',
+        required: false,
+        displayName: 'Expiry Year 4',
+      },
+      userID: {
+        type: 'string',
+        required: false,
+        displayName: 'User',
+        foreignKey: 'users',
+        cellClassName: 'PaymentMethodUser',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table>`,
+          originalDataFormatter: `data.firstName + " " + data.lastName`,
+        },
+        createdAt: { type: 'date', required: true, displayName: 'Created At' },
+        updatedAt: { type: 'date', required: true, displayName: 'Updated At' },
+      },
     },
     pluralDisplayName: 'Payment Methods',
     capitalPluralName: 'PaymentMethods',
@@ -105,7 +138,7 @@ const schema = {
     lowercaseSingularName: 'payment_method',
     singularCapitalName: 'PaymentMethod',
     lowercasePluralName: 'payment_methods',
-    titleFieldKey: 'user_id',
+    titleFieldKey: 'id',
   },
   transactions: {
     fields: {
@@ -114,8 +147,13 @@ const schema = {
         required: true,
         displayName: 'Subscription ID',
         foreignKey: 'subscriptions',
+        cellClassName: 'TransactionSubscription',
+        typeaheadRenderers: {
+          dataItemRenderer: `<table key={data.id}><tr><td><span>#{data.id}</span></td></tr></table>`,
+          originalDataFormatter: `data.id`,
+        },
       },
-      amount: { type: 'number', required: true, displayName: 'Amount' },
+      amount: { type: 'string', required: true, displayName: 'Amount' },
       transaction_date: {
         type: 'date',
         required: true,

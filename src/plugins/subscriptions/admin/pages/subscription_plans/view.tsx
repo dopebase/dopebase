@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-const DetailedUsersView = props => {
+const DetailedSubscriptionPlansView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedUsersView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'users/view?id=' + id,
+          baseAPIURL + 'subscription_plans/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -92,22 +92,52 @@ const DetailedUsersView = props => {
 
         {/* Insert all view form fields here */}
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Email</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.email}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.name}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.first_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Basic Description</label>
+                <div className={`${styles.FormTextField} ${styles.markdownEditorReadOnly} markdownEditorReadOnly FormTextField`}>
+                  <Editor
+                    defaultValue={originalData?.basic_description ?? ''}
+                    readOnly={true}
+                  />
+                </div>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.last_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Detailed Description</label>
+                <CodeMirror
+                  className="editor FormTextField"
+                  type="detailed_description"
+                  value={beautify_html(originalData.detailed_description, {
+                    indent_size: 2,
+                  })}
+                  name="detailed_description"
+                  options={{
+                    theme: 'darcula',
+                    lineNumbers: true,
+                    mode: 'htmlmixed',
+                    readonly: true,
+                  }}
+                />
             </div>
     
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Price</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.price}</span>
+            </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Billing Cycle</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.billing_cycle}</span>
+              </div>
+          
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
@@ -126,4 +156,4 @@ const DetailedUsersView = props => {
   )
 }
 
-export default DetailedUsersView
+export default DetailedSubscriptionPlansView

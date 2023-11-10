@@ -33,53 +33,47 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
 }
 
-const PaymentMethodsColumns = [
+const TransactionsColumns = [
   
       {
-          Header: "ID",
-          accessor: "id",
-      },
-      {
-          Header: "Provider",
-          accessor: "provider",
-      },
-      {
-          Header: "Details",
-          accessor: "details",
-      },
-      {
-          Header: "Is Default",
-          accessor: "is_default",
+          Header: "Subscription ID",
+          accessor: "subscription_id",
           Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
+              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/subscriptions/subscriptions" viewRoute="subscriptions"
+          titleKey="user_id" />
           )
       },
       {
-          Header: "Stripe Customer ID",
-          accessor: "stripeCustomerID",
+          Header: "Amount",
+          accessor: "amount",
       },
       {
-          Header: "Brand",
-          accessor: "brand",
-      },
-      {
-          Header: "Last 4",
-          accessor: "last4",
-      },
-      {
-          Header: "Expiry Month",
-          accessor: "expiryMonth",
-      },
-      {
-          Header: "Expiry Year 4",
-          accessor: "expiryYear",
-      },
-      {
-          Header: "User",
-          accessor: "userID",
+          Header: "Transaction Date",
+          accessor: "transaction_date",
           Cell: data => (
-              <IMForeignKeyTableCell id={data.value} apiRouteName="admin/subscriptions/users" viewRoute="users"
-          titleKey="email" />
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Status",
+          accessor: "status",
+      },
+      {
+          Header: "Provider Transaction ID",
+          accessor: "provider_transaction_id",
+      },
+      {
+          Header: "Created At",
+          accessor: "created_at",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
+          )
+      },
+      {
+          Header: "Updated At",
+          accessor: "updated_at",
+          Cell: data => (
+              <IMDateTableCell timestamp={data.value} />
           )
       },,
   {
@@ -105,7 +99,7 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'payment_methods/delete'
+      const path = baseAPIURL + 'transactions/delete'
       const response = await authPost(path, { id: item.id })
       window.location.reload(false)
     }
@@ -138,14 +132,14 @@ function ActionsItemView(props) {
   )
 }
 
-function PaymentMethodsListView(props) {
+function TransactionsListView(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [PaymentMethods, setPaymentMethods] = useState([])
+  const [Transactions, setTransactions] = useState([])
   const [data, setData] = useState([])
 
   const [user, token, loading] = useCurrentUser()
 
-  const columns = useMemo(() => PaymentMethodsColumns, [])
+  const columns = useMemo(() => TransactionsColumns, [])
 
   const {
     getTableProps,
@@ -168,7 +162,7 @@ function PaymentMethodsListView(props) {
   } = useTable(
     {
       columns,
-      data: PaymentMethods,
+      data: Transactions,
     },
     useGlobalFilter,
     usePagination,
@@ -187,15 +181,15 @@ function PaymentMethodsListView(props) {
 
     fetch(
       baseAPIURL +
-        'payment_methods/list' +
+        'transactions/list' +
         (extraQueryParams ? extraQueryParams : ''),
       config,
     )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const payment_methods = data
-        setData(payment_methods)
+        const transactions = data
+        setData(transactions)
 
         setIsLoading(false)
       })
@@ -205,7 +199,7 @@ function PaymentMethodsListView(props) {
   }, [loading])
 
   useEffect(() => {
-    setPaymentMethods(data)
+    setTransactions(data)
   }, [pageIndex, pageSize, data])
 
   return (
@@ -220,7 +214,7 @@ function PaymentMethodsListView(props) {
                   href="./add">
                   Add New
                 </a>
-                <h1>Payment Methods</h1>
+                <h1>Transactions</h1>
               </div>
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
@@ -262,11 +256,11 @@ function PaymentMethodsListView(props) {
                       })}
                       <tr>
                         {isLoading ? (
-                          <td colSpan={PaymentMethodsColumns.length - 1}>
+                          <td colSpan={TransactionsColumns.length - 1}>
                             <p>Loading...</p>
                           </td>
                         ) : (
-                          <td colSpan={PaymentMethodsColumns.length - 1}>
+                          <td colSpan={TransactionsColumns.length - 1}>
                             <p
                               className={`${styles.PaginationDetails} PaginationDetails`}>
                               Showing {page.length} of {data.length} results
@@ -350,4 +344,4 @@ function PaymentMethodsListView(props) {
   )
 }
 
-export default PaymentMethodsListView
+export default TransactionsListView

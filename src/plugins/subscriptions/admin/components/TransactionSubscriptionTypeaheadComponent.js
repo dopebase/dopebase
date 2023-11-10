@@ -8,9 +8,9 @@ import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-function PaymentMethodUserTypeaheadComponent(props) {
+function TransactionSubscriptionTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
-  const [users, setUsers] = useState(null)
+  const [subscriptions, setSubscriptions] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
   const [inputValue, setInputValue] = useState(null)
   const [isTypeaheadVisible, setIsTypeaheadVisible] = useState(false)
@@ -27,11 +27,11 @@ function PaymentMethodUserTypeaheadComponent(props) {
       }
       try {
         const response = await authFetch(
-          baseAPIURL + 'users/view?id=' + id,
+          baseAPIURL + 'subscriptions/view?id=' + id,
         )
         if (response?.data) {
           const data = response.data
-          setInputValue(data.firstName + " " + data.lastName)
+          setInputValue(data.id)
           setIsLoading(false)
         }
       } catch (err) {
@@ -50,13 +50,13 @@ function PaymentMethodUserTypeaheadComponent(props) {
       try {
         const response = await authFetch(
           baseAPIURL +
-            'users/list?limit=10&search=' +
+            'subscriptions/list?limit=10&search=' +
             typeaheadValue,
         )
         if (response?.data) {
           console.log(response.data)
           if (response?.data) {
-            setUsers(response.data)
+            setSubscriptions(response.data)
           }
         }
       } catch (err) {
@@ -81,15 +81,15 @@ function PaymentMethodUserTypeaheadComponent(props) {
   }
 
   const onClick = data => {
-    setInputValue(data.firstName + " " + data.lastName)
+    setInputValue(data.id)
     onSelect && onSelect(data.id)
     setIsTypeaheadVisible(false)
   }
 
   const listItems =
-    users && users.length
-      ? users.map(
-          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
+    subscriptions && subscriptions.length
+      ? subscriptions.map(
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><span>#{data.id}</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -123,4 +123,4 @@ function PaymentMethodUserTypeaheadComponent(props) {
   )
 }
 
-export default PaymentMethodUserTypeaheadComponent
+export default TransactionSubscriptionTypeaheadComponent

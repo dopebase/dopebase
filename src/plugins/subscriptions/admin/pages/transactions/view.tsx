@@ -33,7 +33,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import { authFetch } from '../../../../../modules/auth/utils/authFetch'
 const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-const DetailedUsersView = props => {
+const DetailedTransactionsView = props => {
   const [isLoading, setIsLoading] = useState(true)
   const [originalData, setOriginalData] = useState(null)
 
@@ -44,7 +44,7 @@ const DetailedUsersView = props => {
     const fetchData = async () => {
       try {
         const response = await authFetch(
-          baseAPIURL + 'users/view?id=' + id,
+          baseAPIURL + 'transactions/view?id=' + id,
         )
         if (response?.data) {
           setOriginalData(response.data)
@@ -91,21 +91,33 @@ const DetailedUsersView = props => {
         </h1>
 
         {/* Insert all view form fields here */}
-            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Email</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.email}</span>
+             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Subscription ID</label>
+                <IMForeignKeyComponent id={originalData.subscription_id} apiRouteName="admin/subscriptions/subscriptions" viewRoute="../subscriptions" titleKey="user_id" />
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>First Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.first_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Amount</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.amount}</span>
             </div>
     
 
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Last Name</label>
-                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.last_name}</span>
+                <label className={`${styles.FormLabel} FormLabel`}>Transaction Date</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.transaction_date && formatTimestamp(originalData.transaction_date)}</span>
+            </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Status</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.status}</span>
+              </div>
+          
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Provider Transaction ID</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.provider_transaction_id}</span>
             </div>
     
 
@@ -126,4 +138,4 @@ const DetailedUsersView = props => {
   )
 }
 
-export default DetailedUsersView
+export default DetailedTransactionsView

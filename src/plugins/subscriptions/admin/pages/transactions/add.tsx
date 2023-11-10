@@ -1,17 +1,29 @@
 // @ts-nocheck
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { Formik } from 'formik'
 import { ClipLoader } from 'react-spinners'
+import Editor from 'rich-markdown-editor'
+import dynamic from 'next/dynamic'
+const CodeMirror = dynamic(
+  () => {
+    import('codemirror')
+    // import('codemirror/mode/javascript/javascript')
+    // import('codemirror/mode/css/css')
+    // import('codemirror/mode/htmlmixed/htmlmixed')
+    // import('codemirror/mode/markdown/markdown')
+    return import('react-codemirror2').then(mod => mod.Controlled)
+  },
+  { ssr: false },
+)
 import IMDatePicker from '../../../../../admin/components/forms/IMDatePicker'
 import { LocationPicker } from '../../../../../admin/components/forms/locationPicker'
 import {
   TypeaheadComponent,
-  IMColorPicker,
-  IMMultimediaComponent,
   IMObjectInputComponent,
+  IMMultimediaComponent,
   IMArrayInputComponent,
+  IMColorPicker,
   IMColorsContainer,
   IMColorBoxComponent,
   IMStaticMultiSelectComponent,
@@ -20,82 +32,42 @@ import {
   IMModal,
   IMToggleSwitchComponent,
 } from '../../../../../admin/components/forms/fields'
-import Editor from 'rich-markdown-editor'
-import dynamic from 'next/dynamic'
-const CodeMirror = dynamic(
-  () => {
-    import('codemirror')
-    import('codemirror/mode/javascript/javascript')
-    import('codemirror/mode/css/css')
-    import('codemirror/mode/htmlmixed/htmlmixed')
-    import('codemirror/mode/markdown/markdown')
-    return import('react-codemirror2').then(mod => mod.Controlled)
-  },
-  { ssr: false },
-)
 import styles from '../../../../../admin/themes/admin.module.css'
 
 /* Insert extra imports here */
+import TransactionSubscriptionTypeaheadComponent from '../../components/TransactionSubscriptionTypeaheadComponent.js'
+
+
+import { pluginsAPIURL } from '../../../../../config/config'
+import { authPost } from '../../../../../modules/auth/utils/authFetch'
 
 const beautify_html = require('js-beautify').html
-import { pluginsAPIURL } from '../../../../../config/config'
-import {
-  authFetch,
-  authPost,
-} from '../../../../../modules/auth/utils/authFetch'
-const baseAPIURL = `${pluginsAPIURL}admin/$pluginname$/`
+const baseAPIURL = `${pluginsAPIURL}`
 
-const Update$capitalsingular$View = props => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [originalData, setOriginalData] = useState(null)
+const AddNewTransactionView = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [modifiedNonFormData, setModifiedNonFormData] = useState({})
-
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
+  const [originalData, setOriginalData] = useState(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authFetch(
-          baseAPIURL + '$lowercaseplural$/view?id=' + id,
-        )
-        if (response?.data) {
-          setOriginalData(response.data)
-          initializeModifieableNonFormData(response.data)
-          setIsLoading(false)
-        }
-      } catch (err) {
-        console.log(err)
-        setIsLoading(false)
-      }
-    }
-    fetchData()
-  }, [id])
+    setModifiedNonFormData({
+      created_at: Math.floor(new Date().getTime() / 1000).toString(),
+    })
+  }, [])
 
-  const initializeModifieableNonFormData = originalData => {
-    var nonFormData = {}
-
-    /* Insert non modifiable initialization data here */
-
-    console.log(nonFormData)
-    setModifiedNonFormData(nonFormData)
-  }
-
-  const saveChanges = async (modifiedData, setSubmitting) => {
+  const createTransaction = async (data, setSubmitting) => {
+    setIsLoading(true)
+    const url = `${baseAPIURL}admin/subscriptions/transactions/add`
     const response = await authPost(
-      baseAPIURL + '$lowercaseplural$/update?id=' + id,
-      JSON.stringify({
-        ...modifiedData,
-        ...modifiedNonFormData,
-      }),
+      url,
+      JSON.stringify({ ...data, ...modifiedNonFormData }),
     )
-    const { data } = response
-    if (data.success == true) {
-      window.location.reload()
-    } else {
-      alert(data.error)
+    const resData = response.data
+    if (resData?.error) {
+      alert(resData?.error)
     }
     setSubmitting(false)
+    setIsLoading(false)
   }
 
   const onTypeaheadSelect = (value, fieldName) => {
@@ -140,7 +112,7 @@ const Update$capitalsingular$View = props => {
 
   const handleColorDelete = fieldName => {
     var newData = { ...modifiedNonFormData }
-    newData[fieldName] = null
+    delete newData[fieldName]
     setModifiedNonFormData(newData)
   }
 
@@ -208,6 +180,9 @@ const Update$capitalsingular$View = props => {
 
   const onLocationChange = (addressObject, fieldName) => {
     var newData = { ...modifiedNonFormData }
+    if (!addressObject || !addressObject.location || !addressObject.gmaps) {
+      return
+    }
     const location = {
       longitude: addressObject.location.lng,
       latitude: addressObject.location.lat,
@@ -304,7 +279,6 @@ const Update$capitalsingular$View = props => {
     for (var i = 0; i < files.length; ++i) {
       formData.append('multimedias', files[i])
     }
-
     fetch(pluginsAPIURL + '../media/uploadMultimedias', {
       method: 'POST',
       body: formData,
@@ -377,22 +351,46 @@ const Update$capitalsingular$View = props => {
   }
 
   return (
-    <div className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
+    <div className={`${styles.FormCard} FormCard`}>
       <div className={`${styles.CardBody} CardBody`}>
-        <h1>{originalData && originalData.name}</h1>
+        <h1>Create New Transaction</h1>
         <Formik
-          initialValues={originalData}
+          initialValues={{}}
           validate={values => {
             values = { ...values, ...modifiedNonFormData }
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.subscription_id) {
+            errors.subscription_id = 'Field Required!'
+        }
+
+        if (!values.amount) {
+            errors.amount = 'Field Required!'
+        }
+
+        if (!values.transaction_date) {
+            errors.transaction_date = 'Field Required!'
+        }
+
+        if (!values.status) {
+            errors.status = 'Field Required!'
+        }
+
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
+
+        if (!values.updated_at) {
+            errors.updated_at = 'Field Required!'
+        }
+
             }
 
             return errors
           }}
           onSubmit={(values, { setSubmitting }) => {
-            saveChanges(values, setSubmitting)
+            createTransaction(values, setSubmitting)
           }}>
           {({
             values,
@@ -405,7 +403,85 @@ const Update$capitalsingular$View = props => {
             /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
-              {/* Insert all edit form fields here */}
+              {/* Insert all add form fields here */}
+          <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+              <label className={`${styles.FormLabel} FormLabel`}>Subscription ID</label>
+              <TransactionSubscriptionTypeaheadComponent onSelect={(value) => onTypeaheadSelect(value, "subscription_id")} id={originalData && originalData.subscription_id} name={originalData && originalData.subscription_id} />
+          </div>
+      
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Amount</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="amount"
+                            name="amount"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.amount}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.amount && touched.amount && errors.amount}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Transaction Date</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.transaction_date}
+                            onChange={(toDate) => onDateChange(toDate, "transaction_date")}
+                        />
+                    </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Status</label>
+                  <IMStaticSelectComponent
+                      options={["success","failed","pending"]}
+                      name="status"
+                      onChange={handleSelectChange}
+                  />
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.status && touched.status && errors.status}
+                  </p>
+              </div>
+          
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Provider Transaction ID</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="provider_transaction_id"
+                            name="provider_transaction_id"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.provider_transaction_id}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.provider_transaction_id && touched.provider_transaction_id && errors.provider_transaction_id}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
+                        />
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.updated_at}
+                            onChange={(toDate) => onDateChange(toDate, "updated_at")}
+                        />
+                    </div>
+    
+
 
               <div
                 className={`${styles.FormActionContainer} FormActionContainer`}>
@@ -413,7 +489,7 @@ const Update$capitalsingular$View = props => {
                   className={`${styles.PrimaryButton} PrimaryButton`}
                   type="submit"
                   disabled={isSubmitting}>
-                  Save $lowercasesingular$
+                  Create transaction
                 </button>
               </div>
             </form>
@@ -424,4 +500,4 @@ const Update$capitalsingular$View = props => {
   )
 }
 
-export default Update$capitalsingular$View
+export default AddNewTransactionView

@@ -97,6 +97,24 @@ const DetailedPaymentMethodsView = props => {
             </div>
     
 
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Provider</label>
+                  <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.provider}</span>
+              </div>
+          
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Details</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.details}</span>
+            </div>
+    
+
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Is Default</label>
+                <IMToggleSwitchComponent isChecked={originalData.is_default} disabled />
+            </div>
+    
+
             <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                 <label className={`${styles.FormLabel} FormLabel`}>Stripe Customer ID</label>
                 <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.stripeCustomerID}</span>

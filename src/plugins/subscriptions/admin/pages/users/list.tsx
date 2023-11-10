@@ -27,7 +27,7 @@ import { authPost } from '../../../../../modules/auth/utils/authFetch'
 import styles from '../../../../../admin/themes/admin.module.css'
 /* Insert extra imports for table cells here */
 
-const baseAPIURL = `${pluginsAPIURL}admin/stripe/`
+const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
 export const getStaticProps: GetStaticProps = async () => {
   return { props: { isAdminRoute: true } }
@@ -41,52 +41,22 @@ const UsersColumns = [
       },
       {
           Header: "First Name",
-          accessor: "firstName",
+          accessor: "first_name",
       },
       {
           Header: "Last Name",
-          accessor: "lastName",
-      },
-      {
-          Header: "Phone",
-          accessor: "phone",
-      },
-      {
-          Header: "Role",
-          accessor: "role",
-      },
-      {
-          Header: "Car Photo",
-          accessor: "carPictureURL",
-          Cell: data => (
-              <IMImagesTableCell singleImageURL={data.value} />
-          )
-      },
-      {
-          Header: "Car Model",
-          accessor: "carName",
-      },
-      {
-          Header: "License Plate",
-          accessor: "carNumber",
-      },
-      {
-          Header: "Banned",
-          accessor: "banned",
-          Cell: data => (
-              <IMToggleSwitchComponent isChecked={data.value} disabled />
-          )
+          accessor: "last_name",
       },
       {
           Header: "Created At",
-          accessor: "createdAt",
+          accessor: "created_at",
           Cell: data => (
               <IMDateTableCell timestamp={data.value} />
           )
       },
       {
           Header: "Updated At",
-          accessor: "updatedAt",
+          accessor: "updated_at",
           Cell: data => (
               <IMDateTableCell timestamp={data.value} />
           )

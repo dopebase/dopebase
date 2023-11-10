@@ -1,6 +1,6 @@
 export const metadata = {
-  id: 'stripe',
-  name: 'Stripe Payments',
-  description: 'Stripe Payments integration for Dopebase',
+  id: 'subscriptions',
+  name: 'SaaS Subscriptions',
+  description: 'SaaS Subscriptions plugin for Dopebase',
   version: '1.0',
 }

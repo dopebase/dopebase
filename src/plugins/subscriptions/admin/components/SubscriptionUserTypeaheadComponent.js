@@ -8,7 +8,7 @@ import styles from '../../../../admin/themes/admin.module.css'
 
 const baseAPIURL = `${pluginsAPIURL}admin/subscriptions/`
 
-function PaymentMethodUserTypeaheadComponent(props) {
+function SubscriptionUserTypeaheadComponent(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [users, setUsers] = useState(null)
   const [typeaheadValue, setTypeaheadValue] = useState('')
@@ -31,7 +31,7 @@ function PaymentMethodUserTypeaheadComponent(props) {
         )
         if (response?.data) {
           const data = response.data
-          setInputValue(data.firstName + " " + data.lastName)
+          setInputValue(data.first_name + " " + data.last_name)
           setIsLoading(false)
         }
       } catch (err) {
@@ -81,7 +81,7 @@ function PaymentMethodUserTypeaheadComponent(props) {
   }
 
   const onClick = data => {
-    setInputValue(data.firstName + " " + data.lastName)
+    setInputValue(data.first_name + " " + data.last_name)
     onSelect && onSelect(data.id)
     setIsTypeaheadVisible(false)
   }
@@ -89,7 +89,7 @@ function PaymentMethodUserTypeaheadComponent(props) {
   const listItems =
     users && users.length
       ? users.map(
-          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profilePictureURL} /></td><td><span>{data.firstName} {data.lastName} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
+          data => <li onClick={() => onClick(data)}><table key={data.id}><tr><td><img src={data.profile_picture_url} /></td><td><span>{data.first_name} {data.last_name} ({data.email})</span></td></tr></table></li>, // <li>{element.firstName} {element.lastName}</li>
         )
       : null
 
@@ -123,4 +123,4 @@ function PaymentMethodUserTypeaheadComponent(props) {
   )
 }
 
-export default PaymentMethodUserTypeaheadComponent
+export default SubscriptionUserTypeaheadComponent

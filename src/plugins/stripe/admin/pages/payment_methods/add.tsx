@@ -361,6 +361,14 @@ const AddNewPaymentMethodView = () => {
             const errors = {}
             {
               /* Insert all form errors here */
+        if (!values.provider) {
+            errors.provider = 'Field Required!'
+        }
+
+        if (!values.details) {
+            errors.details = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -392,6 +400,44 @@ const AddNewPaymentMethodView = () => {
                         />
                         <p className={`${styles.ErrorMessage} ErrorMessage`}>
                             {errors.id && touched.id && errors.id}
+                        </p>
+                    </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Provider</label>
+                  <IMStaticSelectComponent
+                      options={["Stripe","PayPal","Other"]}
+                      name="provider"
+                      onChange={handleSelectChange}
+                  />
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.provider && touched.provider && errors.provider}
+                  </p>
+              </div>
+          
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Details</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="details"
+                            name="details"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.details}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.details && touched.details && errors.details}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Is Default</label>
+                        <IMToggleSwitchComponent isChecked={modifiedNonFormData.is_default} onSwitchChange={() => handleSwitchChange(modifiedNonFormData["is_default"], "is_default")} />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.is_default && touched.is_default && errors.is_default}
                         </p>
                     </div>
     

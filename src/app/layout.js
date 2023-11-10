@@ -6,6 +6,9 @@ import store from '../core/redux/store'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/darcula.css'
+
 const inter = Inter({ subsets: ['latin'] })
 
 const metadata = {
