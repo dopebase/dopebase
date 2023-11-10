@@ -359,25 +359,26 @@ const AddNewSubscriptionPlanView = () => {
             const errors = {}
             {
               /* Insert all form errors here */
-              if (!values.name) {
-                errors.name = 'Field Required!'
-              }
+        if (!values.name) {
+            errors.name = 'Field Required!'
+        }
 
-              if (!values.price) {
-                errors.price = 'Field Required!'
-              }
+        if (!values.price) {
+            errors.price = 'Field Required!'
+        }
 
-              if (!values.billing_cycle) {
-                errors.billing_cycle = 'Field Required!'
-              }
+        if (!values.billing_cycle) {
+            errors.billing_cycle = 'Field Required!'
+        }
 
-              if (!values.created_at) {
-                errors.created_at = 'Field Required!'
-              }
+        if (!values.created_at) {
+            errors.created_at = 'Field Required!'
+        }
 
-              if (!values.updated_at) {
-                errors.updated_at = 'Field Required!'
-              }
+        if (!values.updated_at) {
+            errors.updated_at = 'Field Required!'
+        }
+
             }
 
             return errors
@@ -397,124 +398,108 @@ const AddNewSubscriptionPlanView = () => {
           }) => (
             <form onSubmit={handleSubmit}>
               {/* Insert all add form fields here */}
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Name</label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="name"
-                  name="name"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.name && touched.name && errors.name}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Name</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="name"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.name && touched.name && errors.name}
+                        </p>
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Basic Description
-                </label>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Basic Description</label>
 
-                <div
-                  className={`${styles.FormEditorContainer} FormEditorContainer`}>
-                  <Editor
-                    defaultValue={modifiedNonFormData.basic_description}
-                    onChange={value => {
-                      onCodeChange(value(), 'basic_description')
-                    }}
+                        <div className={`${styles.FormEditorContainer} FormEditorContainer`}>
+                          <Editor
+                            defaultValue={modifiedNonFormData.basic_description}
+                            onChange={value => {
+                              onCodeChange(value(), 'basic_description')
+                            }}
+                          />
+                        </div>
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.basic_description && touched.basic_description && errors.basic_description}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Detailed Description</label>
+                        <CodeMirror
+                            className="editor FormTextField"
+                            type="detailed_description"
+                            value={modifiedNonFormData.detailed_description}
+                            name="detailed_description"
+                            options={{
+                                theme: 'darcula',
+                                lineNumbers: true,
+                                mode: 'htmlmixed',
+                            }}
+                            onBeforeChange={(editor, data, value) => {
+                                onCodeChange(value, 'detailed_description')
+                            }}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.detailed_description && touched.detailed_description && errors.detailed_description}
+                        </p>
+                    </div>
+    
+
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Price</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="price"
+                            name="price"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.price}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.price && touched.price && errors.price}
+                        </p>
+                    </div>
+    
+
+              <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                  <label className={`${styles.FormLabel} FormLabel`}>Billing Cycle</label>
+                  <IMStaticSelectComponent
+                      options={["monthly","yearly"]}
+                      name="billing_cycle"
+                      onChange={handleSelectChange}
                   />
-                </div>
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.basic_description &&
-                    touched.basic_description &&
-                    errors.basic_description}
-                </p>
+                  <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                      {errors.billing_cycle && touched.billing_cycle && errors.billing_cycle}
+                  </p>
               </div>
+          
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Detailed Description
-                </label>
-                <CodeMirror
-                  className="editor FormTextField"
-                  type="detailed_description"
-                  value={modifiedNonFormData.detailed_description}
-                  name="detailed_description"
-                  options={{
-                    theme: 'darcula',
-                    lineNumbers: true,
-                    mode: 'htmlmixed',
-                  }}
-                  onBeforeChange={(editor, data, value) => {
-                    onCodeChange(value, 'detailed_description')
-                  }}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.detailed_description &&
-                    touched.detailed_description &&
-                    errors.detailed_description}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Created At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.created_at}
+                            onChange={(toDate) => onDateChange(toDate, "created_at")}
+                        />
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>Price</label>
-                <input
-                  className={`${styles.FormTextField} FormTextField`}
-                  type="price"
-                  name="price"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.price}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.price && touched.price && errors.price}
-                </p>
-              </div>
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Updated At</label>
+                        <IMDatePicker
+                            selected={modifiedNonFormData.updated_at}
+                            onChange={(toDate) => onDateChange(toDate, "updated_at")}
+                        />
+                    </div>
+    
 
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Billing Cycle
-                </label>
-                <IMStaticSelectComponent
-                  options={['monthly', 'yearly']}
-                  name="billing_cycle"
-                  onChange={handleSelectChange}
-                />
-                <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                  {errors.billing_cycle &&
-                    touched.billing_cycle &&
-                    errors.billing_cycle}
-                </p>
-              </div>
-
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Created At
-                </label>
-                <IMDatePicker
-                  selected={modifiedNonFormData.created_at}
-                  onChange={toDate => onDateChange(toDate, 'created_at')}
-                />
-              </div>
-
-              <div
-                className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                <label className={`${styles.FormLabel} FormLabel`}>
-                  Updated At
-                </label>
-                <IMDatePicker
-                  selected={modifiedNonFormData.updated_at}
-                  onChange={toDate => onDateChange(toDate, 'updated_at')}
-                />
-              </div>
 
               <div
                 className={`${styles.FormActionContainer} FormActionContainer`}>
