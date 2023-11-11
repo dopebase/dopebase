@@ -157,6 +157,9 @@ a:hover {
   .ProseMirror, .FormEditorContainer div {
     background: transparent !important;
   }
+  .markdownEditorReadOnly .ProseMirror {
+    background: var(--primary-background-color) !important;
+  }
 }
 
 .text-center {
