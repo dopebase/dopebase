@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { getKeys } from '../../utils'
 
-const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || ''
+const stripePublishableKey =
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 
 export async function POST(req) {
   console.log(`Charging customer`)

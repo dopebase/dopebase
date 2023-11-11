@@ -58,6 +58,10 @@ const SubscriptionPlansColumns = [
           accessor: "price",
       },
       {
+          Header: "Stripe Price ID",
+          accessor: "stripe_price_id",
+      },
+      {
           Header: "Billing Cycle",
           accessor: "billing_cycle",
       },

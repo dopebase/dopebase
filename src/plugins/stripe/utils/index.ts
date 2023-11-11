@@ -1,6 +1,7 @@
 import type Stripe from 'stripe'
 
-const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || ''
+const stripePublishableKey =
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || ''
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
 
@@ -84,7 +85,7 @@ export function getKeys(payment_method?: string) {
       secret_key = process.env.STRIPE_SECRET_KEY_UK
       break
     default:
-      publishable_key = process.env.STRIPE_PUBLISHABLE_KEY
+      publishable_key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
       secret_key = process.env.STRIPE_SECRET_KEY
   }
 

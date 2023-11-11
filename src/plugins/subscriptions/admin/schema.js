@@ -68,6 +68,11 @@ const schema = {
         displayName: 'Detailed Description',
       },
       price: { type: 'string', required: true, displayName: 'Price' },
+      stripe_price_id: {
+        type: 'string',
+        required: false,
+        displayName: 'Stripe Price ID',
+      },
       billing_cycle: {
         type: 'enum',
         required: true,

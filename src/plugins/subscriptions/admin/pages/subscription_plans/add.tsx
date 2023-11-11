@@ -469,6 +469,22 @@ const AddNewSubscriptionPlanView = () => {
                     </div>
     
 
+                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                        <label className={`${styles.FormLabel} FormLabel`}>Stripe Price ID</label>
+                        <input
+                            className={`${styles.FormTextField} FormTextField`}
+                            type="stripe_price_id"
+                            name="stripe_price_id"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.stripe_price_id}
+                        />
+                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                            {errors.stripe_price_id && touched.stripe_price_id && errors.stripe_price_id}
+                        </p>
+                    </div>
+    
+
               <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                   <label className={`${styles.FormLabel} FormLabel`}>Billing Cycle</label>
                   <IMStaticSelectComponent

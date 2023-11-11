@@ -4,10 +4,15 @@ import { websiteURL } from '../../../../config/config'
 import { getAuthenticatedUser } from '../../../../admin/utils/getAuthenticatedUser'
 
 export async function POST(req: Request) {
-  console.log('eeeeeee')
+  console.log('vvvvvvvv')
   if (req.method === 'POST') {
     // 1. Destructure the price and quantity from the POST body
-    const { price, quantity = 1, metadata = {} } = await req.json()
+    const {
+      stripe_price_id,
+      quantity = 1,
+      type,
+      metadata = {},
+    } = await req.json()
 
     const { secret_key } = getKeys()
 
@@ -45,17 +50,17 @@ export async function POST(req: Request) {
 
       // 4. Create a checkout session in Stripe
       let session
-      if (price.type === 'recurring') {
+      if (type === 'recurring') {
         session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           billing_address_collection: 'required',
-          customer,
+          customer: customer.id,
           customer_update: {
             address: 'auto',
           },
           line_items: [
             {
-              price: price.id,
+              price: stripe_price_id,
               quantity,
             },
           ],
@@ -68,17 +73,17 @@ export async function POST(req: Request) {
           success_url: `${websiteURL}/account`,
           cancel_url: `${websiteURL}/`,
         })
-      } else if (price.type === 'one_time') {
+      } else if (type === 'one_time') {
         session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           billing_address_collection: 'required',
-          customer,
+          customer: customer.id,
           customer_update: {
             address: 'auto',
           },
           line_items: [
             {
-              price: price.id,
+              price: stripe_price_id,
               quantity,
             },
           ],
@@ -90,6 +95,8 @@ export async function POST(req: Request) {
       }
 
       if (session) {
+        console.log('eeeeeeee')
+        console.log(session)
         return new Response(JSON.stringify({ sessionId: session.id }), {
           status: 200,
         })

@@ -45,7 +45,7 @@ export async function POST(req) {
   // Send publishable key and SetupIntent details to client
   return NextResponse.json(
     {
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
       clientSecret: setupIntent.client_secret,
       id: setupIntent.id,
       customerId: setupIntent.customer,

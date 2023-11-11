@@ -133,6 +133,12 @@ const DetailedSubscriptionPlansView = props => {
             </div>
     
 
+            <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Stripe Price ID</label>
+                <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData.stripe_price_id}</span>
+            </div>
+    
+
               <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
                   <label className={`${styles.FormLabel} FormLabel`}>Billing Cycle</label>
                   <span className={`${styles.LockedFieldValue} LockedFieldValue`}>{originalData && originalData.billing_cycle}</span>

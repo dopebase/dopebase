@@ -1,10 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './PricingSection.module.css'
 import themeStyles from '../../theme.module.css'
 import { authPost } from '../../../../modules/auth/utils/authFetch'
+import { websiteURL } from '../../../../config/config'
+import { getStripe } from '../../../../plugins/stripe/lib/stripeClient'
 
 const PricingCheckmark = () => {
   return (
@@ -46,14 +48,13 @@ const MostPopularIcon = () => {
   )
 }
 
-const PricingPlan = ({ plan, index }) => {
+const PricingPlan = ({ plan, index, user, subscription }) => {
   const [selectedPlan, setSelectedPlan] = useState(false)
+  const router = useRouter()
 
-  const features = detailed_description.split('\n')
+  const features = plan.detailed_description?.split('\n') ?? []
 
   const handleCheckout = async plan => {
-    const router = useRouter()
-
     setSelectedPlan(plan)
     if (!user) {
       return router.push('/login')
@@ -61,12 +62,18 @@ const PricingPlan = ({ plan, index }) => {
     if (subscription) {
       return router.push('/account')
     }
+    const { stripe_price_id } = plan
     try {
-      const { sessionId } = await authPost('/api/create-checkout-session', {
-        price,
-      })
-      // const stripe = await getStripe()
-      // stripe?.redirectToCheckout({ sessionId })
+      const { data } = await authPost(
+        `${websiteURL}api/plugins/stripe/payments/create-checkout-session`,
+        {
+          stripe_price_id,
+          type: 'recurring',
+        },
+      )
+      const { sessionId } = data
+      const stripe = await getStripe()
+      stripe?.redirectToCheckout({ sessionId: sessionId })
     } catch (error) {
       return alert(error?.message)
     } finally {
@@ -80,12 +87,17 @@ const PricingPlan = ({ plan, index }) => {
         index === 1 ? styles.proPlan : ''
       }`}>
       <div className={styles.titleContainer}>
-        <h3 className={styles.planTitle}>{plan.title}</h3>
-        {index === 1 && (
-          <p className={styles.mostPopular}>
-            <MostPopularIcon /> Most Popular
-          </p>
+        {index === 1 ? (
+          <div className={styles.mostPopularTitleContainer}>
+            <h3 className={styles.planTitle}>{plan.name}</h3>
+            <p className={styles.mostPopular}>
+              <MostPopularIcon /> Most Popular
+            </p>
+          </div>
+        ) : (
+          <h3 className={styles.planTitle}>{plan.name}</h3>
         )}
+
         <p className={styles.planDescription}>{plan.basic_description}</p>
       </div>
       <div className={styles.priceContainer}>
@@ -103,7 +115,9 @@ const PricingPlan = ({ plan, index }) => {
         </ul>
       </div>
       <div className={styles.buttonContainer}>
-        <button className={styles.button}>Get Started</button>
+        <button className={styles.button} onClick={() => handleCheckout(plan)}>
+          Get Started
+        </button>
       </div>
     </div>
   )
@@ -122,116 +136,14 @@ const Pricing = ({ user, subscription, plans }) => {
       <h3 className={styles.sectionDescription}>{subtitle}</h3>
 
       <div className={styles.pricingContainer}>
-        <div className={`${styles.pricingPlan} ${styles.basicPlan}`}>
-          <div className={styles.titleContainer}>
-            <h3 className={styles.planTitle}>Basic</h3>
-            <p className={styles.planDescription}>
-              Description of your Basic plan
-            </p>
-          </div>
-          <div className={styles.priceContainer}>
-            <span className={styles.price}>$19</span>
-            <span className={styles.priceDescription}>/monthly</span>
-          </div>
-          <div className={styles.featuresContainer}>
-            <ul>
-              <li>
-                <PricingCheckmark />
-                <span>Basic Analytics</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>Unlimited Traffic</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>10GB Storage</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>Basic Support</span>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.buttonContainer}>
-            <button className={styles.button}>Get Started</button>
-          </div>
-        </div>
-        <div className={`${styles.pricingPlan} ${styles.proPlan}`}>
-          <div className={styles.titleContainer}>
-            <div className={styles.mostPopularTitleContainer}>
-              <h3 className={styles.planTitle}>Pro</h3>
-              <p className={styles.mostPopular}>
-                <MostPopularIcon /> Most Popular
-              </p>
-            </div>
-            <p className={styles.planDescription}>
-              Description of your Pro plan
-            </p>
-          </div>
-          <div className={styles.priceContainer}>
-            <span className={styles.price}>$99</span>
-            <span className={styles.priceDescription}>/monthly</span>
-          </div>
-          <div className={styles.featuresContainer}>
-            <ul>
-              <li>
-                <PricingCheckmark />
-                <span>Advanced Analytics</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>Unlimited Traffic</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>100GB Storage</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>Chat Support</span>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.buttonContainer}>
-            <button className={styles.button}>Get Started</button>
-          </div>
-        </div>
-        <div className={`${styles.pricingPlan} ${styles.enterprisePlan}`}>
-          <div className={styles.titleContainer}>
-            <h3 className={styles.planTitle}>Enterprise</h3>
-            <p className={styles.planDescription}>
-              Description of your Enterprise plan
-            </p>
-          </div>
-          <div className={styles.priceContainer}>
-            <span className={styles.price}>$999</span>
-            <span className={styles.priceDescription}>/monthly</span>
-          </div>
-          <div className={styles.featuresContainer}>
-            <ul>
-              <li>
-                <PricingCheckmark />
-                <span>Basic Analytics</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>Unlimited Traffic</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>10GB Storage</span>
-              </li>
-              <li>
-                <PricingCheckmark />
-                <span>In-person Support</span>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.buttonContainer}>
-            <button className={styles.button}>Get Started</button>
-          </div>
-        </div>
+        {plans.map((plan, index) => (
+          <PricingPlan
+            plan={plan}
+            index={index}
+            user={user}
+            subscription={subscription}
+          />
+        ))}
       </div>
     </section>
   )
