@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { getUserByID } from '../../core/db/users'
 
 const jwt = require('jsonwebtoken')
@@ -32,8 +33,13 @@ export const getCurrentUserByCookies = async cookieStore => {
   return user
 }
 
+export const getCurrentUser = async () => {
+  const user = await getCurrentUserByCookies(cookies())
+  return user
+}
+
 export const getCurrentAdmin = async cookieStore => {
-  const user = await getCurrentUser(cookieStore)
+  const user = await getCurrentUserByCookies(cookieStore)
   if (user?.role == 'admin') {
     return user
   }

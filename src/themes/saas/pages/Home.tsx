@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import NavigationMenu from '../components/NavigationMenu'
 import Footer from '../components/Footer'
 import MetaHeader from '../components/MetaHeader'

@@ -47,6 +47,12 @@ const NavigationMenu = () => {
         <a
           className={styles.mainMenuItem}
           target="_blank"
+          href="https://dopebase.com/faq">
+          FAQ
+        </a>
+        <a
+          className={styles.mainMenuItem}
+          target="_blank"
           href="https://dopebase.com/docs">
           Docs
         </a>

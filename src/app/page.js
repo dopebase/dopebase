@@ -1,24 +1,13 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { useTheme } from '../system/themes/hooks'
+import React, { Suspense } from 'react'
+import { getCurrentTheme } from '../system/themes'
 
-export default function Home() {
-  const [theme] = useTheme()
-  const [Component, setComponent] = useState(null)
+export default async function Home() {
+  const theme = await getCurrentTheme()
+  const HomePage = (await import(`../themes/` + `${theme}/pages/Home`)).default
 
-  console.log('rerender')
-
-  useEffect(() => {
-    if (theme) {
-      const HomePage = React.lazy(() => import(`../themes/${theme}/pages/Home`))
-      setComponent(HomePage)
-    } else {
-      setComponent(null)
-    }
-  }, [theme])
-
-  if (Component) {
-    return <Component />
-  }
-  return null
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomePage />
+    </Suspense>
+  )
 }

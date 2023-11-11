@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: false,
   experimental: {
     optimizePackageImports: ['firebase-admin'],
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
   },
   webpack: (
     config,
