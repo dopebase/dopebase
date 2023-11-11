@@ -3,14 +3,20 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllPlugins, isInstalled } from '../../system/plugins'
 import { componentForRoutes } from '../../system/routing/urlRouter'
 
-export default async function Page({ params }: { params: { routes: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { routes: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
   // const router = useRouter()
   const { routes } = params
 
   // const [component, setComponent] = useState(null)
 
   console.log('routes', routes)
-  return await componentForRoutes(routes)
+  return await componentForRoutes(routes, searchParams)
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
   // console.log('search', search)

@@ -68,6 +68,7 @@ const PricingPlan = ({ plan, index, user, subscription }) => {
         `${websiteURL}api/plugins/stripe/payments/create-checkout-session`,
         {
           stripe_price_id,
+          plan_id: plan.id,
           type: 'recurring',
         },
       )

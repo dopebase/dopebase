@@ -10,6 +10,7 @@ export async function POST(req: Request) {
     const {
       stripe_price_id,
       quantity = 1,
+      plan_id,
       type,
       metadata = {},
     } = await req.json()
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
             trial_from_plan: true,
             metadata,
           },
-          success_url: `${websiteURL}/account`,
+          success_url: `${websiteURL}/subscribe?plan_id=${plan_id}`,
           cancel_url: `${websiteURL}/`,
         })
       } else if (type === 'one_time') {

@@ -1,8 +1,12 @@
 import { getSettingsValue } from '../../../system/settings'
 import { getCurrentTheme } from '../../../system/themes'
 
-export const getComponentForRoutes = async routes => {
+export const getComponentForRoutes = async (routes, searchParams) => {
   console.log(`Finding component for routes ${JSON.stringify(routes)}`)
+
+  if ((routes?.length ?? 0) === 0) {
+    return null
+  }
 
   const installedTheme = await getCurrentTheme()
   const slug = routes.join('/')
@@ -25,6 +29,17 @@ export const getComponentForRoutes = async routes => {
           no errors.
         </div>
       )
+    }
+  }
+
+  if (routes[0] === 'subscribe') {
+    // subscriptions home page
+    try {
+      const component = (await import(`../pages/subscribe`)).default
+      return component({ params: { routes }, searchParams: searchParams })
+    } catch (error) {
+      console.log(error)
+      return <div>Subscribe page not set in plugin subscriptions.</div>
     }
   }
 

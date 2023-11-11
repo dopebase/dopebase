@@ -42,7 +42,10 @@ const registerURLParserHooks = () => {
   /* Insert any hooks here */
 
   console.log('registering url parser hooks')
-  hookSystem.addHookCallback('urlParsing', (initialValue, routes) => {
-    return getComponentForRoutes(routes)
-  })
+  hookSystem.addHookCallback(
+    'urlParsing',
+    (initialValue, routes, searchParams) => {
+      return getComponentForRoutes(routes, searchParams)
+    },
+  )
 }
