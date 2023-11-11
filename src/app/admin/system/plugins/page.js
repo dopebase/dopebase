@@ -1,22 +1,14 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
+import React from 'react'
+import { redirect } from 'next/navigation'
 import { AdminAppContainer } from '../../../../admin/screens/AdminAppContainer'
 import { PluginsListView } from '../../../../admin/screens/plugins/PluginsListView'
+import { getCurrentUser } from '../../../../admin/utils/getCurrentUserByCookies'
 
-export default props => {
-  const [user, token, loading] = useCurrentUser()
-  const router = useRouter()
+export default async props => {
+  const user = await getCurrentUser()
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login')
-    }
-  }, [user, loading])
-
-  if (loading) {
-    return <></>
+  if (!user) {
+    redirect('/login')
   }
 
   if (user) {

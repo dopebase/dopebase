@@ -1,16 +1,10 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import useCurrentUser from '../../../../modules/auth/hooks/useCurrentUser'
+import React from 'react'
 import { AdminAppContainer } from '../../../../admin/screens/AdminAppContainer'
-import C from '../../../../plugins/blog/admin/pages/article_categories/add'
+import { getCurrentUser } from '../../../../admin/utils/getCurrentUserByCookies'
 
-export default function Page({ params }: { params: { routes: string } }) {
-  const [user, token, loading] = useCurrentUser()
-  const router = useRouter()
+export default async function Page({ params }: { params: { routes: string } }) {
+  const user = await getCurrentUser()
   const { routes } = params
-
-  const [component, setComponent] = useState(null)
 
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
@@ -32,13 +26,12 @@ export default function Page({ params }: { params: { routes: string } }) {
   //   importPlugin()
   // }, [])
 
-  const Component = React.lazy(
-    () =>
-      import(
-        `../../../../plugins/` +
-          `${pluginID}/admin/pages/${routes.slice(1).join('/')}`
-      ),
-  )
+  const Component = (
+    await import(
+      `../../../../plugins/` +
+        `${pluginID}/admin/pages/${routes.slice(1).join('/')}`
+    )
+  ).default
 
   if (user && user.role !== 'admin') {
     return <>Access denied.</>
