@@ -43,5 +43,27 @@ export const getComponentForRoutes = async (routes, searchParams) => {
     }
   }
 
+  if (routes[0] === 'dashboard' && routes[1] === 'edit-profile') {
+    // subscriptions home page
+    try {
+      const component = (await import(`../pages/editProfile`)).default
+      return component({ params: { routes }, searchParams: searchParams })
+    } catch (error) {
+      console.log(error)
+      return <div>Subscribe page not set in plugin subscriptions.</div>
+    }
+  }
+
+  if (routes[0] === 'dashboard') {
+    // subscriptions home page
+    try {
+      const component = (await import(`../pages/dashboard`)).default
+      return component({ params: { routes }, searchParams: searchParams })
+    } catch (error) {
+      console.log(error)
+      return <div>Subscribe page not set in plugin subscriptions.</div>
+    }
+  }
+
   return null
 }

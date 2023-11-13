@@ -57,10 +57,10 @@ const PricingPlan = ({ plan, index, user, subscription }) => {
   const handleCheckout = async plan => {
     setSelectedPlan(plan)
     if (!user) {
-      return router.push('/login')
+      return router.push('/register')
     }
     if (subscription) {
-      return router.push('/account')
+      return router.push('/dashboard')
     }
     const { stripe_price_id } = plan
     try {

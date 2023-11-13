@@ -90,7 +90,7 @@ export async function POST(req: Request) {
           ],
           mode: 'payment',
           allow_promotion_codes: true,
-          success_url: `${websiteURL}/account`,
+          success_url: `${websiteURL}/dashboard`,
           cancel_url: `${websiteURL}/`,
         })
       }

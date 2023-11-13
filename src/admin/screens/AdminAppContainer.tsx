@@ -16,21 +16,21 @@ export const AdminAppContainer: React.FC = async (
   const { children } = props
 
   console.log('server side user', user)
-  if (user?.role === 'admin') {
-    return (
-      <div className={styles.admin}>
-        <AdminHeader />
-        <div className={styles.adminContent}>
-          <div className={styles.MainMenu}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <AdminMenu />
-            </Suspense>
-          </div>
-          <div className={styles.MainPanel}>{children}</div>
+  // if (user?.role === 'admin') {
+  return (
+    <div className={styles.admin}>
+      <AdminHeader />
+      <div className={styles.adminContent}>
+        <div className={styles.MainMenu}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <AdminMenu />
+          </Suspense>
         </div>
+        <div className={styles.MainPanel}>{children}</div>
       </div>
-    )
-  }
+    </div>
+  )
+  // }
 
   return <div>Sorry, you do not have permissions to access this page.</div>
 }

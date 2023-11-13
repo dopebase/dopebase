@@ -20,6 +20,6 @@ export default async function Page({ params, searchParams }) {
 
   const subscription = await subscribe(user.id, plan_id)
   if (subscription) {
-    return redirect('/account')
+    return redirect('/dashboard')
   }
 }

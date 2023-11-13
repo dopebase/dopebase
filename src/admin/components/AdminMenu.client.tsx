@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import styles from '../themes/admin.module.css'
 
-const AdminMenu = ({ menuItems }) => {
+const AdminMenu = ({ menuItems, urlPath = 'admin' }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedSubindex, setSelectedSubindex] = useState(0)
 
@@ -35,7 +35,7 @@ const AdminMenu = ({ menuItems }) => {
                     : ''
                 }>
                 {menuItem.subItems?.length === 0 ? (
-                  <Link href={`/admin/${menuItem.path}`}>
+                  <Link href={`/${urlPath}/${menuItem.path}`}>
                     <p
                       onClick={() => onSelect(index, -1)}
                       data-toggle={styles.collapse}
@@ -67,7 +67,7 @@ const AdminMenu = ({ menuItems }) => {
                                 : ''
                             }>
                             <Link
-                              href={`/admin/${menuItem.path}/${subitem.path}`}>
+                              href={`/${urlPath}/${menuItem.path}/${subitem.path}`}>
                               <p
                                 className={styles.sidebarNormal}
                                 onClick={() => onSelect(index, subindex)}>
