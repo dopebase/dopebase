@@ -6,7 +6,7 @@ const MetaHeader = ({
   seoTitle,
   seoDescription,
   seoKeyword,
-  photo,
+  photo = 'https://firebasestorage.googleapis.com/v0/b/dopebase-9b89b.appspot.com/o/react-native-booking-appointments-app-template.png?alt=media&amp;token=8c0ca965-e74d-4bc4-99b1-b274ad6803d6',
   url,
   structuredData,
 }) => {

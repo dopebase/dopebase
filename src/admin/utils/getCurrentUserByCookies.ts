@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken')
 export const getCurrentUserByCookies = async cookieStore => {
   const tokenObj = cookieStore.get('dopebase.session-token')
   const token = tokenObj?.value
-  console.log(token)
   const secretOrKey = process.env.JWT_SECRET
 
   if (!tokenObj || !token || !secretOrKey) {
