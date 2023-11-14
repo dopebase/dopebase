@@ -4,18 +4,25 @@ import { getArticleBySlug, getCategoryBySlug, getTagBySlug } from '../db'
 import { getHomeModules } from './getHomeModules'
 
 export const getComponentForRoutes = async routes => {
-  console.log(`Finding component for routes ${JSON.stringify(routes)}`)
+  console.log(`Finding component for routes 123 ${JSON.stringify(routes)}`)
 
   const installedTheme = await getCurrentTheme()
   const slug = routes.join('/')
 
   const blogURL = await getSettingsValue('blog_url')
+
   if (slug === blogURL) {
     // blog home page
     const modules = await getHomeModules()
     const src = `${installedTheme}/pages/blog/Home`
     try {
+      console.log('yyyyyyyy')
+      console.log(slug)
+      console.log(blogURL)
+      console.log('yyyyyyy')
       const component = (await import(`../../../themes/` + src)).default
+      console.log('xxxxxxx')
+      console.log(component)
       return component({ modules: modules })
     } catch (error) {
       console.log(error)

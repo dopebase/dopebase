@@ -1,4 +1,4 @@
-import hookSystem from '../../../system/triggers/HookSystem'
+import HookSystem from '../../../system/triggers/HookSystem'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
@@ -7,7 +7,7 @@ export const registerHooks = () => {
 const registerAdminPanelHooks = () => {
   /* Insert any admin hooks here */
 
-  hookSystem.addHookCallback('beforeRenderAdminPanel', items => {
+  HookSystem.getInstance().addHookCallback('beforeRenderAdminPanel', items => {
     return items.concat([
       {
         title: 'Taxi',

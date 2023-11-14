@@ -1,7 +1,8 @@
 import { getAllPlugins } from '../plugins'
 
-class HookSystem {
+class PrivateHookSystem {
   constructor() {
+    console.log('instantiating hook system')
     this.hooks = {}
     this.registerHook('beforeRenderAdminPanel')
     this.registerHook('urlParsing')
@@ -50,8 +51,33 @@ class HookSystem {
       throw new Error(`Hook ${hookName} does not exist.`)
     }
   }
+
+  async executeAsyncHook(hookName, initialValue, ...args) {
+    var resValue = initialValue
+    if (this.hooks[hookName]) {
+      for (var i = 0; i < this.hooks[hookName].length; i++) {
+        const callback = this.hooks[hookName][i]
+        const tempValue = await callback(resValue, ...args)
+        if (tempValue) {
+          resValue = tempValue
+        }
+      }
+      return resValue
+    } else {
+      throw new Error(`Hook ${hookName} does not exist.`)
+    }
+  }
+}
+class HookSystem {
+  constructor() {
+    throw new Error('Use Singleton.getInstance()')
+  }
+  static getInstance() {
+    if (!HookSystem.instance) {
+      HookSystem.instance = new PrivateHookSystem()
+    }
+    return HookSystem.instance
+  }
 }
 
-const hookSystem = new HookSystem()
-
-export default hookSystem
+export default HookSystem

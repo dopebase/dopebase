@@ -1,4 +1,4 @@
-import hookSystem from '../../../system/triggers/HookSystem'
+import HookSystem from '../../../system/triggers/HookSystem'
 import { getComponentForRoutes } from '../lib/getComponentForRoutes'
 
 export const registerHooks = () => {
@@ -9,7 +9,7 @@ export const registerHooks = () => {
 const registerAdminPanelHooks = () => {
   /* Insert any admin hooks here */
 
-  hookSystem.addHookCallback('beforeRenderAdminPanel', items => {
+  HookSystem.getInstance().addHookCallback('beforeRenderAdminPanel', items => {
     return items.concat([
       {
         title: 'SaaS',
@@ -42,7 +42,7 @@ const registerURLParserHooks = () => {
   /* Insert any hooks here */
 
   console.log('registering url parser hooks')
-  hookSystem.addHookCallback(
+  HookSystem.getInstance().addHookCallback(
     'urlParsing',
     (initialValue, routes, searchParams) => {
       return getComponentForRoutes(routes, searchParams)

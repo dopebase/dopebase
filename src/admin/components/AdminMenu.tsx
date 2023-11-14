@@ -1,5 +1,5 @@
 import React from 'react'
-import hookSystem from '../../system/triggers/HookSystem'
+import HookSystem from '../../system/triggers/HookSystem'
 import { getCurrentUser } from '../utils/getCurrentUserByCookies'
 import AdminMenuComponent from './AdminMenu.client'
 
@@ -44,7 +44,7 @@ const AdminMenu: React.FC = async () => {
   const user = await getCurrentUser()
 
   const items = user?.role === 'admin' ? adminMenuItemsTop : []
-  const menuItemsAfterApplyingHooks = hookSystem.executeHook(
+  const menuItemsAfterApplyingHooks = HookSystem.getInstance().executeHook(
     'beforeRenderAdminPanel',
     items,
   )

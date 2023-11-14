@@ -1,4 +1,4 @@
-import hookSystem from '../triggers/HookSystem'
+import HookSystem from '../triggers/HookSystem'
 
 export const componentForRoutes = async (routes, searchParams) => {
   // Given the routes, return the component that needs to be rendered
@@ -11,15 +11,12 @@ export const componentForRoutes = async (routes, searchParams) => {
     return <div>Unspecified api</div>
   }
 
-  const component = await hookSystem.executeHook(
+  const component = await HookSystem.getInstance().executeAsyncHook(
     'urlParsing',
     null,
     routes,
     searchParams,
   )
-
-  // const component =
-  //   require('../../themes/classic/pages/blog/SingleArticle').default
 
   if (component) {
     return component

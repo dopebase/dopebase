@@ -15,7 +15,6 @@ export default async function Page({
 
   // const [component, setComponent] = useState(null)
 
-  console.log('routes', routes)
   return await componentForRoutes(routes, searchParams)
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
