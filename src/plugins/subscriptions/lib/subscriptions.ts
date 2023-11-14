@@ -4,7 +4,6 @@ import { findOne, insertOne, list } from '../../../core/db'
 
 export const getActiveSubscription = async () => {
   const user = await getCurrentUserByCookies(cookies())
-  console.log(`Retrieved user by cookies: ${JSON.stringify(user)}`)
   if (!user) {
     return null
   }

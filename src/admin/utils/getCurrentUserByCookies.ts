@@ -16,15 +16,12 @@ export const getCurrentUserByCookies = async cookieStore => {
   const bearerToken = `Bearer ${token}`
   const decoded = jwt.verify(bearerToken.split(' ')[1], secretOrKey)
   const userID = decoded.id
-  console.log(userID)
 
   if (!userID) {
     return null
   }
 
   const user = await getUserByID(userID)
-
-  console.log(user)
 
   if (!user) {
     return null

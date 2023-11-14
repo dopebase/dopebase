@@ -76,7 +76,6 @@ const UserProfileMenu: React.FC = memo(() => {
   const hide = () => {
     setIsExpanded(false)
   }
-  console.log(user)
   return (
     <>
       {!loading && user && (

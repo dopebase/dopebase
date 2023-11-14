@@ -56,6 +56,22 @@ const schema = {
     lowercasePluralName: 'payment_methods',
     titleFieldKey: 'id',
   },
+  settings: {
+    fields: {
+      name: { type: 'string', required: true, displayName: 'Settings Name' },
+      value: { type: 'string', required: false, displayName: 'Settings Value' },
+      created_at: { type: 'date', required: true, displayName: 'Created Date' },
+      updated_at: { type: 'date', required: true, displayName: 'Updated Date' },
+    },
+
+    pluralDisplayName: 'Settings',
+    capitalPluralName: 'Settings',
+    tableName: 'settings',
+    lowercaseSingularName: 'settings',
+    singularCapitalName: 'Settings',
+    lowercasePluralName: 'settings',
+    titleFieldKey: 'name',
+  },
   users: {
     pluralDisplayName: 'Users',
     capitalPluralName: 'Users',

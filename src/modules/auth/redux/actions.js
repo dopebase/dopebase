@@ -6,8 +6,6 @@ import { websiteURL } from '../../../config/config'
 // Register User
 export const registerUser = (userData, router, dispatch2) => dispatch => {
   const endpoint = `${websiteURL}api/auth/register`
-  console.log(userData)
-  console.log(endpoint)
   axios
     .post(endpoint, userData)
     .then(response => {

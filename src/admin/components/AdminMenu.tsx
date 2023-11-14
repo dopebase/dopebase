@@ -50,8 +50,6 @@ const AdminMenu: React.FC = async () => {
   )
   const menuItems = menuItemsAfterApplyingHooks.concat(adminMenuItemsBottom)
 
-  console.log('admin menu render server side')
-
   return <AdminMenuComponent menuItems={menuItems} />
 }
 

@@ -18,6 +18,10 @@ const registerAdminPanelHooks = () => {
             title: 'Payment Methods',
             path: 'payment_methods/list',
           },
+          {
+            title: 'Settings',
+            path: 'settings/list',
+          },
         ],
       },
     ])

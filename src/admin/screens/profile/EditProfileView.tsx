@@ -143,7 +143,7 @@ const UpdateUserView = props => {
   return (
     <div className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
       <div className={`${styles.CardBody} CardBody`}>
-        <h1>{originalData && originalData.name}</h1>
+        <h1>Edit Profile</h1>
         <Formik
           initialValues={originalData}
           validate={values => {

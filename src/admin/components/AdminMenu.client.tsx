@@ -8,8 +8,6 @@ const AdminMenu = ({ menuItems, urlPath = 'admin' }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedSubindex, setSelectedSubindex] = useState(0)
 
-  console.log('admin menu render')
-
   const onSelect = (index, subindex) => {
     // const item = menuItems[index]
     // const hasSubitems = item.subItems?.length > 0
