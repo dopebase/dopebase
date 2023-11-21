@@ -109,8 +109,8 @@ function ActionsItemView(props) {
 
   const handleDelete = async item => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      const path = baseAPIURL + 'article_ideas/delete'
-      const response = await authPost(path, { id: item.id })
+      const path = baseAPIURL + 'ai/generate-articles'
+      const response = await authPost(path)
       window.location.reload(false)
     }
   }
@@ -211,6 +211,20 @@ function ArticleIdeasListView(props) {
   useEffect(() => {
     setArticleIdeas(data)
   }, [pageIndex, pageSize, data])
+
+  const generateArticles = async () => {
+    if (
+      window.confirm(
+        'Are you sure you want to generate articles for all ideas?',
+      )
+    ) {
+      setIsLoading(true)
+      const path = baseAPIURL + 'ai/generate-articles'
+      const response = await authPost(path, {})
+      setIsLoading(false)
+      window.location.reload(false)
+    }
+  }
 
   return (
     <>
@@ -342,6 +356,20 @@ function ArticleIdeasListView(props) {
                         className={`${styles.PaginationButton}`}
                         disabled={!canNextPage}>
                         <i className="fa fa-angle-double-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className={`${styles.Card} ${styles.FormCard} Card FormCard`}>
+                  <div className={`${styles.CardBody} CardBody`}>
+                    <div
+                      className={`${styles.FormActionContainer} FormActionContainer`}>
+                      <button
+                        onClick={() => generateArticles()}
+                        className={`${styles.PrimaryButton} PrimaryButton`}
+                        type="submit">
+                        Generate All Articles
                       </button>
                     </div>
                   </div>
