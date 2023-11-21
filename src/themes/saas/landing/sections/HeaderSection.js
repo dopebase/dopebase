@@ -14,17 +14,17 @@ const HeaderSection = ({ title, description }) => {
       </div>
       <div className={styles.ctaContainer}>
         <a
-          href="https://dopebase.com/docs"
+          href={`#pricing`}
           target="_blank"
           className={`${styles.ctaPrimary} ${styles.cta}`}>
           Get Started
         </a>
-        <a
+        {/* <a
           href="https://github.com/dopebase/dopebase"
           target="_blank"
           className={`${styles.ctaSecondary} ${styles.cta}`}>
           <i class="fa fa-github"></i> Preview Demo
-        </a>
+        </a> */}
       </div>
       <div className={styles.previewContainer}>
         <img src="./assets/dopebase-preview.png" className={styles.preview} />

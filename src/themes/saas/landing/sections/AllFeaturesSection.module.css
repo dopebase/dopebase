@@ -43,13 +43,14 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 280px; /* Adjust the width as needed */
+  width: 350px; /* Adjust the width as needed */
 }
 
 .cardTitle {
   color: var(--primary-foreground-color); /* Replace with the actual color from the design */
   margin-bottom: 16px;
-  font-size: 1.3rem !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
 }
 
 .featuresList {

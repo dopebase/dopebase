@@ -38,55 +38,12 @@ const HomePage = ({}) => {
           title={`NextJS SaaS starter kit \n to launch ideas in a weekend`}
           description={`Join 10,000+ developers and entrepreneurs that use DopeSaaS to launch their SaaS ideas in a matter of days instead of years, at a fraction of the cost. DopeSaaS is a fully functional source code written in React and NextJS that will save you months of development and tens of thousands of dollars.`}
         />
-        <BicameralSection
-          title={`AI-Powered Content Innovation`}
-          description={`Dopebase is not just a WordPress alternative - it's a leap forward. Leveraging AI technologies, it transforms the way you build and manage content and media offering smart suggestions and automating routine tasks to free up your creativity and focus on what matters.`}
-          items={[
-            {
-              title: `AI Generated Content`,
-              description: `Generate article ideas, summaries, captions, tags, social posts, content and even entire articles by harnessing the power of LLMs and AI.`,
-            },
-            {
-              title: `AI SEO Strategy`,
-              description:
-                'Leverage AI to auto-optimize all your pages for SEO to improve rankings and traffic.',
-            },
-            {
-              title: `Generative AI Images`,
-              description: `Generate any type of image by using GenAI. Create logos, banners, social media posts, and more directly in Dopebase.`,
-            },
-            {
-              title: `AI Powered Text Editor`,
-              description: `Dopebase's AI-powered text editor helps you write better content by offering smart suggestions and automating routine tasks such as keeping your articles up to date.`,
-            },
-          ]}
-          interactiveChild={null}
-        />
-        <BicameralSection
-          title={`Build in a weekend`}
-          description={`Save years of development by starting with a lightweight open-source backend that powers all the features you need.`}
-          items={[
-            { title: `Authentication` },
-            { title: `Content Management` },
-            { title: `Payments & Subscriptions` },
-            { title: `Email & SMS Marketing` },
-            { title: `Push Notifications` },
-            { title: `Analytics` },
-            { title: `SEO` },
-            { title: `Search` },
-            { title: `Localization` },
-            { title: `Storage` },
-            { title: `Robust APIs` },
-            { title: `AI Workflows` },
-          ]}
-          interactiveChild={null}
-        />
-        <BicameralSection
+        {/* <BicameralSection
           title={`Themes & Plugins`}
-          description={`Similar to WordPress, Dopebase comes with a set of UI themes and modules that you can use to build your website or mobile app with or without code. You can also build your own custom themes and modules.`}
+          description={`DopeSaaS comes with a set of UI themes and plugins that you can use to build your website or mobile app with or without code. You can also build your own custom themes and plugins for maximum flexibility.`}
           items={``}
           interactiveChild={null}
-        />
+        /> */}
         <AllFeaturesSection />
         <FeaturesListSection
           title="Production Ready Code"
@@ -118,6 +75,30 @@ const HomePage = ({}) => {
         <GenericSocialProofSection />
         <TestimonialSection />
         <BicameralSection
+          title={`AI-Powered Content Innovation`}
+          description={`DopeSaas is not just a starter kit - it's a leap forward. Leveraging AI technologies, it transforms the way you build and manage content and media offering smart suggestions and automating routine tasks to free up your creativity and focus on what matters.`}
+          items={[
+            {
+              title: `AI Generated Content`,
+              description: `Generate article ideas, summaries, captions, tags, social posts, content and even entire articles by harnessing the power of LLMs and AI.`,
+            },
+            {
+              title: `AI SEO Strategy`,
+              description:
+                'Leverage AI to auto-optimize all your pages for SEO to improve rankings and traffic.',
+            },
+            {
+              title: `Generative AI Images`,
+              description: `Generate any type of image by using GenAI. Create logos, banners, social media posts, and more directly in Dopebase.`,
+            },
+            {
+              title: `AI Powered Text Editor`,
+              description: `Dopebase's AI-powered text editor helps you write better content by offering smart suggestions and automating routine tasks such as keeping your articles up to date.`,
+            },
+          ]}
+          interactiveChild={null}
+        />
+        {/* <BicameralSection
           title={`Headless & Backendless Architecture`}
           description={`Dopebase is a set of modules and SDKs that can be used together or independently. It can be used as a headless CMS, a backend for your mobile app, or a full-stack website builder.`}
           items={``}
@@ -147,7 +128,7 @@ const HomePage = ({}) => {
           content={``}
           interactiveChild={null}
         />
-        <Footer />
+        <Footer /> */}
       </div>
     </div>
   )

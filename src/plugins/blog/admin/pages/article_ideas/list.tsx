@@ -25,6 +25,7 @@ import { pluginsAPIURL } from '../../../../../config/config'
 import useCurrentUser from '../../../../../modules/auth/hooks/useCurrentUser'
 import { authPost } from '../../../../../modules/auth/utils/authFetch'
 import styles from '../../../../../admin/themes/admin.module.css'
+import GenerateIdeasForm from '../../components/GenerateIdeasForm'
 /* Insert extra imports for table cells here */
 
 const baseAPIURL = `${pluginsAPIURL}admin/blog/`
@@ -34,61 +35,57 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 const ArticleIdeasColumns = [
-  
-      {
-          Header: "Title",
-          accessor: "title",
-      },
-      {
-          Header: "Sections",
-          accessor: "sections",
-      },
-      {
-          Header: "Tags",
-          accessor: "tags",
-      },
-      {
-          Header: "Status",
-          accessor: "status",
-      },
-      {
-          Header: "Extra Prompt",
-          accessor: "extra_prompt",
-      },
-      {
-          Header: "Social Media",
-          accessor: "tweet",
-      },
-      {
-          Header: "SEO Description",
-          accessor: "seo_description",
-      },
-      {
-          Header: "Summary",
-          accessor: "summary",
-      },
-      {
-          Header: "Topic",
-          accessor: "topic",
-      },
-      {
-          Header: "Category",
-          accessor: "category",
-      },
-      {
-          Header: "Created Date",
-          accessor: "created_at",
-          Cell: data => (
-              <IMDateTableCell timestamp={data.value} />
-          )
-      },
-      {
-          Header: "Updated Date",
-          accessor: "updated_at",
-          Cell: data => (
-              <IMDateTableCell timestamp={data.value} />
-          )
-      },,
+  {
+    Header: 'Title',
+    accessor: 'title',
+  },
+  {
+    Header: 'Sections',
+    accessor: 'sections',
+  },
+  {
+    Header: 'Tags',
+    accessor: 'tags',
+  },
+  {
+    Header: 'Status',
+    accessor: 'status',
+  },
+  {
+    Header: 'Extra Prompt',
+    accessor: 'extra_prompt',
+  },
+  {
+    Header: 'Social Media',
+    accessor: 'tweet',
+  },
+  {
+    Header: 'SEO Description',
+    accessor: 'seo_description',
+  },
+  {
+    Header: 'Summary',
+    accessor: 'summary',
+  },
+  {
+    Header: 'Topic',
+    accessor: 'topic',
+  },
+  {
+    Header: 'Category',
+    accessor: 'category',
+  },
+  {
+    Header: 'Created Date',
+    accessor: 'created_at',
+    Cell: data => <IMDateTableCell timestamp={data.value} />,
+  },
+  {
+    Header: 'Updated Date',
+    accessor: 'updated_at',
+    Cell: data => <IMDateTableCell timestamp={data.value} />,
+  },
+  ,
   {
     Header: 'Actions',
     accessor: 'actions',
@@ -229,6 +226,7 @@ function ArticleIdeasListView(props) {
                 </a>
                 <h1>Ideas</h1>
               </div>
+              <GenerateIdeasForm />
               <div className={`${styles.CardBody} CardBody`}>
                 <div className={`${styles.TableContainer} TableContainer`}>
                   <input
