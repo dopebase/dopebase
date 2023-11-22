@@ -38,10 +38,10 @@ async function list(tableName, queryParams) {
     queryOrderBy = `order by ${queryParams.orderBy}`
   }
   console.log(`SELECT * FROM ${tableName} ${queryOrderBy} ${queryLimit}`)
-  const result = await prisma.$queryRawUnsafe(
+  const dbResult = await prisma.$queryRawUnsafe(
     `SELECT * FROM ${tableName} ${queryOrderBy} ${queryLimit}`,
   )
-  const unescapedRes = result.map(res => unescapeObject(res))
+  const unescapedRes = dbResult.map(res => unescapeObject(res))
   if (queryParams.search?.length > 0) {
     var result = []
     var keyword = queryParams.search

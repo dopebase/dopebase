@@ -3,6 +3,7 @@ import { getComponentForRoutes } from '../lib/getComponentForRoutes'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
+  registerInSiteAdminMenuHooks()
   registerURLParserHooks()
 }
 
@@ -40,6 +41,21 @@ const registerAdminPanelHooks = () => {
       },
     ])
   })
+}
+
+const registerInSiteAdminMenuHooks = () => {
+  HookSystem.getInstance().addHookCallback(
+    'inSiteAdminMenu',
+    (items, routes) => {
+      return items.concat([
+        {
+          title: 'Edit',
+          path: 'articles/update?id=' + routes[1].id,
+          icon: 'pencil',
+        },
+      ])
+    },
+  )
 }
 
 const registerURLParserHooks = () => {

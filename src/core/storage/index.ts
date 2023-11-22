@@ -1,5 +1,6 @@
-// Storage is on the hosting server
-// export { upload } from './local/upload'
+const { upload } =
+  process.env.DATABASE_TYPE === 'firebase'
+    ? require('./firebase/upload')
+    : require('./local/upload')
 
-// Storage is on Firebase Storage
-export { upload } from './firebase/upload'
+export { upload }

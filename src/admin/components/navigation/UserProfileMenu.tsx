@@ -66,7 +66,7 @@ const Icon = () => {
   )
 }
 
-const UserProfileMenu: React.FC = memo(() => {
+const UserProfileMenu: React.FC = memo(props => {
   const [user, , loading] = useCurrentUser()
   const [isExpanded, setIsExpanded] = useState(false)
   const onClick = () => {

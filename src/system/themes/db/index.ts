@@ -1,5 +1,6 @@
-// // Prisma database
-// export { getCurrentTheme, setCurrentTheme } from './prismaDB'
+const { getCurrentTheme, setCurrentTheme } =
+  process.env.DATABASE_TYPE === 'firebase'
+    ? require('./firebaseDB')
+    : require('./prismaDB')
 
-// // Firebase database
-export { getCurrentTheme, setCurrentTheme } from './firebaseDB'
+export { getCurrentTheme, setCurrentTheme }

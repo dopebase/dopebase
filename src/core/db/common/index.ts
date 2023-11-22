@@ -1,5 +1,7 @@
-// import db from './prisma/prismaDB'
-import db from './firebase/firebaseDB'
+const db =
+  process.env.DATABASE_TYPE === 'firebase'
+    ? require('./firebase/firebaseDB').default
+    : require('./prisma/prismaDB').default
 
 async function getOne(tableName, id) {
   return db.getOne(tableName, id)

@@ -6,6 +6,7 @@ class PrivateHookSystem {
     this.hooks = {}
     this.registerHook('beforeRenderAdminPanel')
     this.registerHook('urlParsing')
+    this.registerHook('inSiteAdminMenu')
     this.registerPluginHooks()
   }
 

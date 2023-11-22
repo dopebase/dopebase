@@ -1,15 +1,6 @@
-// Firebase database
-export {
-  getUserByID,
-  getUserByEmail,
-  createNewUser,
-  getUserByToken,
-} from './firebase/usersDB'
+const { getUserByID, getUserByEmail, createNewUser, getUserByToken } =
+  process.env.DATABASE_TYPE === 'firebase'
+    ? require('./firebase/usersDB')
+    : require('./prisma/usersDB')
 
-// Prisma database
-// export {
-//   getUserByID,
-//   getUserByEmail,
-//   createNewUser,
-//   getUserByToken,
-// } from "./prisma/usersDB";
+export { getUserByID, getUserByEmail, createNewUser, getUserByToken }

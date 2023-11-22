@@ -16,13 +16,7 @@ export const getComponentForRoutes = async routes => {
     const modules = await getHomeModules()
     const src = `${installedTheme}/pages/blog/Home`
     try {
-      console.log('yyyyyyyy')
-      console.log(slug)
-      console.log(blogURL)
-      console.log('yyyyyyy')
       const component = (await import(`../../../themes/` + src)).default
-      console.log('xxxxxxx')
-      console.log(component)
       return component({ modules: modules })
     } catch (error) {
       console.log(error)

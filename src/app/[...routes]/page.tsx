@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllPlugins, isInstalled } from '../../system/plugins'
 import { componentForRoutes } from '../../system/routing/urlRouter'
+import { getCurrentUser } from '../../admin/utils/getCurrentUserByCookies'
 
 export default async function Page({
   params,
@@ -12,10 +13,22 @@ export default async function Page({
 }) {
   // const router = useRouter()
   const { routes } = params
+  const user = await getCurrentUser()
+  const isAdmin = user?.role === 'admin'
 
   // const [component, setComponent] = useState(null)
 
-  return await componentForRoutes(routes, searchParams)
+  const C = await componentForRoutes(routes, searchParams)
+  if (!isAdmin) {
+    return C
+  }
+
+  return (
+    <div>
+      Admin wrapper
+      <div>{C}</div>
+    </div>
+  )
   // const searchParams = useSearchParams()
   // const search = searchParams.get('sdsadsa')
   // console.log('search', search)

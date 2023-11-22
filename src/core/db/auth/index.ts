@@ -1,4 +1,13 @@
-// Firebase database
+const {
+  loginWithEmailAndPassword,
+  register,
+  resetPassword,
+  updatePassword,
+  requestPasswordReset,
+} =
+  process.env.DATABASE_TYPE === 'firebase'
+    ? require('./firebase/authDB')
+    : require('./prisma/authDB')
 
 export {
   loginWithEmailAndPassword,
@@ -6,13 +15,4 @@ export {
   resetPassword,
   updatePassword,
   requestPasswordReset,
-} from './firebase/authDB'
-
-// Prisma database
-// export {
-//   loginWithEmailAndPassword,
-//   register,
-//   resetPassword,
-// updatePassword,
-// requestPasswordReset,
-// } from './prisma/authDB'
+}
