@@ -40,8 +40,10 @@ const adminMenuItemsBottom = [
   },
 ]
 
-const AdminMenu: React.FC = async () => {
+const AdminMenu = async ({ params, searchParams }) => {
   const user = await getCurrentUser()
+  const { routes } = params
+  const slug = routes.join('/')
 
   const items = user?.role === 'admin' ? adminMenuItemsTop : []
   const menuItemsAfterApplyingHooks = HookSystem.getInstance().executeHook(
@@ -50,7 +52,7 @@ const AdminMenu: React.FC = async () => {
   )
   const menuItems = menuItemsAfterApplyingHooks.concat(adminMenuItemsBottom)
 
-  return <AdminMenuComponent menuItems={menuItems} />
+  return <AdminMenuComponent menuItems={menuItems} slug={slug} />
 }
 
 export default AdminMenu

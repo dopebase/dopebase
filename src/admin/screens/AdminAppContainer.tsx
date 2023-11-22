@@ -7,6 +7,8 @@ import { getCurrentUser } from '../utils/getCurrentUserByCookies'
 
 interface AdminAppContainerProps {
   children: Node
+  params: any
+  searchParams: any
 }
 
 export const AdminAppContainer: React.FC = async (
@@ -22,7 +24,10 @@ export const AdminAppContainer: React.FC = async (
         <div className={styles.adminContent}>
           <div className={styles.MainMenu}>
             <Suspense fallback={<div>Loading...</div>}>
-              <AdminMenu />
+              <AdminMenu
+                params={props.params}
+                searchParams={props.searchParams}
+              />
             </Suspense>
           </div>
           <div className={styles.MainPanel}>{children}</div>

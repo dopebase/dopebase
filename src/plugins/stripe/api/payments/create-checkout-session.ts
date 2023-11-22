@@ -96,8 +96,6 @@ export async function POST(req: Request) {
       }
 
       if (session) {
-        console.log('eeeeeeee')
-        console.log(session)
         return new Response(JSON.stringify({ sessionId: session.id }), {
           status: 200,
         })

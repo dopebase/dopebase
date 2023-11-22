@@ -9,7 +9,7 @@ export const getArticleBySlug = async slug => {
     ? await getOne('article_categories', article.category_id)
     : null
   var tags = []
-  for (var i = 0; i < article.tags.length; i++) {
+  for (var i = 0; i < article?.tags?.length; i++) {
     const tag = await getOne('article_tags', article.tags[i])
     tags.push(tag)
   }

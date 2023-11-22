@@ -16,11 +16,7 @@ import { findOne, list, updateOne } from '../../../../../core/db'
 export const generateArticleIdeas = async originalPrompt => {
   try {
     const prompt = `${originalPrompt}. Return only valid JSON with a titles field only`
-    const completion = await generateText2Text(prompt, 13000, 0.3)
-    console.log('Title Ideas:')
-    console.log(JSON.stringify(completion.data))
-    const generatedContent = completion.data.choices[0].message.content
-
+    const generatedContent = await generateText2Text(prompt, 13000, 0.3)
     console.log(generatedContent)
     const ideas = JSON.parse(generatedContent).titles
     console.log(ideas)

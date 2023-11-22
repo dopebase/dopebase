@@ -58,9 +58,8 @@ export const generateText2Text = async (
     })
     console.log(JSON.stringify(completion))
 
-    const response = `${completion.choices[0].message}`
+    const response = `${completion.choices[0].message.content}`
     if (response?.length > 0) {
-      console.log(response)
       return response.trim()
     }
   } catch (error) {

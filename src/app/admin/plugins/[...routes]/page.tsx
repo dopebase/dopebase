@@ -2,7 +2,13 @@ import React from 'react'
 import { AdminAppContainer } from '../../../../admin/screens/AdminAppContainer'
 import { getCurrentUser } from '../../../../admin/utils/getCurrentUserByCookies'
 
-export default async function Page({ params }: { params: { routes: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { routes: string }
+  searchParams: any
+}) {
   const user = await getCurrentUser()
   const { routes } = params
 
@@ -36,9 +42,8 @@ export default async function Page({ params }: { params: { routes: string } }) {
   if (user && user.role !== 'admin') {
     return <>Access denied.</>
   }
-
   return (
-    <AdminAppContainer>
+    <AdminAppContainer params={params} searchParams={searchParams}>
       <React.Suspense fallback={<div>Loading...</div>}>
         <Component />
       </React.Suspense>

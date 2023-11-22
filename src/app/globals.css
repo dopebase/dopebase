@@ -149,7 +149,7 @@ a:hover {
 
 
 .ProseMirror, .FormEditorContainer div {
-  min-height: 200px;
+  /* min-height: 200px; */
 }
 
 @media (prefers-color-scheme: dark) {

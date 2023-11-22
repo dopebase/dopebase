@@ -7,10 +7,8 @@ const generateSections = async (topic, articleTitle) => {
   try {
     const prompt = `list maximum 10 sections for a detailed tutorial titled "${articleTitle}" on a blog about ${topic}?
      Return response in valid JSON format with a titles field only`
-    const completion = await generateText2Text(prompt, 7000, 0.2)
-
+    const generatedContent = await generateText2Text(prompt, 7000, 0.2)
     console.log('Sections:')
-    const generatedContent = completion.data.choices[0].message.content
     // console.log(generatedContent)
     const sections = JSON.parse(generatedContent).titles
     return sections
@@ -54,8 +52,7 @@ const generateIntroduction = async (topic, title, sections) => {
     do not repeat the section title
     format it in markdown
      `
-    const completion = await generateText2Text(prompt, 7000, 0.2)
-    const generatedContent = `${completion.data.choices[0].message.content}`
+    const generatedContent = await generateText2Text(prompt, 7000, 0.2)
     // console.log(prompt)
     // console.log(generatedContent)
     return generatedContent
@@ -80,8 +77,7 @@ const generateSectionIntro = async (topic, title, section, subsections) => {
     do not repeat the section title
     format it in markdown
      `
-    const completion = await generateText2Text(prompt, 7000, 0.2)
-    const generatedContent = `${completion.data.choices[0].message.content}`
+    const generatedContent = await generateText2Text(prompt, 7000, 0.2)
     // console.log(prompt)
     // console.log(generatedContent)
     return generatedContent
@@ -106,8 +102,7 @@ const generateSubsection = async (topic, title, section, subsection) => {
     do not repeat the section title
     format it in markdown
      `
-    const completion = await generateText2Text(prompt, 7000, 0.2)
-    const generatedContent = `${completion.data.choices[0].message.content}`
+    const generatedContent = await generateText2Text(prompt, 7000, 0.2)
     // console.log(prompt)
     // console.log(generatedContent)
     return generatedContent
@@ -132,8 +127,7 @@ const generateConclusion = async (topic, title, sections) => {
     no headings
     format it in markdown
      `
-    const completion = await generateText2Text(prompt, 7000, 0.3)
-    const generatedContent = `${completion.data.choices[0].message.content}`
+    const generatedContent = await generateText2Text(prompt, 7000, 0.3)
     console.log(prompt)
     console.log(generatedContent)
     return generatedContent
@@ -189,9 +183,7 @@ const generateArticleContent = async (topic, title, sections, slug) => {
     Format it in markdown
  `
 
-    const completion = await generateText2Text(prompt, 15000, 0.7)
-
-    const generatedContent = `${completion.data.choices[0].message.content}`
+    const generatedContent = await generateText2Text(prompt, 15000, 0.7)
     const nonTrimmedContent = generatedContent.replace(`# ${title}`, '')
 
     const nonPhotocontent = nonTrimmedContent.replace(/^\s+|\s+$/g, '')
@@ -282,9 +274,7 @@ const generateArticleContent2 = async (topic, articleTitle, sections, slug) => {
   //     Format it in markdown
   //  `
 
-  //     const completion = await generateText2Text(prompt, 7000, 0.7)
-
-  //     const generatedContent = `${completion.data.choices[0].message.content}`
+  //     const generatedContent = await generateText2Text(prompt, 7000, 0.7)
 
   //     const nonTrimmedContent = generatedContent.replace(`# ${title}`, '')
   //     const nonPhotocontent = nonTrimmedContent.replace(/^\s+|\s+$/g, '')
@@ -311,9 +301,7 @@ const generateTags = async (topic, title, sections) => {
      - ${sections.join('\n- ')}
      `
 
-    const completion = await generateText2Text(prompt, 7000, 0.3)
-
-    const generatedContent = completion.data.choices[0].message.content
+    const generatedContent = await generateText2Text(prompt, 7000, 0.3)
 
     const tags = JSON.parse(generatedContent).tags
     console.log(tags)
@@ -340,9 +328,8 @@ const generateArticleMetadata = async (topic, title) => {
      - slug: a slug for the article. 5 keywords max. Remove numbers and stop words. Remove duplicate words. Replace spaces with dashes. Remove words such as 'with, for, in, the, a, an, to, from, by, of, on, at, as, and, but, or, so, nor, yet, after, before, when, while, if, unless, until, although, because, since, whether, where, wherever, that, what, which, who' from the slug.
      `
 
-    const completion = await generateText2Text(prompt, 7000, 0.3)
+    const generatedContent = await generateText2Text(prompt, 7000, 0.3)
 
-    const generatedContent = completion.data.choices[0].message.content
     const jsonData = JSON.parse(generatedContent)
     return jsonData
   } catch (error) {

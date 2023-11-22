@@ -187,7 +187,7 @@ export const persistArticleIdea = async (
     title,
     sections: JSON.stringify(sections),
     tags: JSON.stringify(tags),
-    seo_description,
+    seo_description: seoDescription,
     summary,
     tweet,
     slug,

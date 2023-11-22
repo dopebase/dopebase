@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const body = await req.json()
     const { prompt, category } = body
-    const topic = await findOne('settings', { name: 'description' })
+    const topic = (await findOne('settings', { name: 'description' })).value
     console.log(body)
     await seedArticleIdeas(prompt, topic ?? 'general topic', category)
     return NextResponse.json({ success: true }, { status: 200 })

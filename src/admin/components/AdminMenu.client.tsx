@@ -4,9 +4,35 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import styles from '../themes/admin.module.css'
 
-const AdminMenu = ({ menuItems, urlPath = 'admin' }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [selectedSubindex, setSelectedSubindex] = useState(0)
+const AdminMenu = ({ menuItems, urlPath = 'admin', slug }) => {
+  const extractSelectedIndex = (menuItems, slug) => {
+    let selectedIndex = 0
+    let selectedSubindex = -1
+    menuItems.forEach((menuItem, index) => {
+      const path = menuItem.path.replace('plugins/', '')
+      if (path === slug) {
+        selectedIndex = index
+        selectedSubindex = -1
+      } else if (menuItem.subItems?.length > 0) {
+        menuItem.subItems.forEach((subitem, subindex) => {
+          const subpath = path + '/' + subitem.path
+          if (subpath === slug) {
+            selectedIndex = index
+            selectedSubindex = subindex
+          }
+        })
+      }
+    })
+    return [selectedIndex, selectedSubindex]
+  }
+
+  const [extractedIndex, extractedSubindex] = extractSelectedIndex(
+    menuItems,
+    slug,
+  )
+
+  const [selectedIndex, setSelectedIndex] = useState(extractedIndex)
+  const [selectedSubindex, setSelectedSubindex] = useState(extractedSubindex)
 
   const onSelect = (index, subindex) => {
     // const item = menuItems[index]
@@ -61,7 +87,7 @@ const AdminMenu = ({ menuItems, urlPath = 'admin' }) => {
                             className={
                               index === selectedIndex &&
                               subindex === selectedSubindex
-                                ? 'selected'
+                                ? styles.selected
                                 : ''
                             }>
                             <Link

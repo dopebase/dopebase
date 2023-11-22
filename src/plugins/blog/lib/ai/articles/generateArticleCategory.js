@@ -22,9 +22,7 @@ const generateCategoryMetadata = async (
 
     const completion = await generateText2Text(prompt, 7000, 0.3)
 
-    const generatedContent = decodeURIComponent(
-      completion.data.choices[0].message.content,
-    )
+    const generatedContent = decodeURIComponent(completion)
 
     const jsonData = JSON.parse(generatedContent)
     console.log(jsonData)
