@@ -76,14 +76,13 @@ const UpdateArticleIdeaView = props => {
     var nonFormData = {}
 
     /* Insert non modifiable initialization data here */
-          if (originalData.created_at) {
-              nonFormData['created_at'] = originalData.created_at
-          }
-          
-          if (originalData.updated_at) {
-              nonFormData['updated_at'] = originalData.updated_at
-          }
-          
+    if (originalData.created_at) {
+      nonFormData['created_at'] = originalData.created_at
+    }
+
+    if (originalData.updated_at) {
+      nonFormData['updated_at'] = originalData.updated_at
+    }
 
     console.log(nonFormData)
     setModifiedNonFormData(nonFormData)
@@ -395,18 +394,17 @@ const UpdateArticleIdeaView = props => {
             const errors = {}
             {
               /* Insert all form errors here */
-        if (!values.title) {
-            errors.title = 'Field Required!'
-        }
+              if (!values.title) {
+                errors.title = 'Field Required!'
+              }
 
-        if (!values.created_at) {
-            errors.created_at = 'Field Required!'
-        }
+              if (!values.created_at) {
+                errors.created_at = 'Field Required!'
+              }
 
-        if (!values.updated_at) {
-            errors.updated_at = 'Field Required!'
-        }
-
+              if (!values.updated_at) {
+                errors.updated_at = 'Field Required!'
+              }
             }
 
             return errors
@@ -426,184 +424,207 @@ const UpdateArticleIdeaView = props => {
           }) => (
             <form onSubmit={handleSubmit}>
               {/* Insert all edit form fields here */}
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Title</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="title"
-                            name="title"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.title}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.title && touched.title && errors.title}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Title</label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="title"
+                  name="title"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.title}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.title && touched.title && errors.title}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Sections</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="sections"
-                            name="sections"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.sections}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.sections && touched.sections && errors.sections}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Sections
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="sections"
+                  name="sections"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.sections}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.sections && touched.sections && errors.sections}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Tags</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="tags"
-                            name="tags"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.tags}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.tags && touched.tags && errors.tags}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Tags</label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="tags"
+                  name="tags"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.tags}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.tags && touched.tags && errors.tags}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Status</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="status"
-                            name="status"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.status}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.status && touched.status && errors.status}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Status
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="status"
+                  name="status"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.status}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.status && touched.status && errors.status}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Extra Prompt</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="extra_prompt"
-                            name="extra_prompt"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.extra_prompt}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.extra_prompt && touched.extra_prompt && errors.extra_prompt}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Extra Prompt
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="extra_prompt"
+                  name="extra_prompt"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.extra_prompt}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.extra_prompt &&
+                    touched.extra_prompt &&
+                    errors.extra_prompt}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Social Media</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="tweet"
-                            name="tweet"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.tweet}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.tweet && touched.tweet && errors.tweet}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Social Media
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="social_media_post"
+                  name="social_media_post"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.social_media_post}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.social_media_post &&
+                    touched.social_media_post &&
+                    errors.social_media_post}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>SEO Description</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="seo_description"
-                            name="seo_description"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.seo_description}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.seo_description && touched.seo_description && errors.seo_description}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  SEO Description
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="seo_description"
+                  name="seo_description"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.seo_description}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.seo_description &&
+                    touched.seo_description &&
+                    errors.seo_description}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Summary</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="summary"
-                            name="summary"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.summary}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.summary && touched.summary && errors.summary}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Summary
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="summary"
+                  name="summary"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.summary}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.summary && touched.summary && errors.summary}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Topic</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="topic"
-                            name="topic"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.topic}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.topic && touched.topic && errors.topic}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>Topic</label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="topic"
+                  name="topic"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.topic}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.topic && touched.topic && errors.topic}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Category</label>
-                        <input
-                            className={`${styles.FormTextField} FormTextField`}
-                            type="category"
-                            name="category"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.category}
-                        />
-                        <p className={`${styles.ErrorMessage} ErrorMessage`}>
-                            {errors.category && touched.category && errors.category}
-                        </p>
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Category
+                </label>
+                <input
+                  className={`${styles.FormTextField} FormTextField`}
+                  type="category"
+                  name="category"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.category}
+                />
+                <p className={`${styles.ErrorMessage} ErrorMessage`}>
+                  {errors.category && touched.category && errors.category}
+                </p>
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Created Date</label>
-                        <IMDatePicker
-                            selected={modifiedNonFormData.created_at}
-                            onChange={(toDate) => onDateChange(toDate, "created_at")}
-                        />
-                    </div>
-    
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Created Date
+                </label>
+                <IMDatePicker
+                  selected={modifiedNonFormData.created_at}
+                  onChange={toDate => onDateChange(toDate, 'created_at')}
+                />
+              </div>
 
-                    <div className={`${styles.FormFieldContainer} FormFieldContainer`}>
-                        <label className={`${styles.FormLabel} FormLabel`}>Updated Date</label>
-                        <IMDatePicker
-                            selected={modifiedNonFormData.updated_at}
-                            onChange={(toDate) => onDateChange(toDate, "updated_at")}
-                        />
-                    </div>
-    
-
+              <div
+                className={`${styles.FormFieldContainer} FormFieldContainer`}>
+                <label className={`${styles.FormLabel} FormLabel`}>
+                  Updated Date
+                </label>
+                <IMDatePicker
+                  selected={modifiedNonFormData.updated_at}
+                  onChange={toDate => onDateChange(toDate, 'updated_at')}
+                />
+              </div>
 
               <div
                 className={`${styles.FormActionContainer} FormActionContainer`}>

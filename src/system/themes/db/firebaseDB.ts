@@ -17,7 +17,7 @@ export const setCurrentTheme = async theme => {
     const insert = await insertOne('settings', {
       name: 'theme',
       value: theme,
-      createdAt: Math.floor(new Date().getTime() / 1000).toString(),
+      created_at: Math.floor(new Date().getTime() / 1000).toString(),
     })
     return insert
   }

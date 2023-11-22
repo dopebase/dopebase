@@ -65,14 +65,21 @@ async function list(tableName, queryParams) {
 async function insertOne(tableName, unescapedData) {
   const data = escapeObject(unescapedData)
   const dataKeys = Object.keys(data)
+  const idValue = data?.id ? `'${data.id}'` : 'gen_random_uuid()'
   let query = `insert into ${tableName} (id`
 
   for (var i = 0; i < dataKeys.length; ++i) {
+    if (dataKeys[i] === 'id') {
+      continue
+    }
     query = `${query}, ${dataKeys[i]}`
   }
-  query += ') values(gen_random_uuid()'
+  query += `) values(${idValue}`
   for (var i = 0; i < dataKeys.length; ++i) {
     const key = dataKeys[i]
+    if (key === 'id') {
+      continue
+    }
     const value = data[key]
     if (value === null) {
       query += ', null'

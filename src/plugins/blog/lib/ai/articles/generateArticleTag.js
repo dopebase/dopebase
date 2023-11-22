@@ -18,13 +18,27 @@ const generateTagMetadata = async (topic, tagName, articleTitle) => {
 
     const completion = await generateText2Text(prompt, 7000, 0.3)
 
-    const generatedContent = decodeURIComponent(completion)
+    const generatedContent = decodeURIComponent(
+      completion.replace('",\n}', '"\n}'), // remove last comma
+    )
     console.log(generatedContent)
-
+    console.log('eeeeeeeee')
     const jsonData = JSON.parse(generatedContent)
+    console.log('rrrrrrr')
 
     // safely return all fields
     const slug = tagName.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-')
+    console.log(`return generateTagMetadata`)
+    console.log({
+      seoTitle: jsonData?.seoTitle ?? '',
+      seoDescription: jsonData?.seoDescription ?? '',
+      summary: jsonData?.summary ?? '',
+      tweet: jsonData?.tweet ?? '',
+      slug: slug,
+      longDescription: jsonData?.longDescription ?? '',
+      aiPrompt: prompt,
+    })
+
     return {
       seoTitle: jsonData?.seoTitle ?? '',
       seoDescription: jsonData?.seoDescription ?? '',
@@ -53,7 +67,16 @@ export const generateArticleTag = async (tagName, topic, articleTitle) => {
     longDescription,
     aiPrompt,
   } = await generateTagMetadata(topic, tagName, articleTitle)
-
+  console.log(`return generateArticleTag`)
+  console.log({
+    seoTitle,
+    seoDescription,
+    summary,
+    tweet,
+    slug,
+    longDescription,
+    aiPrompt,
+  })
   return {
     seoTitle,
     seoDescription,

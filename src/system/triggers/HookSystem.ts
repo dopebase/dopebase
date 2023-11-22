@@ -1,4 +1,4 @@
-import { getAllPlugins } from '../plugins'
+import { getAllPlugins, isInstalled } from '../plugins'
 
 class PrivateHookSystem {
   constructor() {
@@ -14,15 +14,18 @@ class PrivateHookSystem {
     const plugins = await getAllPlugins()
     for (var i = 0; i < plugins.length; i++) {
       const plugin = plugins[i]
-      try {
-        const { registerHooks } = await import(
-          `../../plugins/${plugin.id}/hooks`
-        )
-        registerHooks()
-        console.log(`Registered hooks for plugin ${plugin.id}`)
-      } catch (e) {
-        console.error(`Error while registering hooks for plugin ${plugin.id}`)
-        console.error(e)
+      const installed = await isInstalled(plugin.id)
+      if (installed) {
+        try {
+          const { registerHooks } = await import(
+            `../../plugins/${plugin.id}/hooks`
+          )
+          registerHooks()
+          console.log(`Registered hooks for plugin ${plugin.id}`)
+        } catch (e) {
+          console.error(`Error while registering hooks for plugin ${plugin.id}`)
+          console.error(e)
+        }
       }
     }
   }

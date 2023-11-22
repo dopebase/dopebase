@@ -34,8 +34,12 @@ model User {
   createdAt String? @map("created_at")
   updatedAt String? @map("updated_at")
 
-  articles Article[]
-  Auth     Auth?
+  articles       Article[]
+  Auth           Auth?
+  subscriptions  Subscription[]
+  paymentMethods PaymentMethod[]
+  taxiTrips      TaxiTrip[]
+  taxiUsers      TaxiUser[]
 
   @@map("users")
 }
@@ -189,6 +193,128 @@ model ArticleCategory {
   aiGenerated       Boolean @default(false) @map("ai_generated")
 
   @@map("article_categories")
+}
+
+// Subscriptions
+
+model Subscription {
+  id                String    @id @default(uuid())
+  user_id           String
+  plan_id           String
+  start_date        DateTime
+  end_date          DateTime?
+  status            String
+  last_payment_date DateTime?
+  next_billing_date DateTime?
+  created_at        DateTime
+  updated_at        DateTime
+
+  user        User             @relation(fields: [user_id], references: [id])
+  plan        SubscriptionPlan @relation(fields: [plan_id], references: [id])
+  Transaction Transaction[]
+
+  @@map("subscriptions")
+}
+
+model SubscriptionPlan {
+  id                   String  @id @default(uuid())
+  name                 String
+  basic_description    String?
+  detailed_description String?
+  price                String
+  stripe_price_id      String?
+  billing_cycle        String
+  created_at           String
+  updated_at           String
+
+  subscriptions Subscription[]
+
+  @@map("subscription_plans")
+}
+
+model PaymentMethod {
+  id               String  @id @default(uuid())
+  provider         String
+  details          String
+  is_default       Boolean
+  stripeCustomerID String?
+  brand            String?
+  last4            String?
+  expiryMonth      String?
+  expiryYear       String?
+  userID           String?
+
+  user User? @relation(fields: [userID], references: [id])
+
+  @@map("payment_methods")
+}
+
+model Transaction {
+  id                      String  @id @default(uuid())
+  subscription_id         String
+  amount                  String
+  transaction_date        String?
+  status                  String
+  provider_transaction_id String?
+  created_at              String?
+  updated_at              String?
+
+  subscription Subscription @relation(fields: [subscription_id], references: [id])
+
+  @@map("transactions")
+}
+
+// Taxi
+model TaxiTrip {
+  id          String  @id @default(uuid())
+  pickup      String?
+  dropoff     String?
+  status      String?
+  passengerID String? @map("passenger_id")
+  carType     String? @map("car_type")
+  priceRange  String? @map("price_range")
+  ride        String?
+  carDrive    String? @map("car_drive")
+  createdAt   String  @map("created_at")
+  updatedAt   String  @map("updated_at")
+
+  passenger       User?            @relation(fields: [passengerID], references: [id])
+  taxiCarCategory TaxiCarCategory? @relation(fields: [carType], references: [id])
+
+  @@map("taxi_trips")
+}
+
+model TaxiCarCategory {
+  id                 String  @id @default(uuid())
+  name               String?
+  description        String?
+  photo              String?
+  marker             String?
+  baseFare           String? @map("base_fare")
+  costPerKm          String? @map("cost_per_km")
+  costPerMin         String? @map("cost_per_min")
+  minimumFare        String? @map("minimum_fare")
+  numberOfPassengers String? @map("number_of_passengers")
+  averageSpeedPerMin String? @map("average_speed_per_min")
+  createdAt          String  @map("created_at")
+  updatedAt          String  @map("updated_at")
+
+  taxiTrips TaxiTrip[]
+
+  @@map("taxi_car_categories")
+}
+
+model TaxiUser {
+  id                String  @id @default(uuid())
+  user              User    @relation(fields: [id], references: [id])
+  licensePictureURL String? @map("license_picture_url")
+  carPictureURL     String? @map("car_picture_url")
+  carName           String? @map("car_name")
+  carNumber         String? @map("car_number")
+  carType           String? @map("car_type")
+  inProgressOrderID String? @map("created_at")
+
+  @@map("taxi_users")
 }
 
 // Website Settings

@@ -188,7 +188,11 @@ const schema = {
         required: false,
         displayName: 'Extra Prompt',
       },
-      tweet: { type: 'string', required: false, displayName: 'Social Media' },
+      social_media_post: {
+        type: 'string',
+        required: false,
+        displayName: 'Social Media',
+      },
       seo_description: {
         type: 'string',
         required: false,

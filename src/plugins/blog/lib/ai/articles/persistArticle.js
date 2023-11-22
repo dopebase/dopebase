@@ -96,10 +96,10 @@ const persistArticleToDB = async (
     tags,
     seoDescription,
     summary,
-    tweet,
     slug,
     coverURL,
     aiPrompt,
+    aiSocialPost,
   },
   topic,
   categoryTitle,
@@ -138,7 +138,7 @@ const persistArticleToDB = async (
       ai_seo_description: seoDescription,
       ai_summary: summary,
       ai_tags: tags.join(','),
-      ai_social_post: tweet,
+      ai_social_post: aiSocialPost,
       ai_generated: true,
     })
     console.log(`inserted article titled '${title}'`)
@@ -154,7 +154,9 @@ const persistArticleToDB = async (
 
     return article
   } else {
-    console.error(`No category found for article ${title}`)
+    console.error(
+      `No category found for article ${title} categoryTitle: ${categoryTitle}`,
+    )
     return null
   }
 }
@@ -189,12 +191,12 @@ export const persistArticleIdea = async (
     tags: JSON.stringify(tags),
     seo_description: seoDescription,
     summary,
-    tweet,
+    social_media_post: tweet,
     slug,
     topic,
     category,
     status: 'not_started',
-    extraPrompt: '',
+    extra_prompt: '',
     created_at: dateStr,
     updated_at: dateStr,
   })

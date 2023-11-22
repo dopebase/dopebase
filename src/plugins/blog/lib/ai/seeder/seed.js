@@ -62,9 +62,9 @@ export const seedArticles = async () => {
       sections,
       slug,
       tags,
-      seoDescription,
+      seo_description,
       summary,
-      tweet,
+      social_media_post,
     } = idea
     const existingArticle = await findOne('articles', { slug: slug })
 
@@ -92,9 +92,9 @@ export const seedArticles = async () => {
         sections: sectionsObject,
         content,
         tags: tagsObject,
-        seoDescription,
+        seoDescription: seo_description,
         summary,
-        tweet,
+        aiSocialPost: social_media_post,
         slug,
         coverURL,
         aiPrompt,

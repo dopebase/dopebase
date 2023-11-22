@@ -1,10 +1,11 @@
 import React from 'react'
 import styles from '../theme.module.css'
+import { websiteURL } from '../../../config/config'
 
 const NavigationMenu = () => {
   return (
     <nav className={styles.navbar}>
-      <a href="https://dopebase.com" className={`${styles.navbarTitle}`}>
+      <a href={websiteURL} className={`${styles.navbarTitle}`}>
         <svg
           width="214.00000000000006"
           height="48.35874661857532"

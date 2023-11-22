@@ -57,7 +57,7 @@ const ArticleIdeasColumns = [
   },
   {
     Header: 'Social Media',
-    accessor: 'tweet',
+    accessor: 'social_media_post',
   },
   {
     Header: 'SEO Description',
