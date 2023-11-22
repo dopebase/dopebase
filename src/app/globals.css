@@ -207,6 +207,34 @@ a:hover {
 }
 
 /**
+In Site Admin Menu
+**/
+.inSiteContainer {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  background-color: var(--primary-text-color);
+  color: var(--primary-background-color);
+  padding: 0px 32px;
+}
+.inSiteContainer a {
+  color: var(--primary-background-color)
+}
+
+.inSiteMenuItemsList {
+  display: flex;
+  flex-direction: row;
+  margin-left: 32px;
+  gap: 32px;
+  list-style: none;
+
+}
+
+.inSiteContainer a i {
+  margin-right: 8px;
+}
+
+/**
  * The geosuggest module
  * NOTE: duplicated font-sizes' are for browsers which don't support rem (only IE 8)
  */

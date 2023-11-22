@@ -1,5 +1,7 @@
+import { get } from 'http'
 import HookSystem from '../../../system/triggers/HookSystem'
 import { getComponentForRoutes } from '../lib/getComponentForRoutes'
+import { getAdminMenuForRoutes } from '../lib/getAdminMenuForRoutes'
 
 export const registerHooks = () => {
   registerAdminPanelHooks()
@@ -46,14 +48,9 @@ const registerAdminPanelHooks = () => {
 const registerInSiteAdminMenuHooks = () => {
   HookSystem.getInstance().addHookCallback(
     'inSiteAdminMenu',
-    (items, routes) => {
-      return items.concat([
-        {
-          title: 'Edit',
-          path: 'articles/update?id=' + routes[1].id,
-          icon: 'pencil',
-        },
-      ])
+    async (items, routes) => {
+      var list = await getAdminMenuForRoutes(routes)
+      return items.concat(list)
     },
   )
 }

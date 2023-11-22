@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllPlugins, isInstalled } from '../../system/plugins'
 import { componentForRoutes } from '../../system/routing/urlRouter'
 import { getCurrentUser } from '../../admin/utils/getCurrentUserByCookies'
+import InSiteAdminMenu from '../../admin/components/InSiteAdminMenu'
 
 export default async function Page({
   params,
@@ -25,7 +26,7 @@ export default async function Page({
 
   return (
     <div>
-      Admin wrapper
+      <InSiteAdminMenu params={params} searchParams={searchParams} />
       <div>{C}</div>
     </div>
   )
