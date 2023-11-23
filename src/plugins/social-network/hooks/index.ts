@@ -12,7 +12,7 @@ const registerAdminPanelHooks = () => {
       {
         title: 'Social Network',
         path: 'plugins/social-network',
-        icon: 'car',
+        icon: 'hashtag',
         subItems: [
           {
             title: 'Posts',
