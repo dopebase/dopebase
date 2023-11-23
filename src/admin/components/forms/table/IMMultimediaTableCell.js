@@ -1,5 +1,6 @@
 import React from 'react'
 import { IMMultimediaComponent } from '../fields'
+import styles from '../../../themes/admin.module.css'
 
 function IMMultimediaTableCell(props) {
   const { singleMultimediaURL, multimediaURLs } = props
@@ -8,10 +9,11 @@ function IMMultimediaTableCell(props) {
   }
   if (singleMultimediaURL) {
     return (
-      <div className="multimediaCellContainer">
+      <div
+        className={`${styles.multimediaCellContainer} multimediaCellContainer`}>
         <IMMultimediaComponent
           openable
-          className="multimediaCell"
+          className={`${styles.multimediaCell} multimediaCell`}
           src={singleMultimediaURL}
         />
       </div>
@@ -20,14 +22,19 @@ function IMMultimediaTableCell(props) {
 
   const mediaItems = multimediaURLs.map(data => (
     <IMMultimediaComponent
-      className="multiMultimediaCell"
+      className={`${styles.multiMultimediaCell} multiMultimediaCell`}
       key={data.url}
       src={data.url}
       type={data.mime}
       openable
     />
   ))
-  return <div className="multimediaCellContainer">{mediaItems}</div>
+  return (
+    <div
+      className={`${styles.multimediaCellContainer} multimediaCellContainer`}>
+      {mediaItems}
+    </div>
+  )
 }
 
 export default IMMultimediaTableCell
